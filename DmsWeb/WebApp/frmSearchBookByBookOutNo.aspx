@@ -1,0 +1,77 @@
+﻿<%@ Page Language="VB" MasterPageFile="~/Template/ContentMasterPage.master" AutoEventWireup="false"
+    CodeFile="frmSearchBookByBookOutNo.aspx.vb" Inherits="WebApp_frmSearchBookByBookOutNo" Title="ค้นหาหนังสือ" %>
+
+<%@ Register Src="~/UserControls/txtAutoComplete.ascx" TagName="txtAutoComplete" TagPrefix="uc1" %>
+<%@ Register Src="~/UserControls/txtDate.ascx" TagName="txtDate" TagPrefix="uc2" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <table width="100%" border="0" cellpadding="2" cellspacing="0" bgcolor="#ffffff">
+        <tr>
+            <td class="CssHead" colspan="4" align="left" >
+                ค้นหาจากเลขที่หนังสือส่งออก (นร)
+            </td>
+        </tr>
+        <tr>
+            <td align="right" width="15%">
+                &nbsp;
+            </td>
+            <td width="35%">
+                &nbsp;
+            </td>
+            <td align="right" width="15%">
+                &nbsp;
+            </td>
+            <td width="35%">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" align="left" >
+                <table border="0" cellpadding="0" cellspacing="0" align="center" width="80%">
+                    <tr>
+                        <td align="right" class="Csslbl" width="20%">เลขที่หนังสือส่งออก (นร) :</td>
+                        <td align="left" class="Csslbl" width="80%">
+                            <uc1:txtAutoComplete ID="txtBookOutNo" runat="server"  Width="240" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right" class="Csslbl" width="20%">ชื่อองค์กรส่งออก :</td>
+                        <td align="left" class="Csslbl" width="80%">
+                            <uc1:txtAutoComplete ID="txtCompanyName" runat="server"  Width="240" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right" class="Csslbl" width="15%">
+                            วันที่ส่งออกตั้งแต่ :
+                        </td>
+                        <td class="Csslbl" width="85%" align="left">
+                            <table border="0" >
+                                <tr>
+                                    <td><uc2:txtDate ID="txtSendDateFrom" runat="server" /></td>
+                                    <td>&nbsp;ถึง</td>
+                                    <td><uc2:txtDate ID="txtSendDateTo" runat="server" /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr style="height: 30px">
+                        <td>&nbsp;</td>
+                        <td align="left">
+                            <asp:Button ID="btnSearch" runat="server" CssClass="CssBtn" Text="ค้นหา" Width="80px" />
+                            &nbsp;<asp:Button ID="btnClear" runat="server" CssClass="CssBtn" Text="ล้างค่า" Width="80px" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr><td colspan="4">&nbsp;</td></tr>
+        <tr><td colspan="4">&nbsp;</td></tr>
+        <tr>
+            <td colspan="4" class="Csslbl" align="left">
+                * <font color="blue" >เลขที่หนังสือส่งออก รูปแบบคือ "นร xxxx/xxxxxx" เช่น "นร 1301/000001"</font>
+            </td>
+        </tr>
+    </table>
+</asp:Content>

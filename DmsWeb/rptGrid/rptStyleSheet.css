@@ -1,0 +1,134 @@
+﻿body 
+{
+	font-family:TH SarabunPSK,Arial,Courier New , Courier, monospace;
+	font-size:10px;
+	color:Black;
+}
+.grid_Item
+{
+    font-family: TH SarabunPSK,Arial,Courier New , Courier, monospace;
+    color: #000000;
+    text-align: left;
+    font-size: 18px;
+    table-layout: auto;
+    height: 20px;
+}
+.grid_Header
+{
+	font-family: TH SarabunPSK,Arial,Courier New , Courier, monospace;
+	font-weight: bold;
+	font-size: 20px;
+	color: #333333;
+	text-align: center;
+	background-color: #9ab2ca;
+}
+.grid_AlternatingItem
+{
+    font-family: TH SarabunPSK,Arial, Courier New , Courier, monospace;
+    font-size: 18px;
+    color: #000000;
+    text-align: left;
+    height: 20px;
+    background-color: #D2E9FF;
+}
+.grid_Header td, .grid_Item td,.grid_AlternatingItem td
+{
+	border: #91a7b4 1px solid;
+}
+
+.celllabel
+{
+	color: #000000;
+    text-decoration: none;
+    vertical-align: top;
+    padding: 1px;
+    font-style: normal;
+    font-variant: normal;
+    font-size: 18px;
+    line-height: normal;
+    font-family: TH SarabunPSK,Arial, Courier New, Courier, monospace;
+    
+}
+
+.tabellabel
+{
+	
+	padding-right:10px;
+	text-align:right;
+	font-family: TH SarabunPSK,Arial, Courier New, Courier, monospace;
+	font-size: 14px;
+	width:150px;
+	height:25px;
+	color:#000000;
+	font-weight:bold;
+	vertical-align:top;
+}
+.tabellabelinfo
+{
+	
+	padding-right:10px;
+	text-align:left;
+	font-family: TH SarabunPSK,Arial, Courier New, Courier, monospace;
+	font-size: 14px;
+	width:250px;
+	height:25px;
+	color: #000080;
+	font-weight:bold;
+	vertical-align:top;
+}
+
+
+.GrdItemStyle
+{
+  font-size:18px;
+  font-family:TH SarabunPSK,Arial, Courier New, Courier, monospace;
+  height:25px;
+  background-color:White;
+  border-color:#000033;
+  text-align:center ; 
+}
+.GrdHeaderStyle 
+{
+	font-family: TH SarabunPSK,Arial, Courier New, Courier, monospace;
+	font-size: 18px;
+	font-weight: bold;
+	text-align: center ;
+	height: 30px ;
+	background-color:#9999FF;
+	border-color: #000033 ;
+	color: Black ;
+	
+	
+}
+.GrdAlternatingItemStyle
+{
+  font-size:18px;
+  font-family:TH SarabunPSK,Arial, Courier New, Courier, monospace;
+  height:25px;
+  background-color:White;
+  border-color:#000033;
+  text-align:center ; 
+  padding-left:10px;
+}
+.GrdItemStyle td,.GrdAlternatingItemStyle td
+{
+	border: #91a7b4 1px solid;
+	
+	
+}
+.GrdHeaderStyle td
+{
+	border: #91a7b4 1px solid;
+	
+	
+}
+
+.GrdExtraHeader
+{
+	background-color:#9999FF;
+	border-color:#000033;
+	text-align:center ;
+	font-weight:bold;  
+	color:Black; 
+	
+}

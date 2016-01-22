@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{05EC28EE-EA05-4ECD-9A13-2EED10527AEC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Para</RootNamespace>
+    <AssemblyName>Para</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>Off</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>Para.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>Para.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\LoginSessionPara.vb" />
+    <Compile Include="Common\TmpFileUploadPara.vb" />
+    <Compile Include="Common\UserProfilePara.vb" />
+    <Compile Include="Common\Utilities\Constant.vb" />
+    <Compile Include="Common\Utilities\MessageResources.vb" />
+    <Compile Include="DmsService\FinishSendDocumentResPara.vb" />
+    <Compile Include="DmsService\GetDocumentStatusResPara.vb" />
+    <Compile Include="DmsService\SendDocumentReqPara.vb" />
+    <Compile Include="DmsService\SendDocumentResPara.vb" />
+    <Compile Include="DmsService\StartSendDocumentResPara.vb" />
+    <Compile Include="Document\SendCirclePara.vb" />
+    <Compile Include="Document\SendInternalPara.vb" />
+    <Compile Include="Document\SendInternalSelectedPara.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Table\BookRunningPara.vb" />
+    <Compile Include="Table\BusinessTypePara.vb" />
+    <Compile Include="Table\CompanyPara.vb" />
+    <Compile Include="Table\CompanyTypePara.vb" />
+    <Compile Include="Table\DocCategoryPara.vb" />
+    <Compile Include="Table\DocCatTypePara.vb" />
+    <Compile Include="Table\DocSecretPara.vb" />
+    <Compile Include="Table\DocSpeedPara.vb" />
+    <Compile Include="Table\DocStatusPara.vb" />
+    <Compile Include="Table\DocSubCategoryPara.vb" />
+    <Compile Include="Table\DocTransAttachPara.vb" />
+    <Compile Include="Table\DocTransPara.vb" />
+    <Compile Include="Table\DocTransReferPara.vb" />
+    <Compile Include="Table\DocumentAttachFilePara.vb" />
+    <Compile Include="Table\DocumentCancelClosePara.vb" />
+    <Compile Include="Table\DocumentExtReceiverPara.vb" />
+    <Compile Include="Table\DocumentImportLaststatusPara.vb" />
+    <Compile Include="Table\DocumentIntReceiverPara.vb" />
+    <Compile Include="Table\DocumentRegisterPara.vb" />
+    <Compile Include="Table\DocumentScanJobPara.vb" />
+    <Compile Include="Table\DocumentScanTempPara.vb" />
+    <Compile Include="Table\GroupTitleCompanyDefaultPara.vb" />
+    <Compile Include="Table\GroupTitleKpiDueDatePara.vb" />
+    <Compile Include="Table\GroupTitleOrgResponsePara.vb" />
+    <Compile Include="Table\GroupTitlePara.vb" />
+    <Compile Include="Table\HolidayPara.vb" />
+    <Compile Include="Table\KpiAllGroupTitlePara.vb" />
+    <Compile Include="Table\KpiAllGroupTypePara.vb" />
+    <Compile Include="Table\LogErrorPara.vb" />
+    <Compile Include="Table\LoginHistoryPara.vb" />
+    <Compile Include="Table\LogTransPara.vb" />
+    <Compile Include="Table\MenuPara.vb" />
+    <Compile Include="Table\ModuleFolderPara.vb" />
+    <Compile Include="Table\ModulePara.vb" />
+    <Compile Include="Table\ObjectivePara.vb" />
+    <Compile Include="Table\OfficerPara.vb" />
+    <Compile Include="Table\OfficerSignOrganizationPara.vb" />
+    <Compile Include="Table\OrganizationPara.vb" />
+    <Compile Include="Table\OrganizationStoragePara.vb" />
+    <Compile Include="Table\OrganizationTypePara.vb" />
+    <Compile Include="Table\RolesMenuPara.vb" />
+    <Compile Include="Table\RolesPara.vb" />
+    <Compile Include="Table\RolesUserPara.vb" />
+    <Compile Include="Table\SendStorageGroupTitlePara.vb" />
+    <Compile Include="Table\SysconfigPara.vb" />
+    <Compile Include="Table\ThEgifDocInboundAttPara.vb" />
+    <Compile Include="Table\ThEgifDocInboundPara.vb" />
+    <Compile Include="Table\ThEgifDocInboundRefPara.vb" />
+    <Compile Include="Table\WsImportDocLaststatusPara.vb" />
+    <Compile Include="Table\WsSenddocLogPara.vb" />
+    <Compile Include="THeGIFResponse\CorrespondenceLetterDeleteResponsePara.vb" />
+    <Compile Include="THeGIFResponse\CorrespondenceLetterInboundResponsePara.vb" />
+    <Compile Include="THeGIFResponse\CorrespondenceLetterOutboundResponsePara.vb" />
+    <Compile Include="THeGIFResponse\ReceiveAcceiptLetterNotifierResponsePara.vb" />
+    <Compile Include="THeGIFResponse\ReceiveInvalidAcceptIDNotifierResponsePara.vb" />
+    <Compile Include="THeGIFResponse\ReceiveInvalidLetterNotifierResponsePara.vb" />
+    <Compile Include="THeGIFResponse\ReceiveRejectLetterNotifierResponsePara.vb" />
+    <Compile Include="THeGIFResponse\SendInvalidAcceptIDNotifierResponsePara.vb" />
+    <Compile Include="THeGIFResponse\SendInvalidLetterNotifierResponsePara.vb" />
+    <Compile Include="THeGIFResponse\SendRejectLetterNotifierResponsePara.vb" />
+    <Compile Include="THeGIFResponse\SendAcceiptLetterNotifierResponsePara.vb" />
+    <Compile Include="THeGIFResponse\SendReceiveLetterNotifierResposePara.vb" />
+    <Compile Include="THeGIF\CorrespondenceLetterDeleteRequestPara.vb" />
+    <Compile Include="THeGIF\CorrespondenceLetterOutboundRequestPara.vb" />
+    <Compile Include="THeGIF\DeleteAcceiptLetterNotifierPara.vb" />
+    <Compile Include="THeGIF\DeleteInvalidAcceptIDNotifierPara.vb" />
+    <Compile Include="THeGIF\DeleteInvalidLetterNotifierPara.vb" />
+    <Compile Include="THeGIF\DeleteReceiveLetterNotifierPara.vb" />
+    <Compile Include="THeGIF\DeleteRejectLetterNotifierPara.vb" />
+    <Compile Include="THeGIF\OutboundStatusRequestPara.vb" />
+    <Compile Include="THeGIF\ReceiveAcceiptLetterNotifierPara.vb" />
+    <Compile Include="THeGIF\ReceiveReceiveLetterNotifierPara.vb" />
+    <Compile Include="THeGIF\ReceiveRejectLetterNotifierPara.vb" />
+    <Compile Include="THeGIF\SendAcceiptLetterNotifierPara.vb" />
+    <Compile Include="THeGIF\SendInvalidAcceptIDNotifierPara.vb" />
+    <Compile Include="THeGIF\SendInvalidLetterNotifierPara.vb" />
+    <Compile Include="THeGIF\SendReceiveLetterNotifierPara.vb" />
+    <Compile Include="THeGIF\SendRejectLetterNotifierPara.vb" />
+    <Compile Include="View\VDocSubcategoryPara.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

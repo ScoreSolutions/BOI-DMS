@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="urn:Agent" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="urn:Agent" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="urn:Agent">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <xsd:complexType name="returnlocaInfo">
+        <xsd:all>
+          <xsd:element name="locationname" type="xsd:string" />
+          <xsd:element name="locationaddress" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="returnlocaInfoArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:returnlocaInfo[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="returnproductInfo">
+        <xsd:all>
+          <xsd:element name="productname" type="xsd:string" />
+          <xsd:element name="maxcapacity1" type="xsd:string" />
+          <xsd:element name="actualcapacity1" type="xsd:string" />
+          <xsd:element name="unitname1" type="xsd:string" />
+          <xsd:element name="maxcapacity2" type="xsd:string" />
+          <xsd:element name="actualcapacity2" type="xsd:string" />
+          <xsd:element name="unitname2" type="xsd:string" />
+          <xsd:element name="workinghour" type="xsd:string" />
+          <xsd:element name="workingday" type="xsd:string" />
+          <xsd:element name="producttype" type="xsd:string" />
+          <xsd:element name="hsc" type="xsd:string" />
+          <xsd:element name="actname" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="returnproductInfoArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:returnproductInfo[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="returnprocessInfo">
+        <xsd:all>
+          <xsd:element name="processnum" type="xsd:string" />
+          <xsd:element name="processdesc" type="xsd:string" />
+          <xsd:element name="productdesc" type="xsd:string" />
+          <xsd:element name="pathfile" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="returnprocessInfoArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:returnprocessInfo[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="returnrightInfo">
+        <xsd:all>
+          <xsd:element name="rightdesc" type="xsd:string" />
+          <xsd:element name="productdesc" type="xsd:string" />
+          <xsd:element name="strdate" type="xsd:string" />
+          <xsd:element name="enddate" type="xsd:string" />
+          <xsd:element name="rightsyear" type="xsd:string" />
+          <xsd:element name="reducetax" type="xsd:string" />
+          <xsd:element name="limittax" type="xsd:string" />
+          <xsd:element name="machinetype" type="xsd:string" />
+          <xsd:element name="joinmachine" type="xsd:string" />
+          <xsd:element name="machineyear" type="xsd:string" />
+          <xsd:element name="rightslocation" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="returnrightInfoArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:returnrightInfo[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="returnCardInfo">
+        <xsd:all>
+          <xsd:element name="cardno" type="xsd:string" />
+          <xsd:element name="cardcode" type="xsd:string" />
+          <xsd:element name="cardtype" type="xsd:string" />
+          <xsd:element name="receivedate" type="xsd:string" />
+          <xsd:element name="notificationdate" type="xsd:string" />
+          <xsd:element name="acceptdate" type="xsd:string" />
+          <xsd:element name="approvedate" type="xsd:string" />
+          <xsd:element name="certificatedate" type="xsd:string" />
+          <xsd:element name="operationduedate" type="xsd:string" />
+          <xsd:element name="operationissuedate" type="xsd:string" />
+          <xsd:element name="endprojectdate" type="xsd:string" />
+          <xsd:element name="endstatusdesc" type="xsd:string" />
+          <xsd:element name="endno" type="xsd:string" />
+          <xsd:element name="cardsection" type="xsd:string" />
+          <xsd:element name="businesstype" type="xsd:string" />
+          <xsd:element name="producttype" type="xsd:string" />
+          <xsd:element name="cardstatus" type="xsd:string" />
+          <xsd:element name="locationcount" type="tns:returnlocaInfoArray" />
+          <xsd:element name="productcount" type="tns:returnproductInfoArray" />
+          <xsd:element name="processcount" type="tns:returnprocessInfoArray" />
+          <xsd:element name="rightcount" type="tns:returnrightInfoArray" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="returnCardInfoArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:returnCardInfo[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="returnComInfo">
+        <xsd:all>
+          <xsd:element name="comnameth" type="xsd:string" />
+          <xsd:element name="comnameen" type="xsd:string" />
+          <xsd:element name="comcode" type="xsd:string" />
+          <xsd:element name="comucode" type="xsd:string" />
+          <xsd:element name="comtype" type="xsd:string" />
+          <xsd:element name="address" type="xsd:string" />
+          <xsd:element name="tamname" type="xsd:string" />
+          <xsd:element name="ampname" type="xsd:string" />
+          <xsd:element name="provname" type="xsd:string" />
+          <xsd:element name="zipcode" type="xsd:string" />
+          <xsd:element name="phone" type="xsd:string" />
+          <xsd:element name="fax" type="xsd:string" />
+          <xsd:element name="chkdesc" type="xsd:string" />
+          <xsd:element name="industrialname" type="xsd:string" />
+          <xsd:element name="plantaddress" type="xsd:string" />
+          <xsd:element name="plantphone" type="xsd:string" />
+          <xsd:element name="plantfax" type="xsd:string" />
+          <xsd:element name="taxid" type="xsd:string" />
+          <xsd:element name="registercode" type="xsd:string" />
+          <xsd:element name="registerdate" type="xsd:string" />
+          <xsd:element name="registercapital" type="xsd:string" />
+          <xsd:element name="investmentcapital" type="xsd:string" />
+          <xsd:element name="opendate" type="xsd:string" />
+          <xsd:element name="thaishare" type="xsd:string" />
+          <xsd:element name="foreignshare" type="xsd:string" />
+          <xsd:element name="laborer" type="xsd:string" />
+          <xsd:element name="saleyear" type="xsd:string" />
+          <xsd:element name="domestic" type="xsd:string" />
+          <xsd:element name="abroad" type="xsd:string" />
+          <xsd:element name="resulttype" type="xsd:string" />
+          <xsd:element name="resultvalue" type="xsd:string" />
+          <xsd:element name="cardcount" type="tns:returnCardInfoArray" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="returnComInfoArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:returnComInfo[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="returnFactoryInfo">
+        <xsd:all>
+          <xsd:element name="factoryaddress" type="xsd:string" />
+          <xsd:element name="factorydistrict" type="xsd:string" />
+          <xsd:element name="factoryamphur" type="xsd:string" />
+          <xsd:element name="factoryprovince" type="xsd:string" />
+          <xsd:element name="factoryzipcode" type="xsd:string" />
+          <xsd:element name="factoryindustrial" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="returnFactoryInfoArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:returnFactoryInfo[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="returnProductsInfo">
+        <xsd:all>
+          <xsd:element name="productname" type="xsd:string" />
+          <xsd:element name="maxcapacity1" type="xsd:string" />
+          <xsd:element name="actualcapacity1" type="xsd:string" />
+          <xsd:element name="unitname1" type="xsd:string" />
+          <xsd:element name="maxcapacity2" type="xsd:string" />
+          <xsd:element name="actualcapacity2" type="xsd:string" />
+          <xsd:element name="unitname2" type="xsd:string" />
+          <xsd:element name="workinghour" type="xsd:string" />
+          <xsd:element name="workingday" type="xsd:string" />
+          <xsd:element name="producttype" type="xsd:string" />
+          <xsd:element name="hsc" type="xsd:string" />
+          <xsd:element name="actname" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="returnProductsInfoArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:returnProductsInfo[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="returnCardsInfo">
+        <xsd:all>
+          <xsd:element name="cardno" type="xsd:string" />
+          <xsd:element name="certificatedate" type="xsd:string" />
+          <xsd:element name="operationduedate" type="xsd:string" />
+          <xsd:element name="cardsection" type="xsd:string" />
+          <xsd:element name="businesstype" type="xsd:string" />
+          <xsd:element name="cardstatus" type="xsd:string" />
+          <xsd:element name="locationcount" type="tns:returnFactoryInfoArray" />
+          <xsd:element name="productcount" type="tns:returnProductsInfoArray" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="returnCardsInfoArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:returnCardsInfo[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="returnCompanyInfo">
+        <xsd:all>
+          <xsd:element name="comcode" type="xsd:string" />
+          <xsd:element name="comnameth" type="xsd:string" />
+          <xsd:element name="comnameen" type="xsd:string" />
+          <xsd:element name="comtype" type="xsd:string" />
+          <xsd:element name="address" type="xsd:string" />
+          <xsd:element name="district" type="xsd:string" />
+          <xsd:element name="amphur" type="xsd:string" />
+          <xsd:element name="province" type="xsd:string" />
+          <xsd:element name="zipcode" type="xsd:string" />
+          <xsd:element name="phone" type="xsd:string" />
+          <xsd:element name="fax" type="xsd:string" />
+          <xsd:element name="industrial" type="xsd:string" />
+          <xsd:element name="cardcount" type="tns:returnCardsInfoArray" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="returnCompanyInfoArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:returnCompanyInfo[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="getXMLCompanyInfo_funcRequest">
+    <wsdl:part name="xmllogin" type="xsd:string" />
+    <wsdl:part name="xmlpasswd" type="xsd:string" />
+    <wsdl:part name="transactionno" type="xsd:string" />
+    <wsdl:part name="companycode" type="xsd:string" />
+    <wsdl:part name="lastupdate" type="xsd:string" />
+    <wsdl:part name="page" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getXMLCompanyInfo_funcResponse">
+    <wsdl:part name="transactionno" type="xsd:string" />
+    <wsdl:part name="status" type="xsd:string" />
+    <wsdl:part name="errormessage" type="xsd:string" />
+    <wsdl:part name="totalrow" type="xsd:string" />
+    <wsdl:part name="totalpage" type="xsd:string" />
+    <wsdl:part name="page" type="xsd:string" />
+    <wsdl:part name="companylist" type="tns:returnComInfoArray" />
+  </wsdl:message>
+  <wsdl:message name="updateExtendRightsRequest">
+    <wsdl:part name="xmllogin" type="xsd:string" />
+    <wsdl:part name="xmlpasswd" type="xsd:string" />
+    <wsdl:part name="cardno" type="xsd:string" />
+    <wsdl:part name="productkey" type="xsd:string" />
+    <wsdl:part name="rightsend" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="updateExtendRightsResponse">
+    <wsdl:part name="status" type="xsd:string" />
+    <wsdl:part name="errormessage" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="updateFirstImportMachineRequest">
+    <wsdl:part name="xmllogin" type="xsd:string" />
+    <wsdl:part name="xmlpasswd" type="xsd:string" />
+    <wsdl:part name="cardno" type="xsd:string" />
+    <wsdl:part name="firstimport" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="updateFirstImportMachineResponse">
+    <wsdl:part name="status" type="xsd:string" />
+    <wsdl:part name="errormessage" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getCompanyProjectInfo_funcRequest">
+    <wsdl:part name="xmllogin" type="xsd:string" />
+    <wsdl:part name="xmlpasswd" type="xsd:string" />
+    <wsdl:part name="transactionno" type="xsd:string" />
+    <wsdl:part name="companycode" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getCompanyProjectInfo_funcResponse">
+    <wsdl:part name="transactionno" type="xsd:string" />
+    <wsdl:part name="status" type="xsd:string" />
+    <wsdl:part name="errormessage" type="xsd:string" />
+    <wsdl:part name="totalproject" type="xsd:string" />
+    <wsdl:part name="projectlist" type="tns:returnCompanyInfoArray" />
+  </wsdl:message>
+  <wsdl:portType name="BCDPortType">
+    <wsdl:operation name="getXMLCompanyInfo_func">
+      <documentation>Service send company information</documentation>
+      <wsdl:input message="tns:getXMLCompanyInfo_funcRequest" />
+      <wsdl:output message="tns:getXMLCompanyInfo_funcResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="updateExtendRights">
+      <documentation>Update Extent Rights</documentation>
+      <wsdl:input message="tns:updateExtendRightsRequest" />
+      <wsdl:output message="tns:updateExtendRightsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="updateFirstImportMachine">
+      <documentation>Update First Import Machine</documentation>
+      <wsdl:input message="tns:updateFirstImportMachineRequest" />
+      <wsdl:output message="tns:updateFirstImportMachineResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getCompanyProjectInfo_func">
+      <documentation>Service send project of company information</documentation>
+      <wsdl:input message="tns:getCompanyProjectInfo_funcRequest" />
+      <wsdl:output message="tns:getCompanyProjectInfo_funcResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BCDBinding" type="tns:BCDPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="getXMLCompanyInfo_func">
+      <soap:operation soapAction="urn:Agent/getXMLCompanyInfo_func" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:Agent" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:Agent" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateExtendRights">
+      <soap:operation soapAction="urn:Agent/updateExtendRights" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:Agent" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:Agent" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateFirstImportMachine">
+      <soap:operation soapAction="urn:Agent/updateFirstImportMachine" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:Agent" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:Agent" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCompanyProjectInfo_func">
+      <soap:operation soapAction="urn:Agent/getCompanyProjectInfo_func" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:Agent" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:Agent" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BCD">
+    <wsdl:port name="BCDPort" binding="tns:BCDBinding">
+      <soap:address location="http://119.63.77.24/BCD-EXT/webservice_api.php" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

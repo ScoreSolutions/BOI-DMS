@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:import namespace="http://microsoft.com/wsdl/types/" />
+      <s:element name="SendFileToServer">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FileByte" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="FileName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendFileToServerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SendFileToServerResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendFileStreamToServer">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FileByte" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FileName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="FileCount" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendFileStreamToServerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SendFileStreamToServerResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConvertStringFileToByte">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FileName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConvertStringFileToByteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ConvertStringFileToByteResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteIsDuplicateFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FileName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteIsDuplicateFileResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DeleteIsDuplicateFileResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckScanStartJob">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ClientIP" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckScanStartJobResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CheckScanStartJobResult" type="tns:DocumentScanJobPara" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="DocumentScanJobPara">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="CREATE_BY" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CREATE_ON" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="UPDATE_BY" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UPDATE_ON" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="JOB_START_DATE" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="CLIENT_IP" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CLIENT_PAGE" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CLIENT_BROWSER" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CLIENT_SESSIONID" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="REF_ID" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="START_STATUS" type="s1:char" />
+          <s:element minOccurs="0" maxOccurs="1" name="CHILD_DOCUMENT_SCAN_TEMP_document_scan_job_id">
+            <s:complexType>
+              <s:sequence>
+                <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+              </s:sequence>
+            </s:complexType>
+          </s:element>
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetScanJobPara">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="vJobID" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetScanJobParaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetScanJobParaResult" type="tns:DocumentScanJobPara" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCurrentFileList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="vJobID" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="RefID" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCurrentFileListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCurrentFileListResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveFileScan">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="vJobID" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="FileByte" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="FileExt" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FileDesc" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveFileScanResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SaveFileScanResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetJobStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="vJobID" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="JobStatusID" type="tns:JobStatus" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="JobStatus">
+        <s:restriction base="s:string">
+          <s:enumeration value="ProgramStarted" />
+          <s:enumeration value="ProgramClosed" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="SetJobStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SetJobStatusResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteAttachFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="vID" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteAttachFileResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DeleteAttachFileResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+      <s:simpleType name="char">
+        <s:restriction base="s:unsignedShort" />
+      </s:simpleType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SendFileToServerSoapIn">
+    <wsdl:part name="parameters" element="tns:SendFileToServer" />
+  </wsdl:message>
+  <wsdl:message name="SendFileToServerSoapOut">
+    <wsdl:part name="parameters" element="tns:SendFileToServerResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendFileStreamToServerSoapIn">
+    <wsdl:part name="parameters" element="tns:SendFileStreamToServer" />
+  </wsdl:message>
+  <wsdl:message name="SendFileStreamToServerSoapOut">
+    <wsdl:part name="parameters" element="tns:SendFileStreamToServerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConvertStringFileToByteSoapIn">
+    <wsdl:part name="parameters" element="tns:ConvertStringFileToByte" />
+  </wsdl:message>
+  <wsdl:message name="ConvertStringFileToByteSoapOut">
+    <wsdl:part name="parameters" element="tns:ConvertStringFileToByteResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteIsDuplicateFileSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteIsDuplicateFile" />
+  </wsdl:message>
+  <wsdl:message name="DeleteIsDuplicateFileSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteIsDuplicateFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckScanStartJobSoapIn">
+    <wsdl:part name="parameters" element="tns:CheckScanStartJob" />
+  </wsdl:message>
+  <wsdl:message name="CheckScanStartJobSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckScanStartJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetScanJobParaSoapIn">
+    <wsdl:part name="parameters" element="tns:GetScanJobPara" />
+  </wsdl:message>
+  <wsdl:message name="GetScanJobParaSoapOut">
+    <wsdl:part name="parameters" element="tns:GetScanJobParaResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCurrentFileListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCurrentFileList" />
+  </wsdl:message>
+  <wsdl:message name="GetCurrentFileListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCurrentFileListResponse" />
+  </wsdl:message>
+  <wsdl:message name="SaveFileScanSoapIn">
+    <wsdl:part name="parameters" element="tns:SaveFileScan" />
+  </wsdl:message>
+  <wsdl:message name="SaveFileScanSoapOut">
+    <wsdl:part name="parameters" element="tns:SaveFileScanResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetJobStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:SetJobStatus" />
+  </wsdl:message>
+  <wsdl:message name="SetJobStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:SetJobStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteAttachFileSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteAttachFile" />
+  </wsdl:message>
+  <wsdl:message name="DeleteAttachFileSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteAttachFileResponse" />
+  </wsdl:message>
+  <wsdl:portType name="DmsDocScanWebServiceSoap">
+    <wsdl:operation name="SendFileToServer">
+      <wsdl:input message="tns:SendFileToServerSoapIn" />
+      <wsdl:output message="tns:SendFileToServerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendFileStreamToServer">
+      <wsdl:input message="tns:SendFileStreamToServerSoapIn" />
+      <wsdl:output message="tns:SendFileStreamToServerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConvertStringFileToByte">
+      <wsdl:input message="tns:ConvertStringFileToByteSoapIn" />
+      <wsdl:output message="tns:ConvertStringFileToByteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteIsDuplicateFile">
+      <wsdl:input message="tns:DeleteIsDuplicateFileSoapIn" />
+      <wsdl:output message="tns:DeleteIsDuplicateFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckScanStartJob">
+      <wsdl:input message="tns:CheckScanStartJobSoapIn" />
+      <wsdl:output message="tns:CheckScanStartJobSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetScanJobPara">
+      <wsdl:input message="tns:GetScanJobParaSoapIn" />
+      <wsdl:output message="tns:GetScanJobParaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrentFileList">
+      <wsdl:input message="tns:GetCurrentFileListSoapIn" />
+      <wsdl:output message="tns:GetCurrentFileListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveFileScan">
+      <wsdl:input message="tns:SaveFileScanSoapIn" />
+      <wsdl:output message="tns:SaveFileScanSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetJobStatus">
+      <wsdl:input message="tns:SetJobStatusSoapIn" />
+      <wsdl:output message="tns:SetJobStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAttachFile">
+      <wsdl:input message="tns:DeleteAttachFileSoapIn" />
+      <wsdl:output message="tns:DeleteAttachFileSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DmsDocScanWebServiceSoap" type="tns:DmsDocScanWebServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SendFileToServer">
+      <soap:operation soapAction="http://tempuri.org/SendFileToServer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendFileStreamToServer">
+      <soap:operation soapAction="http://tempuri.org/SendFileStreamToServer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConvertStringFileToByte">
+      <soap:operation soapAction="http://tempuri.org/ConvertStringFileToByte" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteIsDuplicateFile">
+      <soap:operation soapAction="http://tempuri.org/DeleteIsDuplicateFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckScanStartJob">
+      <soap:operation soapAction="http://tempuri.org/CheckScanStartJob" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetScanJobPara">
+      <soap:operation soapAction="http://tempuri.org/GetScanJobPara" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrentFileList">
+      <soap:operation soapAction="http://tempuri.org/GetCurrentFileList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveFileScan">
+      <soap:operation soapAction="http://tempuri.org/SaveFileScan" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetJobStatus">
+      <soap:operation soapAction="http://tempuri.org/SetJobStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAttachFile">
+      <soap:operation soapAction="http://tempuri.org/DeleteAttachFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="DmsDocScanWebServiceSoap12" type="tns:DmsDocScanWebServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SendFileToServer">
+      <soap12:operation soapAction="http://tempuri.org/SendFileToServer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendFileStreamToServer">
+      <soap12:operation soapAction="http://tempuri.org/SendFileStreamToServer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConvertStringFileToByte">
+      <soap12:operation soapAction="http://tempuri.org/ConvertStringFileToByte" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteIsDuplicateFile">
+      <soap12:operation soapAction="http://tempuri.org/DeleteIsDuplicateFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckScanStartJob">
+      <soap12:operation soapAction="http://tempuri.org/CheckScanStartJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetScanJobPara">
+      <soap12:operation soapAction="http://tempuri.org/GetScanJobPara" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrentFileList">
+      <soap12:operation soapAction="http://tempuri.org/GetCurrentFileList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveFileScan">
+      <soap12:operation soapAction="http://tempuri.org/SaveFileScan" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetJobStatus">
+      <soap12:operation soapAction="http://tempuri.org/SetJobStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAttachFile">
+      <soap12:operation soapAction="http://tempuri.org/DeleteAttachFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DmsDocScanWebService">
+    <wsdl:port name="DmsDocScanWebServiceSoap" binding="tns:DmsDocScanWebServiceSoap">
+      <soap:address location="http://localhost/TestWebServiceDMS/DmsDocScanWebService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="DmsDocScanWebServiceSoap12" binding="tns:DmsDocScanWebServiceSoap12">
+      <soap12:address location="http://localhost/TestWebServiceDMS/DmsDocScanWebService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

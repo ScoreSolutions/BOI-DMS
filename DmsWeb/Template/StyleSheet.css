@@ -1,0 +1,1300 @@
+﻿*
+{
+    padding: 0;
+    margin: 0;
+}
+a
+{
+    color: #454545;
+    text-decoration: none; /*background: inherit; color: #454545; text-decoration: none;*/
+}
+#left a
+{
+    border-bottom: #fff 1px;
+}
+#right a
+{
+    border-bottom: #000 1px;
+    font-weight: bold; /*border-bottom: #000 1px dotted;*/
+}
+a:hover
+{
+    color: #000;
+    text-decoration: underline;
+}
+p
+{
+    margin: 0px;
+    padding: 0px !important;
+    padding: 5px 10px 5px 10px;
+}
+h1
+{
+    padding-top: 0px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    margin: 10px 10px 0px 10px;
+    font: 20px "Courier New" , Courier, monospace;
+}
+h2
+{
+    padding: 0px;
+    margin: 0px 0px 0px 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    font: 18px "Courier New" , Courier, monospace;
+    color: #666666;
+}
+h1 a
+{
+    background: inherit;
+    color: #000;
+    text-decoration: none;
+}
+h2 a
+{
+    background: inherit;
+    color: #666666;
+    text-decoration: none;
+}
+
+#wrapper
+{
+    margin: 10px auto !important;
+    width: 1000px !important;
+    background-image: url(../Images/xxx.png) !important;
+    background-repeat: repeat-y !important;
+}
+
+/*
+#wrapper {margin-left:auto;margin-right:auto;
+margin-top:0;
+padding-top:0px;
+text-align:left;
+position:relative;
+width:1000px;
+background-color:#FFFFFF !important;}
+*/
+
+#header
+{
+    color: #333; /* width: 1018px !important; padding: 8px;*/
+    float: left;
+    height: 112px;
+    margin: 0;
+    background-color: #dbe6ec;
+    background-image: url(../Images/boilogo.jpg);
+    background-repeat: no-repeat;
+}
+
+#navigation
+{
+    float: left;
+    width: 902px;
+    color: #333;
+    padding: 0 10px;
+    border-bottom: 3px solid #66ccff;
+    margin: 0 0 0 0;
+    background-color: #FFFFFF;
+}
+#navigation ul
+{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: block;
+    font-weight: bold;
+    float: right;
+}
+#navigation ul li
+{
+    list-style: none;
+    display: inline;
+    float: left;
+    width: 150px;
+    height: 35px;
+    padding: 0;
+    line-height: 35px;
+    font-size: 13px;
+    margin: 0 3px 0 3px;
+}
+#navigation ul li a
+{
+    height: 35px;
+    width: 150px;
+    float: left;
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
+    color: #6c7b83;
+    text-align: center;
+    background: url(images/menu_bt.jpg) no-repeat center 0%;
+}
+#navigation ul li a:hover
+{
+    height: 35px;
+    width: 150px;
+    text-decoration: none;
+    color: #68c2ef;
+}
+#navigation ul li a.current
+{
+    height: 35px;
+    width: 150px;
+    float: left;
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
+    color: #66ccff;
+    background: url(images/menu_bt.jpg) no-repeat center 0%;
+}
+#leftcolumn
+{
+    color: #333;
+    margin: 0 0 0 0;
+    padding: 0px;
+    min-height: 350px;
+    width: 202px;
+    float: left;
+}
+.leftnav
+{
+    width: 195px;
+    margin-top: 20px;
+    margin-left: 5px;
+}
+.leftnav li h2
+{
+    margin: 0;
+    height: 25px;
+    color: #5f9b1e;
+    padding-left: 20px;
+    padding-top: 10px;
+    font-size: 1.5em;
+}
+.leftnav li ul
+{
+    line-height: normal;
+    list-style-type: none;
+    display: list-item;
+}
+.leftnav li li
+{
+    padding: 5px;
+    margin-left: 20px;
+    font-size: 1em;
+}
+.leftnav li a
+{
+    padding-left: 10px;
+    text-decoration: none;
+    color: #53a5ce;
+}
+.leftnav li a:hover
+{
+    border: none;
+    padding-left: 10px;
+}
+
+#content
+{
+    float: left;
+    color: #333;
+    background: #fff;
+    margin: 0 0 0 0;
+    padding: 0px;
+    min-height: 350px; /*width: 718px !important;*/
+    display: inline;
+    text-align: justify;
+}
+#content h1
+{
+    color: #53a5ce;
+    font-size: 1.9em;
+    font-weight: lighter;
+}
+#content h2
+{
+    color: #53a5ce;
+    font-size: 1.6em;
+    font-weight: lighter;
+    padding-top: 20px;
+}
+#rightcolumn
+{
+    color: #333;
+    margin: 0 0 0 0;
+    padding: 10px;
+    min-height: 350px;
+    width: 202px;
+    float: left;
+}
+.ads p
+{
+    font-family: verdana;
+    font-size: 1em;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    margin-right: 10px;
+    text-align: justify;
+    padding-right: 10px;
+}
+.ads
+{
+    width: 190px;
+    height: 600px !important;
+    margin-left: 5px;
+    margin-top: 15px;
+}
+.ads h4
+{
+    background-color: #5f9b1e;
+    color: #fff;
+    font-weight: lighter;
+    font-size: 0.8em;
+    padding-bottom: 2px;
+    text-decoration: underline;
+}
+.ads h3
+{
+    font-family: verdana;
+    font-size: 1em;
+    padding-top: 30px;
+    padding-left: 3px;
+    padding-bottom: 5px;
+    color: #5f9b1e;
+    text-decoration: underline;
+}
+.ads a
+{
+    margin-right: 25px;
+    margin-bottom: 2px;
+    color: #53a5ce;
+    font-size: 0.8em;
+    font-weight: bold;
+    padding-left: 3px;
+    text-decoration: none;
+    padding-bottom: 15px;
+}
+#footer
+{
+    width: 902px !important;
+    clear: both;
+    color: #333;
+    background: #dbe6ec;
+    margin: 0 0 0 0;
+    padding: 10px;
+    text-align: center;
+}
+
+#menu li a
+{
+    height: 32px;
+    voice-family: "\"}\"";
+    voice-family: inherit;
+    height: 25px;
+    text-decoration: none;
+}
+
+#menu li a:link, #menu li a:visited
+{
+    color: #1010d4;
+    display: block;
+    background: url(images/v3.jpg);
+    background-repeat: no-repeat;
+    padding: 8px 0 0 10px;
+}
+
+#menu li a:hover
+{
+    color: #1010d4;
+    background: url(images/v3.jpg) 0 -32px;
+    background-repeat: no-repeat;
+    padding: 8px 0 0 10px;
+}
+
+#menu li a:active
+{
+    color: #1010d4;
+    background: url(images/v3.jpg) 0 -64px;
+    background-repeat: no-repeat;
+    padding: 8px 0 0 10px;
+}
+#left
+{
+    padding-top: 0px;
+    padding-bottom: 5px;
+    margin: 0px;
+    width: 200px;
+    float: left;
+    background: #fff;
+    height: 800px;
+}
+.manuLeft
+{
+    border: 0px;
+}
+.Lheader
+{
+    border-style: none;
+    border-color: inherit;
+    border-width: 0px;
+    width: 170px;
+    height: 27px;
+    margin: 2px;
+    padding-top: 12px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    padding-left: 25px;
+    background: url(images/Menu/btnManuLeft.png);
+    font-size: 14px;
+    text-align: left;
+    vertical-align: middle;
+    color: #fff;
+}
+.Lheader a:hover
+{
+    color: #003366;
+    background: none;
+}
+
+.subheaderMenu
+{
+    width: 150px;
+    height: 15px;
+    border: 0px;
+    margin: 0px;
+    padding-top: 3px;
+    padding-right: 3px;
+    padding-bottom: 5px;
+    padding-left: 35px; /*background: #EBF1F3;*/
+    font-size: 12px;
+    border-top: 0px;
+    border-right: 0px;
+    text-align: left;
+}
+.subheaderMenu a
+{
+    color: #003366;
+    background: none;
+}
+.subheaderMenu a:hover
+{
+    color: #29ABE2;
+    background: none;
+}
+
+.logo
+{
+    padding: 10px 0px 5px 0px;
+    width: 1003px;
+    height: 140px;
+}
+.form
+{
+    width: 100%; /*height: 800px;*/
+}
+.form
+{
+    width: 100%; /*height: 800px;*/
+}
+.mainMenu
+{
+    padding: 0px;
+    margin: 0px; /*width: 1018px;*/
+    clear: both;
+    height: 27px;
+    font-size: 12px;
+    background: #3b5998;
+    float: left;
+}
+.TextView
+{
+    font-family: TH SarabunPSK,Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    height: 20px;
+    color: #7d129c;
+    background-color: #EEEEEE;
+    vertical-align: baseline;
+    border: #EEEEEE 2px solid;
+}
+
+.TextBox
+{
+    font-family: TH SarabunPSK, Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    background-color: #FFFFFF;
+    height: 20px;
+    border: 1px solid #9597aa;
+    color: #000000;
+    font-weight:bold;
+}
+
+.Cmb
+{
+    font-family: TH SarabunPSK,Arial, Helvetica, sans-serif;
+    font-size: 20px;
+}
+.t_tablestyle
+{
+    table-layout: fixed;
+    border-width: 1px;
+    border-top: thin outset;
+    border-bottom: thin outset;
+    border-right: thin outset;
+    border-left: thin outset;
+    padding: 2px;
+}
+.t_headtext
+{
+    font-weight: bold;
+    color: #491364;
+    background-image: url(../Images/header_table_bg.png);
+    background-repeat: repeat-x;
+    background-color: #e4cafe;
+    height: 25px;
+}
+.t_headsort
+{
+    font-weight: bold;
+    color: #491364;
+    background-image: url(../Images/header_table_bg.png);
+    background-repeat: repeat-x;
+    background-color: #e4cafe;
+    height: 30px;
+    text-decoration: underline;
+    font-family: TH SarabunPSK,Tahoma;
+}
+.t_alt_bg
+{
+    background-color: #ecd9f6;
+}
+
+/* Controls */
+.zTextbox
+{
+    font-family: TH SarabunPSK,Tahoma;
+    font-size: 20px;
+}
+.zTextbox-View
+{
+    font-family: TH SarabunPSK,Tahoma;
+    font-size: 20px;
+    color: #7d129c;
+    background-color: #EEEEEE;
+    vertical-align: baseline;
+    border: #EEEEEE 2px solid;
+}
+.zTextboxR
+{
+    font-family: TH SarabunPSK,Tahoma;
+    font-size: 20px;
+    text-align: right;
+}
+.zTextboxR-View
+{
+    font-family: TH SarabunPSK,Tahoma;
+    font-size: 20px;
+    font-weight:bold;
+    color: #7d129c;
+    background-color: #EEEEEE;
+    vertical-align: baseline;
+    border: #EEEEEE 2px solid;
+    text-align: right;
+}
+.zComboBox
+{
+    font-family: TH SarabunPSK,Tahoma;
+    font-size: 18px;
+    margin: 0px;
+    padding: 0px;
+    cursor: default;
+    text-align: left;
+    vertical-align: text-top;
+    border: solid 1px #9597aa;
+    background-color: Window;
+    color: #000000;
+    font-weight:bold;
+}
+
+.WindowsStyle
+{
+    font-family: TH SarabunPSK,Tahoma;
+    font-size: 18px; 
+}
+.WindowsStyle .ajax__combobox_inputcontainer .ajax__combobox_textboxcontainer input 
+{ 
+    font-family: TH SarabunPSK,Tahoma;
+    font-size: 18px; 
+    margin:0 0 0 0; 
+    border: solid 1px #9597aa; 
+    border-right: 0px none; 
+    padding: 0px 0px 0px 2px; 
+    height: 18px; 
+    vertical-align:top;
+    clip: rect(0px, auto, auto, auto);
+} 
+
+.zButton
+{
+    font-family: TH SarabunPSK,Tahoma;
+    font-size: 20px;
+    height: 22px;
+}
+.zHidden
+{
+    display: none;
+}
+.zRemark
+{
+    font-family: TH SarabunPSK,Tahoma;
+    font-size: 20px;
+    font-weight: bold;
+    color: Red;
+}
+.water
+{
+    font-family: TH SarabunPSK,Tahoma;
+    font-size: 20px;
+    color: Silver;
+}
+
+
+
+/* modal Popup */
+.modalBackground
+{
+    background-color: Gray;
+    filter: alpha(opacity=70);
+    opacity: 0.7;
+}
+.modalPopup
+{
+    background-color: #ffffff;
+    border-width: 3px;
+    border-style: solid;
+    border-color: Gray;
+    padding: 3px;
+}
+
+.modalPopupSearch
+{
+    background-color: #ffffff;
+    border-width: 3px;
+    border-style: solid;
+    border-color: Gray;
+    padding: 3px;
+    width: 800px;
+    height: 600px;
+    overflow: scroll;
+}
+.popupControl
+{
+    background-color: #AAD4FF;
+    position: absolute;
+    visibility: hidden;
+    border-style: solid;
+    border-color: Black;
+    border-width: 2px;
+}
+
+/*GridViewCSS Soft Grey Style*/
+.GridViewStyle
+{
+    font-family: TH SarabunPSK,Arial, Sans-Serif;
+    font-size: 20px;
+    table-layout: auto;
+    border-collapse: collapse;
+    border: #91a7b4 1px solid;
+}
+/*Header and Pager styles*/
+.HeaderStyle, .PagerStyle
+{
+	background-position: top;
+	background-repeat: repeat-x;
+	background-color: #16387c;
+}
+.HeaderStyle th
+{
+	padding: 5px;
+	color: #FFFFFF;
+}
+.HeaderStyle a
+{
+    text-decoration: none;
+    color: #FFFFFF;
+    display: block;
+    text-align: center;
+    font-weight:bold;
+    background-color: #16387c;
+}
+.HeaderStyleReports
+{
+	margin: 5px;
+	border: 1px solid #000000;
+	background-position: top;
+	background-repeat: repeat-x;
+	background-color: #6699FF;
+	color: #000000;
+	font-weight: bold;
+	padding: 5px;
+}
+.PagerStyle table
+{
+    text-align: center;
+    margin: auto;
+}
+.PagerStyle table td
+{
+    border: 0px;
+    padding: 5px;
+}
+.PagerStyle td
+{
+    border-top: #91a7b4 1px solid;
+}
+.PagerStyle a
+{
+    color: #16387c;
+    text-decoration: none;
+    padding: 2px 10px 2px 10px;
+    border-top: solid 1px #fff;
+    border-right: solid 1px #91a7b4;
+    border-bottom: solid 1px #91a7b4;
+    border-left: solid 1px #fff;
+}
+.PagerStyle span
+{
+    font-weight: bold;
+    color: #16387c;
+    text-decoration: none;
+    padding: 2px 10px 2px 10px;
+}
+/*RowStyles*/
+.RowStyle td, .AltRowStyle td, .SelectedRowStyle td, .EditRowStyle td /*Common Styles*/
+{
+    padding: 3px;
+    border-right: solid 1px #91a7b4;
+}
+.RowStyle td
+{
+    background-color: #f1f5f6;
+}
+.AltRowStyle td
+{
+    background-color: #9AB2C0;
+    background-position: 0 -80px;
+    background-repeat: repeat-x;
+}
+.SelectedRowStyle td
+{
+    background-color: #fcb814;
+    background-position: center;
+    background-repeat: repeat-x;
+}
+
+.popHead
+{
+    font-size: 20px;
+    font-weight:bold;
+    color: #FFFFFF;
+}
+
+.onProgress
+{
+    position: relative;
+    left: 0;
+    top: 0;
+    z-index: 100000;
+    width: 1018px;
+    height: 100%;
+    filter: alpha(opacity=10);
+}
+
+.lbUser
+{
+    padding-top: 0px;
+    padding-left: 0px;
+    padding-bottom: 0px;
+    padding-right: 5px;
+    margin: 0px;
+    width: 300px;
+    height: 20px;
+    font: bold 20px TH SarabunPSK,Tahoma;
+    vertical-align: middle;
+    text-decoration: none;
+    text-align: right;
+    color: #FFFFFF;
+}
+.MemuHead
+{
+    width: 200px;
+    float: left;
+    height: 24px;
+    font-size: 20px;
+    vertical-align: middle;
+    text-decoration: none;
+    text-align: right;
+    color: #000;
+}
+.MemuHeadContent
+{
+    padding-top: 5px;
+    padding-left: 0px;
+    padding-bottom: 0px;
+    padding-right: 0px;
+    margin: 0px;
+    width: 220px;
+    float: left;
+    height: 24px;
+    font-size: 20px;
+    vertical-align: middle;
+    text-decoration: none;
+    text-align: left;
+    color: #000;
+}
+.mGrid
+{
+    width: 100%;
+    background-color: #edeff4;
+    margin: 5px 0 10px 0;
+    border: solid 1px #3b5998;
+    border-collapse: collapse;
+    font-size:20px;
+    font-family: TH SarabunPSK,Tahoma;
+}
+.mGrid td
+{
+    padding: 2px;
+    border: solid 1px #3b5998;
+    color: #464646; /*text-align:center;*/
+}
+.mGrid th
+{
+    padding: 4px 2px;
+    color: #fff;
+    background: #627aad; /*url(../Images/og_head.png) repeat-x top;*/
+    border-left: solid 1px #525252;
+    font-size: 20px;
+}
+.mGrid .alt
+{
+    background-position: #FFFFFF;
+    background: #FFFFFF;
+}
+.mGrid .pgr
+{
+    background: #3b5998 /*url(../Images/og_foot.png) repeat-x top;*/;
+}
+.mGrid .pgr table
+{
+    margin: 5px 0;
+}
+.mGrid .pgr td
+{
+    border-width: 0;
+    padding: 0 6px;
+    border-left: solid 1px #666;
+    font-weight: bold;
+    color: #000;
+    line-height: 12px;
+}
+.mGrid .pgr a
+{
+    color: #000000;
+    text-decoration: none;
+    font-weight: bold;
+}
+.mGrid .pgr a:hover
+{
+    color: #000;
+    text-decoration: blink;
+    font-weight: bold;
+}
+.CssBtn
+{
+    font: bold 20px TH SarabunPSK,Tahoma;
+    height: 26px;
+    background-color: #779999;
+    background-image: url(../Images/fBtn.png);
+    border-style: solid;
+    border-color: #DDDDDD;
+    border-width: 1px;
+    color: #fff;
+    cursor: hand;
+    cursor: pointer;
+}
+.Csslbl
+{
+    color: #000000;
+    text-decoration: none;
+    vertical-align: top;
+    padding: 1px;
+    font-style: normal;
+    font-variant: normal;
+    font-size: 20px;
+    font-weight:bold;
+    line-height: normal;
+    font-family: TH SarabunPSK,Arial, "Courier New" , Courier, monospace;
+  
+}
+.CssHeadBook
+{
+    color: #000000;
+    text-decoration: none;
+    vertical-align: top;
+    padding: 1px;
+    font-style: normal;
+    font-variant: normal;
+    font-size: 34px;
+    line-height: normal;
+    font-family: TH SarabunPSK,Arial, "Courier New" , Courier, monospace;
+}
+.CssLink
+{
+    color: #3b5998;
+    text-decoration: underline;
+    vertical-align: middle;
+    padding: 1px;
+    font-style: normal;
+    font-variant: normal;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    line-height: normal;
+    font-family: TH SarabunPSK,Arial, "Courier New" , Courier, monospace;
+}
+.CssLink
+{
+    color: #3b5998;
+    text-decoration: underline;
+    vertical-align: middle;
+    padding: 1px;
+    font-style: normal;
+    font-variant: normal;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    line-height: normal;
+    font-family: TH SarabunPSK,Arial, "Courier New" , Courier, monospace;
+}
+.CssHead
+{
+    color: #3b5998;
+    text-decoration: none;
+    vertical-align: middle;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: bold;
+    font-size: 25px;
+    line-height: normal;
+    font-family: TH SarabunPSK,Arial, "Courier New" , Courier, monospace;
+}
+.CssSubHead
+{
+    color: #000000;
+    text-decoration: none;
+    vertical-align: middle;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: normal;
+    font-family: TH SarabunPSK,Arial, "Courier New" , Courier, monospace;
+    background-color: #6699FF;
+    height: 30px;
+}
+
+/* Image in Text Box */
+.txtSearch
+{
+    font-family: TH SarabunPSK,Arial, "Courier New" , Courier, monospace;
+    font-size: 20px;
+    background: #FFFFFF url(../Images/search.png) no-repeat 210px -3px;
+    padding: 4px 4px 4px 4px;
+    border: 1px solid #CCCCCC;
+    width: 230px;
+    height: 14px;
+}
+.CssGridModule
+{
+    width: 100%;
+    background-color: #CCCCCC;
+    margin: 5px 0 10px 0;
+    border: solid 1px #3b5998;
+    border-collapse: collapse;
+}
+
+/*Menu Content*/
+
+.applemenu
+{
+	position:relative;
+    margin: 0px 0;
+    padding: 0;
+    width: 200px; /*width of menu*/
+    border: 1px solid #9A9A9A;
+    text-align:left;
+}
+.applemenu div.silverheader a
+{
+    background: black url(../Images/YahooSprite.gif) repeat-x center left; /*silvergradientover.gif*/
+    background-position: 0 -80px;
+    font: bold 20px TH SarabunPSK,Tahoma, "Lucida Grande" , "Trebuchet MS" , Helvetica, sans-serif;
+    color: #16387c;
+    display: block;
+    position: relative; /*To help in the anchoring of the ".statusicon" icon image*/
+    width: auto;
+    padding: 5px 0;
+    padding-left: 8px;
+    text-decoration: none;
+}
+.applemenu div.silverheader a:visited, .applemenu div.silverheader a:active
+{
+    /*color: white;*/
+    color: #16387c;
+}
+.applemenu div.selected a, .applemenu div.silverheader a:hover
+{
+    /* background-image: url(../Images/silvergradientover.gif);*/ /*background: black url(../Images/YahooSprite.gif) repeat-x center left;silvergradientover.gif     background-position: top;     color: #16387c;*/
+}
+.applemenu div.submenu
+{
+    /*DIV that contains each sub menu*/
+    font: normal 20px TH SarabunPSK,Tahoma, "Lucida Grande" , "Trebuchet MS" , Helvetica, sans-serif;
+    background: white;
+    padding: 5px;
+    height: auto; /*Height that applies to all sub menu DIVs. A good idea when headers are toggled via "mouseover" instead of "click"*/
+}
+.MenuButton
+{
+    font-size: 16px;
+    font-family: TH SarabunPSK,Tahoma,sans-serif;
+    font-weight: bold;
+    width: 200px;
+    height: 22px;
+    background-color: #CCDDCC;
+    border-top-style: solid;
+    border-top-color: #99AA99;
+    border-top-width: 2px;
+    border-bottom-style: solid;
+    border-bottom-color: #99AA99;
+    border-bottom-width: 2px;
+    border-left-style: solid;
+    border-left-color: #BBCCBB;
+    border-left-width: 5px;
+    border-right-style: solid;
+    border-right-color: #BBCCBB;
+    border-right-width: 5px;
+    cursor: hand;
+    cursor: pointer;
+}
+
+
+
+
+/*   ปุ่มต่างๆ ที่มีในระบบ   */
+.btnSendOutside
+{
+    background: url('../Images/send.png');
+    background-repeat: no-repeat;
+    font: bold 20px TH SarabunPSK,Tahoma;
+    height: 25px;
+    background-color: #779999;
+    border-style: solid;
+    border-color: #DDDDDD;
+    border-width: 1px;
+    color: #fff;
+    cursor: hand;
+    cursor: pointer;
+}
+
+.btnCancelSend
+{
+    background: url('../Images/delete1.png');
+    background-repeat: no-repeat;
+    font: bold 20px TH SarabunPSK,Tahoma;
+    height: 25px;
+    background-color: #779999;
+    border-style: solid;
+    border-color: #DDDDDD;
+    border-width: 1px;
+    color: #fff;
+    cursor: hand;
+    cursor: pointer;
+}
+
+.btnSendCircle
+{
+    background: url('../Images/staging.gif');
+    background-repeat: no-repeat;
+    font: bold 20px TH SarabunPSK,Tahoma;
+    height: 25px;
+    background-color: #779999;
+    border-style: solid;
+    border-color: #DDDDDD;
+    border-width: 1px;
+    color: #fff;
+    cursor: hand;
+    cursor: pointer;
+}
+
+.btnReceiveInside
+{
+    background: url('../Images/03.gif');
+    background-repeat: no-repeat;
+    font: bold 20px TH SarabunPSK,Tahoma;
+    height: 25px;
+    background-color: #779999;
+    border-style: solid;
+    border-color: #DDDDDD;
+    border-width: 1px;
+    color: #fff;
+    cursor: hand;
+    cursor: pointer;
+}
+
+.btnCloseJob
+{
+    background: url('../Images/red_flag.png');
+    background-repeat: no-repeat;
+    font: bold 20px TH SarabunPSK,Tahoma;
+    height: 25px;
+    background-color: #779999;
+    border-style: solid;
+    border-color: #DDDDDD;
+    border-width: 1px;
+    color: #fff;
+    cursor: hand;
+    cursor: pointer;
+}
+
+.btnSendInside
+{
+    background: url('../Images/send1.png');
+    background-repeat: no-repeat;
+    font: bold 20px TH SarabunPSK,Tahoma;
+    height: 25px;
+    background-color: #779999;
+    border-style: solid;
+    border-color: #DDDDDD;
+    border-width: 1px;
+    color: #fff;
+    cursor: hand;
+    cursor: pointer;
+}
+.btnAttach
+{
+    background: url('../Images/attach.png');
+    background-repeat: no-repeat;
+    font: bold 20px TH SarabunPSK,Tahoma;
+    height: 25px;
+    background-color: #779999;
+    border-style: solid;
+    border-color: #DDDDDD;
+    border-width: 1px;
+    color: #fff;
+    cursor: hand;
+    cursor: pointer;
+}
+.btnUpload
+{
+     background: url('../Images/Button/upload.gif');
+    background-repeat: no-repeat;
+    width:103px;
+    height: 25px;
+    background-color: #779999;
+    border-style: solid;
+    border-color: #DDDDDD;
+    border-width: 1px;
+    color: #fff;
+    cursor: hand;
+    cursor: pointer;
+}
+.btnCancel
+{
+     background: url('../Images/Button/cancel.gif');
+    background-repeat: no-repeat;
+    width:80px;
+    height: 25px;
+    background-color: #779999;
+    border-style: solid;
+    border-color: #DDDDDD;
+    border-width: 1px;
+    color: #fff;
+    cursor: hand;
+    cursor: pointer;
+}
+ .FileUploadClass 
+        { 
+            font-size: 5px; 
+            z-index: 500; 
+            position: relative; 
+            z-index: 10; 
+        } 
+        .FileUploadClass input[type=file] 
+        { 
+            background: transparent; 
+            border: Dashed 2px #000000; 
+            opacity: 0; 
+            filter: alpha(opacity = 0); 
+        } 
+        .FakeFileUpload 
+        { 
+            position: relative; 
+            border: Solid 1px #000000; 
+            width: 400px; 
+            z-index:1; 
+        } 
+        .FakeFileUploadDiv 
+        { 
+            position: absolute; 
+            opacity: .5; 
+            -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; 
+            filter: alpha(opacity=50); 
+            z-index:5; 
+        } 
+
+.afu { 
+   
+display:inline-block; 
+  
+border: Dotted 10px Brown; 
+
+} 
+   
+ 
+ 
+.afu input[type=file]  { 
+   
+background-color:Blue; 
+
+} 
+
+/*  For Calendar in page Holity*/
+.mainTableFrame
+{
+    border-right: #00bfff thin solid;
+    border-top: #00bfff thin solid;
+    border-left: #00bfff thin solid;
+    border-bottom: #00bfff thin solid;
+    width: 800px;
+}
+
+.subHeader
+{
+    text-transform: capitalize;
+    color: #6fa1d9;
+    font-family: Arial, Verdana;
+    font-weight: normal;
+    font-size: 1.3em;
+    background-color: #f5f5f5;
+    vertical-align: top;
+    text-align: left;
+    page-break-after: auto;
+}
+
+.calendarFrame
+{
+    border-right: #add8e6 thin solid;
+    border-top: #add8e6 thin solid;
+    border-left: #add8e6 thin solid;
+    border-bottom: #add8e6 thin solid;
+}
+
+.calendarMonthYear
+{
+    font-size: 0.9em;
+    color: #ffffff;
+    font-family: Arial;
+    font-weight: bold;
+    background-color: #335ea8;
+    letter-spacing: 1px;
+}
+
+.calendarDay
+{
+    font-size: 0.7em;
+    color: #ffffff;
+    font-family: Arial;
+    font-weight: bold;
+    background-color: #6fa1d9;
+}
+
+.hasEvent
+{
+    font-size: 0.7em;
+    font-family: Verdana, Arial;
+    background-position: center center;
+    background-image: url(Images/event.png);
+    background-repeat: no-repeat;
+    background-color: #99CCFF;
+    text-align: center;
+    width: 25px;
+    height: 18px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.hasNoEvent
+{
+    font-size: 0.7em;
+    font-family: Verdana, Arial;
+    text-align: center;
+    width: 25px;
+    height: 18px;
+}
+
+.WeekEnd
+{
+    font-size: 0.7em;
+    font-family: Verdana, Arial;
+    background-position: center center;
+    background-image: url(Images/event.png);
+    background-repeat: no-repeat;
+    background-color: #66FFFF;
+    text-align: center;
+    width: 25px;
+    height: 18px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+/*AutoComplete flyout */
+.autocomplete_completionListElement
+{
+    margin: 0px !important;
+    background-color: #FFFFFF;
+    color: windowtext;
+    border: buttonshadow;
+    border-width: 1px;
+    border-style: double;
+    cursor:pointer;
+    overflow: auto;
+    height: 200px;
+    text-align: left;
+    list-style-type: none;
+    z-index: 100000000;
+}
+
+/* AutoComplete highlighted item */
+.autocomplete_highlightedListItem
+{
+    background-color: #507CD1;
+    color: black;
+    padding: 1px;
+    font-family: TH SarabunPSK,Arial;
+    font-size: 20px;
+    font-weight:bold;
+}
+
+/* AutoComplete item */
+.autocomplete_listItem
+{
+    background-color: window;
+    color: windowtext;
+    padding: 1px;
+    font-family: TH SarabunPSK,Arial;
+    font-size: 20px;
+}

@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{88E1C2E4-C97A-4CF6-A509-80BF6586365A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Linq</RootNamespace>
+    <AssemblyName>Linq</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>Off</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>Linq.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>Linq.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\Utilities\SqlBoiCentralDB.vb" />
+    <Compile Include="Common\Utilities\IniReader.vb" />
+    <Compile Include="Common\Utilities\SqlDB.vb" />
+    <Compile Include="Common\Utilities\TransactionDB.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Table\BookRunningLinq.vb" />
+    <Compile Include="Table\BusinessTypeLinq.vb" />
+    <Compile Include="Table\CompanyLinq.vb" />
+    <Compile Include="Table\CompanyTypeLinq.vb" />
+    <Compile Include="Table\DocCategoryLinq.vb" />
+    <Compile Include="Table\DocCatTypeLinq.vb" />
+    <Compile Include="Table\DocSecretLinq.vb" />
+    <Compile Include="Table\DocSpeedLinq.vb" />
+    <Compile Include="Table\DocStatusLinq.vb" />
+    <Compile Include="Table\DocSubcategoryLinq.vb" />
+    <Compile Include="Table\DocTransAttachLinq.vb" />
+    <Compile Include="Table\DocTransLinq.vb" />
+    <Compile Include="Table\DocTransReferLinq.vb" />
+    <Compile Include="Table\DocumentAttachFileLinq.vb" />
+    <Compile Include="Table\DocumentCancelCloseLinq.vb" />
+    <Compile Include="Table\DocumentExtReceiverLinq.vb" />
+    <Compile Include="Table\DocumentImportLaststatusLinq.vb" />
+    <Compile Include="Table\DocumentIntReceiverLinq.vb" />
+    <Compile Include="Table\DocumentRegisterLinq.vb" />
+    <Compile Include="Table\DocumentScanJobLinq.vb" />
+    <Compile Include="Table\DocumentScanTempLinq.vb" />
+    <Compile Include="Table\GroupTitleCompanyDefaultLinq.vb" />
+    <Compile Include="Table\GroupTitleKpiDueDateLinq.vb" />
+    <Compile Include="Table\GroupTitleLinq.vb" />
+    <Compile Include="Table\GroupTitleOrgResponseLinq.vb" />
+    <Compile Include="Table\HolidayLinq.vb" />
+    <Compile Include="Table\KpiAllGroupTitleLinq.vb" />
+    <Compile Include="Table\KpiAllGroupTypeLinq.vb" />
+    <Compile Include="Table\LogErrorLinq.vb" />
+    <Compile Include="Table\LoginHistoryLinq.vb" />
+    <Compile Include="Table\LogTransLinq.vb" />
+    <Compile Include="Table\MenuLinq.vb" />
+    <Compile Include="Table\ModuleFolderLinq.vb" />
+    <Compile Include="Table\ModuleLinq.vb" />
+    <Compile Include="Table\ObjectiveLinq.vb" />
+    <Compile Include="Table\OfficerLinq.vb" />
+    <Compile Include="Table\OfficerSignOrganizationLinq.vb" />
+    <Compile Include="Table\OrganizationLinq.vb" />
+    <Compile Include="Table\OrganizationStorageLinq.vb" />
+    <Compile Include="Table\OrganizationTypeLinq.vb" />
+    <Compile Include="Table\RolesLinq.vb" />
+    <Compile Include="Table\RolesMenuLinq.vb" />
+    <Compile Include="Table\RolesUserLinq.vb" />
+    <Compile Include="Table\SendStorageGroupTitleLinq.vb" />
+    <Compile Include="Table\SysconfigLinq.vb" />
+    <Compile Include="Table\ThEgifDocInboundAttLinq.vb" />
+    <Compile Include="Table\ThEgifDocInboundLinq.vb" />
+    <Compile Include="Table\ThEgifDocInboundRefLinq.vb" />
+    <Compile Include="Table\WsImportDocLaststatusLinq.vb" />
+    <Compile Include="Table\WsSenddocLogLinq.vb" />
+    <Compile Include="View\VDocSubcategoryLinq.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Para\Para.vbproj">
+      <Project>{05EC28EE-EA05-4ECD-9A13-2EED10527AEC}</Project>
+      <Name>Para</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,13 @@
+D:\MyProject\BOI-DMS\BOI-DMS\LinqWS\bin\Debug\LinqWS.dll.config
+D:\MyProject\BOI-DMS\BOI-DMS\LinqWS\bin\Debug\LinqWS.dll
+D:\MyProject\BOI-DMS\BOI-DMS\LinqWS\bin\Debug\LinqWS.pdb
+D:\MyProject\BOI-DMS\BOI-DMS\LinqWS\bin\Debug\LinqWS.xml
+D:\MyProject\BOI-DMS\BOI-DMS\LinqWS\bin\Debug\Para.dll
+D:\MyProject\BOI-DMS\BOI-DMS\LinqWS\bin\Debug\Para.pdb
+D:\MyProject\BOI-DMS\BOI-DMS\LinqWS\bin\Debug\Para.xml
+D:\MyProject\BOI-DMS\BOI-DMS\LinqWS\obj\Debug\ResolveAssemblyReference.cache
+D:\MyProject\BOI-DMS\BOI-DMS\LinqWS\obj\Debug\LinqWS.Resources.resources
+D:\MyProject\BOI-DMS\BOI-DMS\LinqWS\obj\Debug\LinqWS.vbproj.GenerateResource.Cache
+D:\MyProject\BOI-DMS\BOI-DMS\LinqWS\obj\Debug\LinqWS.dll
+D:\MyProject\BOI-DMS\BOI-DMS\LinqWS\obj\Debug\LinqWS.xml
+D:\MyProject\BOI-DMS\BOI-DMS\LinqWS\obj\Debug\LinqWS.pdb
