@@ -1,0 +1,148 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+BOIScan
+</name>
+</assembly>
+<members>
+<member name="P:BOIScan.My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:BOIScan.My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="T:BOIScan.My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="M:BOIScan.BOIService.DmsDocScanWebService.#ctor">
+	<remarks/>
+</member><member name="E:BOIScan.BOIService.DmsDocScanWebService.CheckScanStartJobCompleted">
+	<remarks/>
+</member><member name="E:BOIScan.BOIService.DmsDocScanWebService.GetScanJobParaCompleted">
+	<remarks/>
+</member><member name="E:BOIScan.BOIService.DmsDocScanWebService.GetCurrentFileListCompleted">
+	<remarks/>
+</member><member name="E:BOIScan.BOIService.DmsDocScanWebService.SaveFileScanCompleted">
+	<remarks/>
+</member><member name="E:BOIScan.BOIService.DmsDocScanWebService.SetJobStatusCompleted">
+	<remarks/>
+</member><member name="E:BOIScan.BOIService.DmsDocScanWebService.DeleteAttachFileCompleted">
+	<remarks/>
+</member><member name="M:BOIScan.BOIService.DmsDocScanWebService.CheckScanStartJob(System.String)">
+	<remarks/>
+</member><member name="M:BOIScan.BOIService.DmsDocScanWebService.CheckScanStartJobAsync(System.String)">
+	<remarks/>
+</member><member name="M:BOIScan.BOIService.DmsDocScanWebService.CheckScanStartJobAsync(System.String,System.Object)">
+	<remarks/>
+</member><member name="M:BOIScan.BOIService.DmsDocScanWebService.GetScanJobPara(System.Int64)">
+	<remarks/>
+</member><member name="M:BOIScan.BOIService.DmsDocScanWebService.GetScanJobParaAsync(System.Int64)">
+	<remarks/>
+</member><member name="M:BOIScan.BOIService.DmsDocScanWebService.GetScanJobParaAsync(System.Int64,System.Object)">
+	<remarks/>
+</member><member name="M:BOIScan.BOIService.DmsDocScanWebService.GetCurrentFileList(System.Int64)">
+	<remarks/>
+</member><member name="M:BOIScan.BOIService.DmsDocScanWebService.GetCurrentFileListAsync(System.Int64)">
+	<remarks/>
+</member><member name="M:BOIScan.BOIService.DmsDocScanWebService.GetCurrentFileListAsync(System.Int64,System.Object)">
+	<remarks/>
+</member><member name="M:BOIScan.BOIService.DmsDocScanWebService.SaveFileScan(System.Int64,System.Byte[],System.String,System.String)">
+	<remarks/>
+</member><member name="M:BOIScan.BOIService.DmsDocScanWebService.SaveFileScanAsync(System.Int64,System.Byte[],System.String,System.String)">
+	<remarks/>
+</member><member name="M:BOIScan.BOIService.DmsDocScanWebService.SaveFileScanAsync(System.Int64,System.Byte[],System.String,System.String,System.Object)">
+	<remarks/>
+</member><member name="M:BOIScan.BOIService.DmsDocScanWebService.SetJobStatus(System.Int64,BOIScan.BOIService.JobStatus)">
+	<remarks/>
+</member><member name="M:BOIScan.BOIService.DmsDocScanWebService.SetJobStatusAsync(System.Int64,BOIScan.BOIService.JobStatus)">
+	<remarks/>
+</member><member name="M:BOIScan.BOIService.DmsDocScanWebService.SetJobStatusAsync(System.Int64,BOIScan.BOIService.JobStatus,System.Object)">
+	<remarks/>
+</member><member name="M:BOIScan.BOIService.DmsDocScanWebService.DeleteAttachFile(System.Int64)">
+	<remarks/>
+</member><member name="M:BOIScan.BOIService.DmsDocScanWebService.DeleteAttachFileAsync(System.Int64)">
+	<remarks/>
+</member><member name="M:BOIScan.BOIService.DmsDocScanWebService.DeleteAttachFileAsync(System.Int64,System.Object)">
+	<remarks/>
+</member><member name="M:BOIScan.BOIService.DmsDocScanWebService.CancelAsync(System.Object)">
+	<remarks/>
+</member><member name="T:BOIScan.BOIService.DmsDocScanWebService">
+	<remarks/>
+</member><member name="P:BOIScan.BOIService.DocumentScanJobPara.ID">
+	<remarks/>
+</member><member name="P:BOIScan.BOIService.DocumentScanJobPara.CREATE_BY">
+	<remarks/>
+</member><member name="P:BOIScan.BOIService.DocumentScanJobPara.CREATE_ON">
+	<remarks/>
+</member><member name="P:BOIScan.BOIService.DocumentScanJobPara.UPDATE_BY">
+	<remarks/>
+</member><member name="P:BOIScan.BOIService.DocumentScanJobPara.UPDATE_ON">
+	<remarks/>
+</member><member name="P:BOIScan.BOIService.DocumentScanJobPara.JOB_START_DATE">
+	<remarks/>
+</member><member name="P:BOIScan.BOIService.DocumentScanJobPara.CLIENT_IP">
+	<remarks/>
+</member><member name="P:BOIScan.BOIService.DocumentScanJobPara.CLIENT_PAGE">
+	<remarks/>
+</member><member name="P:BOIScan.BOIService.DocumentScanJobPara.CLIENT_BROWSER">
+	<remarks/>
+</member><member name="P:BOIScan.BOIService.DocumentScanJobPara.CLIENT_SESSIONID">
+	<remarks/>
+</member><member name="P:BOIScan.BOIService.DocumentScanJobPara.REF_ID">
+	<remarks/>
+</member><member name="P:BOIScan.BOIService.DocumentScanJobPara.START_STATUS">
+	<remarks/>
+</member><member name="P:BOIScan.BOIService.DocumentScanJobPara.CHILD_DOCUMENT_SCAN_TEMP_document_scan_job_id">
+	<remarks/>
+</member><member name="T:BOIScan.BOIService.DocumentScanJobPara">
+	<remarks/>
+</member><member name="F:BOIScan.BOIService.JobStatus.ProgramStarted">
+	<remarks/>
+</member><member name="F:BOIScan.BOIService.JobStatus.ProgramClosed">
+	<remarks/>
+</member><member name="T:BOIScan.BOIService.JobStatus">
+	<remarks/>
+</member><member name="T:BOIScan.BOIService.CheckScanStartJobCompletedEventHandler">
+	<remarks/>
+</member><member name="P:BOIScan.BOIService.CheckScanStartJobCompletedEventArgs.Result">
+	<remarks/>
+</member><member name="T:BOIScan.BOIService.CheckScanStartJobCompletedEventArgs">
+	<remarks/>
+</member><member name="T:BOIScan.BOIService.GetScanJobParaCompletedEventHandler">
+	<remarks/>
+</member><member name="P:BOIScan.BOIService.GetScanJobParaCompletedEventArgs.Result">
+	<remarks/>
+</member><member name="T:BOIScan.BOIService.GetScanJobParaCompletedEventArgs">
+	<remarks/>
+</member><member name="T:BOIScan.BOIService.GetCurrentFileListCompletedEventHandler">
+	<remarks/>
+</member><member name="P:BOIScan.BOIService.GetCurrentFileListCompletedEventArgs.Result">
+	<remarks/>
+</member><member name="T:BOIScan.BOIService.GetCurrentFileListCompletedEventArgs">
+	<remarks/>
+</member><member name="T:BOIScan.BOIService.SaveFileScanCompletedEventHandler">
+	<remarks/>
+</member><member name="P:BOIScan.BOIService.SaveFileScanCompletedEventArgs.Result">
+	<remarks/>
+</member><member name="T:BOIScan.BOIService.SaveFileScanCompletedEventArgs">
+	<remarks/>
+</member><member name="T:BOIScan.BOIService.SetJobStatusCompletedEventHandler">
+	<remarks/>
+</member><member name="P:BOIScan.BOIService.SetJobStatusCompletedEventArgs.Result">
+	<remarks/>
+</member><member name="T:BOIScan.BOIService.SetJobStatusCompletedEventArgs">
+	<remarks/>
+</member><member name="T:BOIScan.BOIService.DeleteAttachFileCompletedEventHandler">
+	<remarks/>
+</member><member name="P:BOIScan.BOIService.DeleteAttachFileCompletedEventArgs.Result">
+	<remarks/>
+</member><member name="T:BOIScan.BOIService.DeleteAttachFileCompletedEventArgs">
+	<remarks/>
+</member>
+</members>
+</doc>

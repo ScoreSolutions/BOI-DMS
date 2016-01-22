@@ -1,0 +1,343 @@
+Name of product : fi-series image scanner
+Name of software : Scanner Control SDK (the ÅgLicensed SoftwareÅh)
+
+IMPORTANT
+
+ATTENTION: PLEASE READ THIS END-USER LICENSE AGREEMENT ("Agreement") BEFORE
+INSTALLING THE LICENSED SOFTWARE.
+
+READ THE FOLLOWING TERMS AND CONDITIONS OF THIS AGREEMENT CAREFULLY BEFORE
+ INSTALLING THE LICENSED SOFTWARE.
+BY INSTALLING THE LICENSED SOFTWARE, YOU(ÅgLicenseeÅh) AGREE TO BE BOUND BY THE
+TERMS AND CONDITIONS OF THIS AGREEMENT.
+IF YOU DO NOT AGREE TO THE TERMS OF THIS AGREEMENT, DO NOT INSTALL THE LICENSED
+SOFTWARE. AND IN THAT CASE YOU SHOULD RETURN THE PRODUCT INCLUDING THE LICENSED
+SOFTWARE AND ALL WRITTEN MATERIALS, PROMPTLY TO THE PLACE OF PURCHASE PROMPTLY
+FOR A FULL REFUND.
+
+Terms and Conditions
+
+
+Article 1 (Definitions)
+  Definitions.  The following capitalized terms shall have the following
+                meanings:
+
+  (1) "Licensed Software" shall mean software that is designed as a toolkit for
+      developing Windows application software used to control "fi-series" image
+      scanner products, and that is described hereinabove.
+      "Licensed Software" consists of the "Source Code" of application software
+      (sample) and materials such as documentation describing the function
+      specifications as well as "Object Code".
+  (2) "Licensee's software products" shall mean application software that is
+      developed by Licensee, with "Licensed Software" hereunder.
+  (3) "Object Code" shall mean any compiled, assembled, or machine executable
+      version of the Licensed Software, or any part thereof.
+  (4) "Source Code" shall mean the human readable form of the Licensed
+      Software.
+  (5) "Confidential Information" shall mean the following:
+      i.   "Licensed Software"; and
+      ii.  Any information excluding "Licensed Software", provided in tangible
+           form, clearly labeled as "Confidential" or some similar designation;
+           or
+      iii. Any information, disclosed orally or otherwise, identified
+           confidential at the time of disclosure and confirmed as such in
+           writing within fifteen (15) days of that disclosure.
+  (6) "Competitive Products" shall mean any product that supports substantially
+      similar functionality as the Licensed Software or an alternative
+      functionality to the Licensed Software.
+
+Article 2 (License Grant)
+  Subject to LicenseeÅfs compliance with obligations and limitations and
+  restrictions set forth in this Agreement, the PFU shall grant to Licensee a
+  worldwide, non-exclusive, non-transferable, and royalty-free right as
+  follows:
+
+  (1) to install and use "Licensed Software" on those computers, without
+      limitation on the number of computers;.
+  (2) to copy, use, and modify "Source Code", which is originally contained in
+      "Licensed Software" solely for the creation of the "Object Code" of
+      "Licensee's software products";.
+  (3) to copy the "Object Code" of "Licensee's software products" including
+      "Licensed Software" and "Object Code" originally contained in "Licensed
+      SoftwareÅh at your own premises or your contractorÅfs premises:
+  (4) to distribute and sublicense the copies of "Object Code" of "Licensee's
+      software products" copied under the previous sub-paragraph, directly or
+      indirectly via any of distributors of Licensee.
+  (5) to distribute the copies of "Object Code" originally contained in
+      "Licensed Software" along with the copies of "Object Code" of
+      "Licensee's software products"
+      In such case, end-users are subject to conditions imposed on the use of
+      "Object Code" originally contained in "Licensed Software"; such
+      conditions shall comply with terms and conditions of the end-user
+      licensee agreement displayed onscreen at the time of installation of the
+      relevant "Object Code".
+
+Article 3 (Modification etc.)
+  Licensee may not modify or, except to the extent expressly permitted by
+  applicable law, reverse engineer, including, without limitation, decompile
+  and disassemble, "Object Code" included in "Licensed Software".
+
+Article 4 (Prohibitions of Subcontract)
+1. Licensee shall not subcontract work conducted by using "Licensed Software",
+   in whole or in part, to any third party for developing "Licensee's software
+   products", without prior written consent of PFU.
+2. PFU shall consent to the subcontract described in the above paragraph so
+   long as subcontractors meet all the following conditions. 
+   (1) Such subcontractors shall acknowledge that "Confidential Information"
+       that PFU provides for Licensee is the trade secret of PFU and agree to
+       handle it in accordance with and subject to the terms and conditions set
+       forth in Article 9.
+   (2) Such subcontractors shall not disclose "Confidential Information" to
+       another third party except where Licensee discloses the information to
+       another third party with other consent in writing from PFU prior to
+       disclosure.
+
+3. Licensee shall remain liable to PFU hereunder even if PFU consents to the
+   subcontract by Licensee under this article.
+
+Article 5 (Limited Warranty)
+  EXCEPT AS EXPRESSLY PROVIDED HEREIN, UNDER NO CIRCUMSTANCES SHALL PFU OR ITS
+  SUPPLIERS BE LIABLE TO LICENSEE OR TO ANY OTHER PERSON UNDER TORT, CONTRACT,
+  OR ANY OTHER LEGAL THEORY, FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR
+  CONSEQUENTIAL DAMAGES OF ANY CHARACTER ARISING FROM THE USE, PERFORMANCE OR
+  NON-PERFORMANCE OF THE SOFTWARE, INCLUDING, WITHOUT LIMITATION, DAMAGES FOR
+  LOSS OF PROFITS, LOSS OF GOODWILL, OR LOSS OF DATA, EVEN IF PFU HAS BEEN
+  INFORMED OF THE POSSIBILITY OF SUCH DAMAGES.  SOME JURISDICTIONS DO NOT ALLOW
+  THE EXCLUSION OR LIMITATION OF INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO THESE
+  LIMITATIONS AND EXCLUSIONS MAY NOT APPLY TO LICENSEE.
+
+Article 6 (Support for "Licensed Software")
+  This Agreement shall not include any support services to Licensee for the
+  Licensed Software. If Licensee desire to obtain any support services for the
+  Licensed Software, Licensee shall make and enter into a separate support
+  service agreement Licensor provides.  
+
+Article 7 (High-Safety Applications)
+1. Licensee acknowledge and agree that "Licensed Software" is not designed,
+   developed and manufactured as contemplated for use accompanying fatal risks
+   or dangers that, unless extremely high safety is secured, could lead
+   directly to death, personal injury, severe physical damage or other loss
+   (hereinafter "High Safety Required Use"), including without limitation,
+   nuclear reaction control in nuclear facility, aircraft flight control, air
+   traffic control, mass transport control, medical life support system,
+   missile launch control in weapon system.  Licensee shall not use "Licensed
+   Software" without securing the sufficient safety required for the High
+   Safety Required Use.  In addition, PFU shall assume no liability whatsoever
+   for damages arising from use of "Licensed Software" by Licensee in
+   high-safety applications.
+2. Licensee acknowledge and agree that PFU is not liable for any damage to the
+   Licensed Software or to LicenseeÅfs computer or computer network caused by
+   unauthorized access or computer viruses.  It is LicenseeÅfs responsibility
+   to take proper security measures to avoid unauthorized access to LicenseeÅfs
+   computer or computer network.  
+
+Article 8 (Reservation of Rights and Ownership)
+1. PFU or its suppliers own the title, copyright, and other intellectual
+   property rights in the Licensed Software.  The Licensed Software is
+   protected by copyright and other intellectual property laws and treaties.
+   Except as expressly stated herein, this Agreement does not grant Licensee
+   any intellectual property rights in the Licensed Software.  All rights not
+   expressly granted are reserved by PFU and its suppliers.
+2. Licensee shall not change or remove any copyright notices of "Licensed
+   Software", contained within "Licensed Software" and its copies.
+3. The copyright of "Licensee's software products" shall be held by Licensee.
+   However, in the event that "Object Code" that is created, with or without
+   modification, based on "Source Code" originally contained in "Licensed
+   Software" partly consists of "Licensee's software products", PFU, as the
+   copyright holder of the original, shall withhold the copyright of the
+   relevant part.
+
+Article 9 (Confidentiality)
+1. Confidentiality Obligation
+   Licensee and PFU shall assume obligations as set forth in the following with
+   respect to any "Confidential Information" disclosed by either party to the
+   other party.
+
+   (1) The receiving party of "Confidential Information", with the care of a
+       good manager, shall manage the "Confidential Information" of the
+       disclosing party and shall not disclose or leak the "Confidential
+       Information" to any third party, whether directly or in directly,
+       regardless of the purpose, except in the following:
+       i.  In the event that Licensee distributes such information as copies of
+           "Object Code" based on "Licensed Software" to the extent granted in
+           Article 2.
+       ii. In the event that Licensee discloses the "Confidential Information"
+           of PFU to third parties approved by the PFU with prior written
+           consent, in accordance with Article 4, for the purpose of
+           developing "Licensee's software products".
+   (2) In accordance with restrictions provided in the above, the receiving
+       party of "Confidential Information" may disclose "Confidential
+       Information" provided by the disclosing party only to the employees of
+       the receiving party, who need to know the information for the purpose of
+       this Agreement. The receiving party of "Confidential Information" shall
+       impress its employees with the point that the relevant information is
+       the "Confidential Information" of the disclosing party, and that those
+       employees shall maintain the information as confidentiality hereunder.
+   (3) In the event that the receiving party discloses "Confidential
+       Information" of the disclosing party to third parties other than the
+       employees of the receiving party for the purpose of this Agreement, the
+       receiving party shall obtain prior written consent from the disclosing
+       party regarding to the relevant disclosure to be made. In addition, the
+       receiving party shall be responsible for any acts by the relevant third
+       party, on behalf of the third party.
+
+2. Exceptions to confidentiality obligation
+
+   (1) Following information shall not be deemed that it is the Confidential
+       Information:
+
+       a) Information that is now generally known or available by publication,
+          commercial use or otherwise without any failure of obligations in
+          this section by the receiving party;
+       b) Information that had been obtained by either party at the time of
+          disclosure by the other party; 
+       c) Information that is disclosed by third parties without restriction;
+       d) Information that the disclosing party discloses to third parties
+          without restriction; or
+       e) Information that is developed by either party without any access to
+          the Confidential Information of the other party.
+
+   (2) In the event that the receiving party of "Confidential Information" is
+       compelled to disclose the information to any third party by law, the
+       receiving party shall be able to disclose and provide the "Confidential
+       Information" to the relevant third party after requesting the third
+       party to take measures to maintain confidentiality within permissible
+       limits under the relevant law.
+
+3. Return of "Confidential Information"
+   If this Agreement has expired or is terminated, both parties shall promptly
+   return to the other party or destroy, upon the disclosing party's request,
+   all of the "Confidential Information" and their copies according to the
+   other partyÅfs direction. 
+
+Article 10 (Audit)
+  Licensee agrees that PFU may conduct an audit to verify Licensee's compliance
+  with its obligations under this Agreement at any time during regular business
+  hours.
+
+Article 11 (Indemnities)
+1. PFU shall provide "Licensed Software", on a free-of-charge basis, for the
+   convenience of Licensee, and PFU shall be liable to Licensee hereunder to
+   the extent set forth herein. PFU shall not guarantee any matters not set
+   forth herein and shall not be liable to Licensee for such matters.
+2. Licensee shall indemnify, hold harmless, and defend PFU and its subsidiaries
+   and affiliates from and against any and all third party claims arising out
+   of that Licensee's software products infringe such third partyÅfs right.
+
+Article 12 (Term of Agreement)
+  This Agreement shall commence on the Effective Date and continue for one (1)
+  years after such date, unless earlier terminated under Article 13
+  hereinbelow.  This Agreement may be automatically renewed for additional
+  one (1) year term unless either party provides written notice to the other
+  party of its intention for this Agreement not to be renewed at least
+  thirty (30) days prior to the end of first or subsequent terms.
+
+Article 13 (Termination of Agreement)
+1. Either party hereto may terminate this Agreement with written notice to the
+   other party hereto in the event that:
+
+   (1) The other party materially breaches the terms of this Agreement and has
+       not remedied such a breach within fifteen (15) days after receipt of
+       notice of such a breach;
+   (2) The other party becomes involved in or subject to the involvement in the
+       filing of a voluntary or involuntary petition in bankruptcy or other
+       insolvency proceeding, a general assignment for the benefit of
+       creditors, the appointment of a receiver or trustee of the business, or
+       the adoption of a plan of liquidation or dissolution;
+   (3) The other party performs unlawful acts; or
+   (4) The other party performs acts to defame the other party's reputation.
+
+
+2. If any one of the above events occurs on Licensee or PFU, the non-defaulting
+   party shall demand immediate payment of all sums payable by the defaulting
+   party, in the nature of the case, whereupon the same shall become immediate
+   due and payable. In such cases, the respective claims of Licensee and PFU
+   shall be set off against each other forthwith if both parties share
+   obligations.
+
+Article 14 (Handling after the Termination of Agreement)
+1. "Licensed Software" shall be handled as described in the following when this
+   Agreement is expired or terminated in accordance with and subject to the
+   terms and conditions set forth in Article 12 or Article 13:
+
+   (1) Licensee shall immediately discontinue any use, reproduction, and
+       distribution of "Licensed Software". If, however, the Agreement is
+       terminated under the previous article, for reasons attributable to PFU,
+       Licensee shall be able to continue distributing copies of "Object Code"
+       of "Licensee's software products" including "Licensed Software" and
+       "Object Code" originally contained in "Licensed Software" in accordance
+       with and subject to the terms and conditions herein set forth, with
+       limits of not less than the quantity for which Licensee itself has
+       accepted an order from customers by the time of termination of this
+       Agreement.
+   (2) Licensee and PFU shall promptly return to the other party or destroy,
+       upon the disclosing party's request, all of the "Confidential
+       Information" and their copies according to the other party's direction,
+       except for those copies described in Sub-Artilcle 15.1. (1) hereinabove.
+
+2. Expiration and termination of this Agreement shall have no effect on the use
+   rights of end-users using copies of "Object Code" of "Licensee's software
+   products" and those of "Object Code" originally contained in "Licensed
+   Software", which are appropriately distributed by Licensee hereunder. Such
+   end-users shall be able to ongoingly use aforesaid copies in accordance with
+   use conditions applicable to the relevant copies.
+3. Article 9 shall survive either the expiration or the termination of this
+   Agreement for another three (3) years and Articles 5, 7, 8, and 11, and
+   paragraph 4 of Article 15, and this article shall remain in effect.
+
+Article 15 (Miscellaneous Provisions)
+
+1. No Assignment
+
+   (1) Licensee shall not assign or transfer this Agreement and any of its
+       rights or obligations hereunder, in whole or in part, without prior
+       written consent of PFU. Assignment described in this paragraph shall
+       include any one of the following:
+       i.   The whole or main part of the property of Licensee is sold or
+            assigned to any third party.
+       ii.  Licensee is taken over or merged by any third party.
+       iii. Licensee is put under the control of any competing company that
+            competes with PFU, because of changes in capital ties.
+   (2) In the event that Licensee assigns the rights of Licensee and "Licensed
+       Software" in the possession of Licensee to any third party, with prior
+       written consent of PFU, the Licensee shall destroy all copies of
+       "Licensed Software" possessed by Licensee, or assign those to the third
+       party along with "Licensed Software".
+
+2. Successor binding effect
+   The Agreement shall inure to the benefit of successors and assigns of the
+   either of the parties hereto.
+
+3. Export Control
+   Licensee agree to comply with all applicable international and national laws
+   that apply to "Licensed Software", including the U.S. Export Administration
+   Regulations, as well as end-user, end-use, and destination restrictions
+   issued by U.S. and other governments.
+
+4. Interpretation
+   This Agreement will be governed by and construed in accordance with the
+   substantive laws of Japan and the parties hereto submit to the exclusive
+   jurisdiction of the Tokyo District Court. This Agreement will not be
+   governed by the conflict of law rules of any jurisdiction or by the United
+   Nations Convention on Contracts for the International Sale of Goods, the
+   application of which is expressly excluded.  This Agreement shall be in the
+   English language. In the interpretation hereof, no translation in any other
+   language shall be taken into consideration.
+
+5. Severability
+   If any provision of this Agreement is held to be invalid or unenforceable
+   for any reason, the other provisions shall continue in full force and
+   effect.
+
+6. Amendment of this Agreement
+   Any amendment of this Agreement shall be in writing and signed by duly
+   representatives of Licensee and PFU hereto. No oral amendment shall have
+   binding effects to both parties.
+
+7. Entire Agreement
+   This Agreement is the entire agreement between the parties hereto relating
+   to the Licensed Software, and it supersedes all prior or contemporaneous
+   oral or written communications, proposals and representations with respect
+   to the Licensed Software.
+
+PFU LIMITED

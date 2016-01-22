@@ -1,0 +1,15 @@
+D:\MyProject\BOI-DMS\BOIDataConversion\BOIDataConversion\bin\Debug\BOIDataConversion.exe
+D:\MyProject\BOI-DMS\BOIDataConversion\BOIDataConversion\bin\Debug\BOIDataConversion.pdb
+D:\MyProject\BOI-DMS\BOIDataConversion\BOIDataConversion\bin\Debug\BOIDataConversion.xml
+D:\MyProject\BOI-DMS\BOIDataConversion\BOIDataConversion\obj\Debug\ResolveAssemblyReference.cache
+D:\MyProject\BOI-DMS\BOIDataConversion\BOIDataConversion\obj\Debug\BOIDataConversion.Form1.resources
+D:\MyProject\BOI-DMS\BOIDataConversion\BOIDataConversion\obj\Debug\BOIDataConversion.Resources.resources
+D:\MyProject\BOI-DMS\BOIDataConversion\BOIDataConversion\obj\Debug\BOIDataConversion.vbproj.GenerateResource.Cache
+D:\MyProject\BOI-DMS\BOIDataConversion\BOIDataConversion\obj\Debug\BOIDataConversion.exe
+D:\MyProject\BOI-DMS\BOIDataConversion\BOIDataConversion\obj\Debug\BOIDataConversion.xml
+D:\MyProject\BOI-DMS\BOIDataConversion\BOIDataConversion\obj\Debug\BOIDataConversion.pdb
+D:\MyProject\BOI-DMS\BOIDataConversion\BOIDataConversion\obj\Debug\BOIDataConversion.frmCompany.resources
+D:\MyProject\BOI-DMS\BOIDataConversion\BOIDataConversion\obj\Debug\BOIDataConversion.frmUpdateDocumentNoMovement.resources
+D:\MyProject\BOI-DMS\BOIDataConversion\BOIDataConversion\obj\Debug\BOIDataConversion.frmUpdateSendBackSystem.resources
+D:\MyProject\BOI-DMS\BOIDataConversion\BOIDataConversion\obj\Debug\BOIDataConversion.frmUpdateDocumentStatus.resources
+D:\MyProject\BOI-DMS\BOIDataConversion\BOIDataConversion\obj\Debug\BOIDataConversion.frmUpdateSendBackSystemStorage.resources
