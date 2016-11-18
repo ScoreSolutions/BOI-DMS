@@ -164,7 +164,7 @@
     </table>
 </asp:Panel>
 <cc1:ModalPopupExtender ID="zPopConfirmClear" runat="server" 
-    BackgroundCssClass="modalBackground"   DropShadow="true" PopupControlID="Panel2" 
+    BackgroundCssClass="modalBackground" DropShadow="true" PopupControlID="Panel2" 
     TargetControlID="Button4">
 </cc1:ModalPopupExtender>
 

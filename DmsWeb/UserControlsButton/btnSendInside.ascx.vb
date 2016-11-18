@@ -115,7 +115,6 @@ Partial Class UserControls_Button_btnSendInside
     Protected Sub btnButton1_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnButton1.Click
         ClearSendComplete()
         RaiseEvent Click(sender, e)
-
     End Sub
 
     Protected Sub btnNo_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnNo.Click

@@ -1,9 +1,0 @@
-D:\MyProject\BOI-DMS\BOI-DMS\Para\bin\Debug\Para.dll
-D:\MyProject\BOI-DMS\BOI-DMS\Para\bin\Debug\Para.pdb
-D:\MyProject\BOI-DMS\BOI-DMS\Para\bin\Debug\Para.xml
-D:\MyProject\BOI-DMS\BOI-DMS\Para\obj\Debug\ResolveAssemblyReference.cache
-D:\MyProject\BOI-DMS\BOI-DMS\Para\obj\Debug\Para.Resources.resources
-D:\MyProject\BOI-DMS\BOI-DMS\Para\obj\Debug\Para.vbproj.GenerateResource.Cache
-D:\MyProject\BOI-DMS\BOI-DMS\Para\obj\Debug\Para.dll
-D:\MyProject\BOI-DMS\BOI-DMS\Para\obj\Debug\Para.xml
-D:\MyProject\BOI-DMS\BOI-DMS\Para\obj\Debug\Para.pdb
