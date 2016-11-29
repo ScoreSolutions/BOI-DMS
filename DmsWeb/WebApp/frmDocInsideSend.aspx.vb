@@ -234,12 +234,12 @@ Partial Class WebApp_frmDocInsideSend
     Protected Sub btnSendCircle1_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnSendCircle1.Click
         Dim SelectedDoc As Para.Document.SendInternalSelectedPara = GetSelectedDocNo()
         If SelectedDoc.SelectedRowID.Rows.Count > 0 Then
-            If SelectedDoc.SelectedRowID.Rows.Count = 1 Then
-                Config.SaveTransLog("frmDocInsideSend.aspx คลิกปุ่มส่งหนังสือเวียน เลขที่หนังสือ " & SelectedDoc.SelectedBookNo)
-                btnSendCircle1.SetShowPop()
-            Else
-                Config.SetAlert("ส่งหนังสือเวียนได้ทีละ 1 เรื่อง", Me)
-            End If
+            'If SelectedDoc.SelectedRowID.Rows.Count = 1 Then
+            Config.SaveTransLog("frmDocInsideSend.aspx คลิกปุ่มส่งหนังสือเวียน เลขที่หนังสือ " & SelectedDoc.SelectedBookNo)
+            btnSendCircle1.SetShowPop()
+            'Else
+            '    Config.SetAlert("ส่งหนังสือเวียนได้ทีละ 1 เรื่อง", Me)
+            'End If
         Else
             Config.SetAlert("กรุณาเลือกเลขที่หนังสือที่ต้องการส่งหนังสือเวียน", Me)
         End If
@@ -271,147 +271,166 @@ Partial Class WebApp_frmDocInsideSend
 
         Dim uPara As Para.Common.UserProfilePara = Config.GetLogOnUser
         Dim ret As Boolean = False
-        Dim SelectedDoc As Para.Document.SendInternalSelectedPara = GetSelectedDocNo()
-        If SelectOrgDT.Rows.Count > 0 Then
-            Dim eng As New Engine.Document.DocumentRegisterENG
-            Dim bPara As New Para.TABLE.DocumentRegisterPara
-            bPara = eng.GetDocumentPara(SelectedDoc.SelectedRowID.Rows(0)("DOCUMENT_REGISTER_ID"), trans)
-            sePara.BOOK_NO = bPara.BOOK_NO
 
-            For Each dr As DataRow In SelectOrgDT.Rows
-                If eng.ChkDupByBookNo(bPara.BOOK_NO & "/" & dr("OrgAbbNameReceive"), 0) = False Then
-                    Dim nPara As New Para.TABLE.DocumentRegisterPara
-                    nPara.BOOK_NO = bPara.BOOK_NO & "/" & dr("OrgAbbNameReceive")
-                    nPara.REQUEST_NO = bPara.REQUEST_NO
-                    nPara.GROUP_TITLE_ID = bPara.GROUP_TITLE_ID
-                    nPara.TITLE_NAME = bPara.TITLE_NAME
-                    nPara.REGISTER_DATE = bPara.REGISTER_DATE
-                    nPara.EXPECT_FINISH_DATE = bPara.EXPECT_FINISH_DATE
-                    nPara.DOC_SECRET_ID = bPara.DOC_SECRET_ID
-                    nPara.DOC_SPEED_ID = bPara.DOC_SPEED_ID
-                    nPara.DOC_STATUS_ID = Para.Common.Utilities.Constant.DocumentRegister.DocStatusID.JobIncome
+        If SelectOrgDT.Rows.Count > 0 Then   'หน่วยงานที่ถูกเลือก เพื่อส่งเวียน
 
-                    nPara.ORGANIZATION_ID_OWNER = bPara.ORGANIZATION_ID_OWNER
-                    nPara.ORGANIZATION_NAME = bPara.ORGANIZATION_NAME
-                    nPara.ORGANIZATION_APPNAME = bPara.ORGANIZATION_APPNAME
+            Dim SelectedDoc As Para.Document.SendInternalSelectedPara = GetSelectedDocNo()  'เรื่องที่ส่งเวียน
+            If SelectedDoc.SelectedRowID.Rows.Count > 0 Then
+                For Each DocDr As DataRow In SelectedDoc.SelectedRowID.Rows
+                    Dim eng As New Engine.Document.DocumentRegisterENG
+                    Dim bPara As New Para.TABLE.DocumentRegisterPara
+                    bPara = eng.GetDocumentPara(DocDr("DOCUMENT_REGISTER_ID"), trans)
+                    sePara.BOOK_NO += ", " & bPara.BOOK_NO
 
-                    nPara.ORGANIZATION_ID_PROCESS = bPara.ORGANIZATION_ID_PROCESS
-                    nPara.ORGANIZATION_NAME_PROCESS = bPara.ORGANIZATION_NAME_PROCESS
-                    nPara.ORGANIZATION_ABBNAME_PROCESS = bPara.ORGANIZATION_ABBNAME_PROCESS
+                    For Each dr As DataRow In SelectOrgDT.Rows
+                        Dim cBookNo As String = bPara.BOOK_NO & "/" & dr("OrgAbbNameReceive")
+                        Dim IsDup As Boolean = False
+                        Do
+                            'เช็คเลขที่หนังสือเวียนซ้ำ
+                            If eng.ChkDupByBookNo(cBookNo, 0) = True Then
+                                IsDup = True
 
-                    nPara.OFFICER_ID_APPROVE = bPara.OFFICER_ID_APPROVE
-                    nPara.OFFICER_NAME = bPara.OFFICER_NAME
-                    nPara.OFFICER_ORGANIZATION_ID = bPara.OFFICER_ORGANIZATION_ID
-                    nPara.OFFICER_ID_POSSESS = bPara.OFFICER_ID_POSSESS
-                    nPara.OFFICER_NAME_POSSESS = bPara.OFFICER_NAME_POSSESS
-                    nPara.ADMINISTRATION_TYPE = bPara.ADMINISTRATION_TYPE
-                    nPara.REMARKS = bPara.REMARKS
+                                'หาเครื่องหมาย - ที่อยู่หลัง /
+                                Dim tmpSlash() As String = cBookNo.Split("/")
+                                If tmpSlash.Length > 0 Then
+                                    Dim addNo As String = tmpSlash(tmpSlash.Length - 1).Replace(dr("OrgAbbNameReceive"), "")
+                                    If addNo.StartsWith("-") = True Then
+                                        cBookNo = bPara.BOOK_NO & "/" & dr("OrgAbbNameReceive") & "-" & (Convert.ToInt16(addNo.Replace("-", "")) + 1)
+                                    Else
+                                        cBookNo += "-2"
+                                    End If
+                                End If
+                            Else
+                                IsDup = False
+                            End If
+                        Loop While IsDup = True
 
-                    nPara.COMPANY_ID = bPara.COMPANY_ID
-                    nPara.COMPANY_NAME = bPara.COMPANY_NAME
-                    nPara.COMPANY_DOC_NO = bPara.COMPANY_DOC_NO
-                    nPara.COMPANY_DOC_DATE = bPara.COMPANY_DOC_DATE
-                    nPara.COMPANY_SIGN = bPara.COMPANY_SIGN
-                    nPara.COMPANY_SIGN_DATE = bPara.COMPANY_SIGN_DATE
-                    nPara.COMPANY_DOC_SYS_ID = bPara.COMPANY_DOC_SYS_ID
-                    nPara.BUSINESS_TYPE_ID = bPara.BUSINESS_TYPE_ID
+                        Dim nPara As New Para.TABLE.DocumentRegisterPara
+                        nPara.BOOK_NO = cBookNo
+                        nPara.REQUEST_NO = bPara.REQUEST_NO
+                        nPara.GROUP_TITLE_ID = bPara.GROUP_TITLE_ID
+                        nPara.TITLE_NAME = bPara.TITLE_NAME
+                        nPara.REGISTER_DATE = bPara.REGISTER_DATE
+                        nPara.EXPECT_FINISH_DATE = bPara.EXPECT_FINISH_DATE
+                        nPara.DOC_SECRET_ID = bPara.DOC_SECRET_ID
+                        nPara.DOC_SPEED_ID = bPara.DOC_SPEED_ID
+                        nPara.DOC_STATUS_ID = Para.Common.Utilities.Constant.DocumentRegister.DocStatusID.JobIncome
 
-                    nPara.USERNAME_REGISTER = bPara.USERNAME_REGISTER
-                    nPara.ORGANIZATION_ID_REGISTER = bPara.ORGANIZATION_ID_REGISTER
-                    nPara.DOCUMENT_RECEIVE_TYPE = bPara.DOCUMENT_RECEIVE_TYPE
-                    nPara.REF_DOCUMENT_REGISTER_ID = bPara.ID
-                    nPara.COMPANY_CERT_NO = bPara.COMPANY_CERT_NO
-                    nPara.COMPANY_NOTIFY_NO = bPara.COMPANY_NOTIFY_NO
-                    nPara.ELECTRONIC_DOC_ID = bPara.ELECTRONIC_DOC_ID
-                    nPara.REF_TH_EGIF_DOC_INBOUND_ID = bPara.REF_TH_EGIF_DOC_INBOUND_ID
+                        nPara.ORGANIZATION_ID_OWNER = bPara.ORGANIZATION_ID_OWNER
+                        nPara.ORGANIZATION_NAME = bPara.ORGANIZATION_NAME
+                        nPara.ORGANIZATION_APPNAME = bPara.ORGANIZATION_APPNAME
 
-                    Dim DocRegisID As Long = eng.SaveDocumentRegister(uPara.UserName, nPara, Nothing, 0, trans)
-                    If DocRegisID > 0 Then
-                        ret = True
-                        Dim iPara As New Para.TABLE.DocumentIntReceiverPara
-                        iPara.DOCUMENT_REGISTER_ID = DocRegisID
-                        iPara.ORGANIZATION_ID_SEND = uPara.ORG_DATA.ID
-                        iPara.ORGANIZATION_NAME_SEND = uPara.ORG_DATA.ORG_THAI_NAME
-                        iPara.ORGANIZATION_APPNAME_SEND = uPara.ORG_DATA.NAME_RECEIVE
-                        iPara.SEND_DATE = DateTime.Now
-                        iPara.SENDER_OFFICER_USERNAME = uPara.UserName
-                        iPara.SENDER_OFFICER_FULLNAME = uPara.FirstName & " " & uPara.LastName
-                        iPara.RECEIVE_STATUS_ID = Para.Common.Utilities.Constant.DocumentIntReceiver.ReceiveStatusID.SendNoReceive
-                        iPara.ORGANIZATION_ID_RECEIVE = Convert.ToInt64(dr("OrgNameReceiveID"))
-                        iPara.ORGANIZATION_NAME_RECEIVE = dr("OrgNameReceive")
-                        iPara.ORGANIZATION_APPNAME_RECEIVE = dr("OrgAbbNameReceive")
+                        nPara.ORGANIZATION_ID_PROCESS = bPara.ORGANIZATION_ID_PROCESS
+                        nPara.ORGANIZATION_NAME_PROCESS = bPara.ORGANIZATION_NAME_PROCESS
+                        nPara.ORGANIZATION_ABBNAME_PROCESS = bPara.ORGANIZATION_ABBNAME_PROCESS
 
-                        Dim sEng As New Engine.Master.OfficerEng
-                        Dim sPara As Para.TABLE.OfficerPara = sEng.GetOfficerPara(Convert.ToInt64(dr("StaffNameReceiveID")))
-                        iPara.RECEIVER_OFFICER_USERNAME = sPara.USERNAME
-                        iPara.RECEIVER_OFFICER_FULLNAME = sPara.FIRST_NAME & " " & sPara.LAST_NAME
-                        iPara.RECEIVE_OBJECTIVE_ID = Convert.ToInt64(dr("PurposeID"))
-                        iPara.RECEIVE_TYPE_ID = Convert.ToInt64(dr("PurposeID"))
-                        iPara.REMARKS = dr("remark_receive")
+                        nPara.OFFICER_ID_APPROVE = bPara.OFFICER_ID_APPROVE
+                        nPara.OFFICER_NAME = bPara.OFFICER_NAME
+                        nPara.OFFICER_ORGANIZATION_ID = bPara.OFFICER_ORGANIZATION_ID
+                        nPara.OFFICER_ID_POSSESS = bPara.OFFICER_ID_POSSESS
+                        nPara.OFFICER_NAME_POSSESS = bPara.OFFICER_NAME_POSSESS
+                        nPara.ADMINISTRATION_TYPE = bPara.ADMINISTRATION_TYPE
+                        nPara.REMARKS = bPara.REMARKS
 
-                        If iPara.ORGANIZATION_ID_RECEIVE = iPara.ORGANIZATION_ID_SEND Then
-                            'กรณีส่งหนังสือเวียน ถ้าส่งเวียนหาหน่วยงานตัวเอง ก็ให้คนที่ส่งนั่นแหละเป็นผู้รับเองซะเลย
-                            Dim rPara As New Para.TABLE.DocumentRegisterPara
-                            rPara = eng.GetDocumentPara(DocRegisID, trans)
-                            rPara.DOC_STATUS_ID = Para.Common.Utilities.Constant.DocumentRegister.DocStatusID.JobRemain
-                            rPara.ORGANIZATION_APPNAME = uPara.ORG_DATA.EXPR1
-                            rPara.ORGANIZATION_ID_OWNER = uPara.ORG_DATA.ID
-                            rPara.ORGANIZATION_NAME = uPara.ORG_DATA.ORG_NAME
+                        nPara.COMPANY_ID = bPara.COMPANY_ID
+                        nPara.COMPANY_NAME = bPara.COMPANY_NAME
+                        nPara.COMPANY_DOC_NO = bPara.COMPANY_DOC_NO
+                        nPara.COMPANY_DOC_DATE = bPara.COMPANY_DOC_DATE
+                        nPara.COMPANY_SIGN = bPara.COMPANY_SIGN
+                        nPara.COMPANY_SIGN_DATE = bPara.COMPANY_SIGN_DATE
+                        nPara.COMPANY_DOC_SYS_ID = bPara.COMPANY_DOC_SYS_ID
+                        nPara.BUSINESS_TYPE_ID = bPara.BUSINESS_TYPE_ID
 
-                            rPara.ORGANIZATION_ID_PROCESS = uPara.ORG_DATA.ID
-                            rPara.ORGANIZATION_NAME_PROCESS = uPara.ORG_DATA.ORG_NAME
-                            rPara.ORGANIZATION_ABBNAME_PROCESS = uPara.ORG_DATA.EXPR1
-                            rPara.OFFICER_ID_POSSESS = uPara.OFFICER_DATA.ID
-                            rPara.OFFICER_NAME_POSSESS = uPara.FirstName & " " & uPara.LastName
-                            ret = eng.SaveDocumentRegister(uPara.UserName, rPara, Nothing, "0", trans)
+                        nPara.USERNAME_REGISTER = bPara.USERNAME_REGISTER
+                        nPara.ORGANIZATION_ID_REGISTER = bPara.ORGANIZATION_ID_REGISTER
+                        nPara.DOCUMENT_RECEIVE_TYPE = bPara.DOCUMENT_RECEIVE_TYPE
+                        nPara.REF_DOCUMENT_REGISTER_ID = bPara.ID
+                        nPara.COMPANY_CERT_NO = bPara.COMPANY_CERT_NO
+                        nPara.COMPANY_NOTIFY_NO = bPara.COMPANY_NOTIFY_NO
+                        nPara.ELECTRONIC_DOC_ID = bPara.ELECTRONIC_DOC_ID
+                        nPara.REF_TH_EGIF_DOC_INBOUND_ID = bPara.REF_TH_EGIF_DOC_INBOUND_ID
+
+                        Dim DocRegisID As Long = eng.SaveDocumentRegister(uPara.UserName, nPara, Nothing, 0, trans)
+                        If DocRegisID > 0 Then
+                            ret = True
+                            Dim iPara As New Para.TABLE.DocumentIntReceiverPara
+                            iPara.DOCUMENT_REGISTER_ID = DocRegisID
+                            iPara.ORGANIZATION_ID_SEND = uPara.ORG_DATA.ID
+                            iPara.ORGANIZATION_NAME_SEND = uPara.ORG_DATA.ORG_THAI_NAME
+                            iPara.ORGANIZATION_APPNAME_SEND = uPara.ORG_DATA.NAME_RECEIVE
+                            iPara.SEND_DATE = DateTime.Now
+                            iPara.SENDER_OFFICER_USERNAME = uPara.UserName
+                            iPara.SENDER_OFFICER_FULLNAME = uPara.FirstName & " " & uPara.LastName
+                            iPara.RECEIVE_STATUS_ID = Para.Common.Utilities.Constant.DocumentIntReceiver.ReceiveStatusID.SendNoReceive
+                            iPara.ORGANIZATION_ID_RECEIVE = Convert.ToInt64(dr("OrgNameReceiveID"))
+                            iPara.ORGANIZATION_NAME_RECEIVE = dr("OrgNameReceive")
+                            iPara.ORGANIZATION_APPNAME_RECEIVE = dr("OrgAbbNameReceive")
+
+                            Dim sEng As New Engine.Master.OfficerEng
+                            Dim sPara As Para.TABLE.OfficerPara = sEng.GetOfficerPara(Convert.ToInt64(dr("StaffNameReceiveID")))
+                            iPara.RECEIVER_OFFICER_USERNAME = sPara.USERNAME
+                            iPara.RECEIVER_OFFICER_FULLNAME = sPara.FIRST_NAME & " " & sPara.LAST_NAME
+                            iPara.RECEIVE_OBJECTIVE_ID = Convert.ToInt64(dr("PurposeID"))
+                            iPara.RECEIVE_TYPE_ID = Convert.ToInt64(dr("PurposeID"))
+                            iPara.REMARKS = dr("remark_receive")
+
+                            If iPara.ORGANIZATION_ID_RECEIVE = iPara.ORGANIZATION_ID_SEND Then
+                                'กรณีส่งหนังสือเวียน ถ้าส่งเวียนหาหน่วยงานตัวเอง ก็ให้คนที่ส่งนั่นแหละเป็นผู้รับเองซะเลย
+                                Dim rPara As New Para.TABLE.DocumentRegisterPara
+                                rPara = eng.GetDocumentPara(DocRegisID, trans)
+                                rPara.DOC_STATUS_ID = Para.Common.Utilities.Constant.DocumentRegister.DocStatusID.JobRemain
+                                rPara.ORGANIZATION_APPNAME = uPara.ORG_DATA.EXPR1
+                                rPara.ORGANIZATION_ID_OWNER = uPara.ORG_DATA.ID
+                                rPara.ORGANIZATION_NAME = uPara.ORG_DATA.ORG_NAME
+
+                                rPara.ORGANIZATION_ID_PROCESS = uPara.ORG_DATA.ID
+                                rPara.ORGANIZATION_NAME_PROCESS = uPara.ORG_DATA.ORG_NAME
+                                rPara.ORGANIZATION_ABBNAME_PROCESS = uPara.ORG_DATA.EXPR1
+                                rPara.OFFICER_ID_POSSESS = uPara.OFFICER_DATA.ID
+                                rPara.OFFICER_NAME_POSSESS = uPara.FirstName & " " & uPara.LastName
+                                ret = eng.SaveDocumentRegister(uPara.UserName, rPara, Nothing, "0", trans)
+                                If ret = True Then
+                                    iPara.RECEIVE_DATE = iPara.SEND_DATE
+                                    iPara.RECEIVE_STATUS_ID = Para.Common.Utilities.Constant.DocumentIntReceiver.ReceiveStatusID.Received
+                                    iPara.RECEIVER_OFFICER_USERNAME = uPara.UserName
+                                    iPara.RECEIVER_OFFICER_FULLNAME = uPara.FirstName & " " & uPara.LastName
+                                End If
+                                rPara = Nothing
+                            End If
                             If ret = True Then
-                                iPara.RECEIVE_DATE = iPara.SEND_DATE
-                                iPara.RECEIVE_STATUS_ID = Para.Common.Utilities.Constant.DocumentIntReceiver.ReceiveStatusID.Received
-                                iPara.RECEIVER_OFFICER_USERNAME = uPara.UserName
-                                iPara.RECEIVER_OFFICER_FULLNAME = uPara.FirstName & " " & uPara.LastName
+                                ret = eng.SaveInsideSend(uPara.UserName, iPara, trans)
+                                Config.SaveTransLog("frmDocInsideSend.aspx ส่งหนังสือเวียนต้นเรื่อง " & bPara.BOOK_NO & " เลขที่หนังสือ :" & nPara.BOOK_NO)
+                                If ret = False Then
+                                    _err = eng.ErrorMessage
+                                    Exit For
+                                End If
                             End If
-                            rPara = Nothing
-                        End If
-                        If ret = True Then
-                            ret = eng.SaveInsideSend(uPara.UserName, iPara, trans)
-                            Config.SaveTransLog("frmDocInsideSend.aspx ส่งหนังสือเวียนต้นเรื่อง " & bPara.BOOK_NO & " เลขที่หนังสือ :" & nPara.BOOK_NO)
-                            If ret = False Then
-                                _err = eng.ErrorMessage
-                                Exit For
-                            End If
-                        End If
 
-                        sEng = Nothing
-                        sPara = Nothing
-                        iPara = Nothing
-                    Else
-                        ret = False
-                        _err = eng.ErrorMessage
-                        Exit For
-                    End If
-                    If ret = False Then
-                        _err = eng.ErrorMessage
-                        nPara = Nothing
-                        Exit For
-                    Else
-                        Dim seDr As DataRow = sePara.SEND_LIST.NewRow
-                        seDr("book_no") = nPara.BOOK_NO
-                        seDr("OrgNameReceive") = dr("OrgNameReceive").ToString
-                        sePara.SEND_LIST.Rows.Add(seDr)
-                        nPara = Nothing
-                    End If
-                Else
-                    'กรณีส่งหนังสือเวียนซ้ำ
-                    Dim seDr As DataRow = sePara.SEND_LIST.NewRow
-                    seDr("book_no") = bPara.BOOK_NO & "/" & dr("OrgAbbNameReceive") & " <font color='red'>(ส่งซ้ำ)</font>"
-                    seDr("OrgNameReceive") = dr("OrgNameReceive").ToString
-                    sePara.SEND_LIST.Rows.Add(seDr)
-                    ret = True
-                    Config.SaveTransLog("frmDocInsideSend.aspx ส่งหนังสือเวียนซ้ำต้นเรื่อง " & bPara.BOOK_NO & " เลขที่หนังสือ :" & bPara.BOOK_NO & "/" & dr("OrgAbbNameReceive"))
-                End If
-            Next
-            eng = Nothing
-            bPara = Nothing
+                            sEng = Nothing
+                            sPara = Nothing
+                            iPara = Nothing
+                        Else
+                            ret = False
+                            _err = eng.ErrorMessage
+                            Exit For
+                        End If
+                        If ret = False Then
+                            _err = eng.ErrorMessage
+                            nPara = Nothing
+                            Exit For
+                        Else
+                            Dim seDr As DataRow = sePara.SEND_LIST.NewRow
+                            seDr("book_no") = nPara.BOOK_NO
+                            seDr("OrgNameReceive") = dr("OrgNameReceive").ToString
+                            sePara.SEND_LIST.Rows.Add(seDr)
+                            nPara = Nothing
+                        End If
+                    Next
+                    eng = Nothing
+                    bPara = Nothing
+                Next
+            End If
+            SelectedDoc = Nothing
         End If
 
         If ret = True Then
@@ -424,7 +443,6 @@ Partial Class WebApp_frmDocInsideSend
         End If
 
         uPara = Nothing
-        SelectedDoc = Nothing
         sePara = Nothing
     End Sub
 
