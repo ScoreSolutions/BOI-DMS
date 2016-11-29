@@ -19,22 +19,13 @@ Partial Class Report_rptKPI
             Config.SetAlert("กรุณาระบุวันที่สิ้นสุดมากกว่าวันที่เริ่มต้น", Me, txtDate2.ClientID)
             Exit Sub
         End If
-        'Session.Remove("formdt")
-        'Session.Remove("todt")
-        'Session.Remove("OrgID")
-        'Session.Remove("IsExpectedFinishDate")
-
-        'Session("formdt") = txtDate1.DateValue
-        'Session("todt") = txtDate2.DateValue
-        'Session("OrgID") = cmbOrg.SelectedValue
-        'Session("IsExpectedFinishDate") = IIf(chkIsExpectedFinishDate.Checked, "Y", "N")
-        ''Response.Redirect("../rptGrid/rptkpibyemp.aspx")
+ 
         Dim wh As String = "OrgID=" & cmbOrg.SelectedValue
         wh += "&DateFrom=" & txtDate1.DateValue.ToString("yyyy-MM-dd", New Globalization.CultureInfo("en-US"))
         wh += "&DateTo=" & txtDate2.DateValue.ToString("yyyy-MM-dd", New Globalization.CultureInfo("en-US"))
         wh += "&IsExpectedFinishDate=" & IIf(chkIsExpectedFinishDate.Checked, "Y", "N")
         Config.SaveTransLog("เรียกดู KPI เงื่อนไข : " & wh)
-        Config.PreviewReports("../rptGrid/rptkpibyemp.aspx?" & wh & "&rnd=" & DateTime.Now.Millisecond, Me)
+        Config.PreviewReports("../rptGrid/rptKPI.aspx?" & wh & "&rnd=" & DateTime.Now.Millisecond, Me)
     End Sub
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
