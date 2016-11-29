@@ -221,7 +221,7 @@ Partial Class UserControls_Button_btnSendCircle
     '    zPop2.Show()
     'End Sub
     Public Sub SetSendComplete(ByVal para As Para.Document.SendCirclePara)
-        lblBookNo.Text = para.BOOK_NO
+        lblBookNo.Text = para.BOOK_NO.Substring(2)
 
         If para.SEND_LIST.Rows.Count > 0 Then
             GridView1.DataSource = para.SEND_LIST
