@@ -60,6 +60,23 @@
                         <tr id="rItem" runat="server" >
                             <td align='left'><asp:Label ID="lblGroupTitleName" runat="server"></asp:Label></td>
                             <td align='center' style='background-color: #FFFBD6;' ><asp:Label ID="lblIncome" runat="server"></asp:Label></td>
+                            
+                            <td align='center' style='background-color: #FFFBD6;' ><asp:Label ID="lblRemainOver" runat="server"></asp:Label></td>
+                            <td align='center' style='background-color: #FFFBD6;' ><asp:Label ID="lblRemainNotOver" runat="server"></asp:Label></td>
+                            <td align='center' style='background-color: #FFFBD6;' ><asp:Label ID="lblRemainTotal" runat="server"></asp:Label></td>
+                            
+                            <td align='center' style='background-color: #FFFBD6;' ><asp:Label ID="lblOutOver" runat="server"></asp:Label></td>
+                            <td align='center' style='background-color: #FFFBD6;' ><asp:Label ID="lblOutNotOver" runat="server"></asp:Label></td>
+                            <td align='center' style='background-color: #FFFBD6;' ><asp:Label ID="lblOutTotal" runat="server"></asp:Label></td>
+                            
+                            <td align='center' style='background-color: #FFFBD6;' ><asp:Label ID="lblRemTotOver" runat="server"></asp:Label></td>
+                            <td align='center' style='background-color: #FFFBD6;' ><asp:Label ID="lblRemTotNotOver" runat="server"></asp:Label></td>
+                            <td align='center' style='background-color: #FFFBD6;' ><asp:Label ID="lblRemTotTotal" runat="server"></asp:Label></td>
+                            
+                            <td align='center' style='background-color: #FFFBD6;' ><asp:Label ID="lblMaxProcPeriod" runat="server"></asp:Label></td>
+                            <td align='center' style='background-color: #FFFBD6;' ><asp:Label ID="lblKpiAvg" runat="server"></asp:Label></td>
+                            <td align='center' style='background-color: #FFFBD6;' ><asp:Label ID="lblKpiMax" runat="server"></asp:Label></td>
+                            <td align='center' style='background-color: #FFFBD6;' ><asp:Label ID="lblKpiMin" runat="server"></asp:Label></td>
                         </tr>
                     </ItemTemplate>
                 </asp:Repeater>

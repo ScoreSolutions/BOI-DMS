@@ -120,8 +120,37 @@ Partial Class rptGrid_rptKPI
             rptGroupTitle.DataSource = dt.DefaultView.ToTable.Copy
             rptGroupTitle.DataBind()
 
+            'เรื่องเข้า
             Dim lblSumIncome As Label = e.Item.FindControl("lblSumIncome")
             lblSumIncome.Text = sumIncome.ToString("#,##0")
+
+            'ค้างสะสม
+            Dim lblSumRemOver As Label = e.Item.FindControl("lblSumRemOver")
+            Dim lblSumRemNotOver As Label = e.Item.FindControl("lblSumRemNotOver")
+            Dim lblTotalRemain As Label = e.Item.FindControl("lblTotalRemain")
+            lblSumRemOver.Text = sumRemOver.ToString("#,##0")
+            lblSumRemNotOver.Text = sumRemNotOver.ToString("#,##0")
+            lblTotalRemain.Text = (sumRemOver + sumRemNotOver).ToString("#,##0")
+
+            'เรื่องออก
+            Dim lblSumOutOver As Label = e.Item.FindControl("lblSumOutOver")
+            Dim lblSumOutNotOver As Label = e.Item.FindControl("lblSumOutNotOver")
+            Dim lblTotalOut As Label = e.Item.FindControl("lblTotalOut")
+            lblSumOutOver.Text = sumOutOver.ToString("#,##0")
+            lblSumOutNotOver.Text = sumOutNotOver.ToString("#,##0")
+            lblTotalOut.Text = (sumOutOver + sumOutNotOver).ToString("#,##0")
+
+            'ค้างคงเหลือ
+            Dim lblSumRemTotOver As Label = e.Item.FindControl("lblSumRemTotOver")
+            Dim lblSumRemTotNotOver As Label = e.Item.FindControl("lblSumRemTotNotOver")
+            Dim lblTotalRemTot As Label = e.Item.FindControl("lblTotalRemTot")
+            lblSumRemTotOver.Text = sumRemTotOver.ToString("#,##0")
+            lblSumRemTotNotOver.Text = sumRemTotNotOver.ToString("#,##0")
+            lblTotalRemTot.Text = (sumRemTotOver + sumRemTotNotOver).ToString("#,##0")
+
+            
+
+
         End If
         dt.DefaultView.RowFilter = ""
 
@@ -135,6 +164,19 @@ Partial Class rptGrid_rptKPI
         Dim rItem As HtmlTableRow = e.Item.FindControl("rItem")
         Dim lblGroupTitleName As Label = e.Item.FindControl("lblGroupTitleName")
         Dim lblIncome As Label = e.Item.FindControl("lblIncome")
+        Dim lblRemainOver As Label = e.Item.FindControl("lblRemainOver")
+        Dim lblRemainNotOver As Label = e.Item.FindControl("lblRemainNotOver")
+        Dim lblRemainTotal As Label = e.Item.FindControl("lblRemainTotal")
+        Dim lblOutOver As Label = e.Item.FindControl("lblOutOver")
+        Dim lblOutNotOver As Label = e.Item.FindControl("lblOutNotOver")
+        Dim lblOutTotal As Label = e.Item.FindControl("lblOutTotal")
+        Dim lblRemTotOver As Label = e.Item.FindControl("lblRemTotOver")
+        Dim lblRemTotNotOver As Label = e.Item.FindControl("lblRemTotNotOver")
+        Dim lblRemTotTotal As Label = e.Item.FindControl("lblRemTotTotal")
+        Dim lblMaxProcPeriod As Label = e.Item.FindControl("lblMaxProcPeriod")
+        Dim lblKpiAvg As Label = e.Item.FindControl("lblKpiAvg")
+        Dim lblKpiMax As Label = e.Item.FindControl("lblKpiMax")
+        Dim lblKpiMin As Label = e.Item.FindControl("lblKpiMin")
 
         If iTitle Mod 2 = 0 Then
             rItem.Attributes.Add("class", "grid_Item")
@@ -143,7 +185,8 @@ Partial Class rptGrid_rptKPI
         End If
 
         lblGroupTitleName.Text = e.Item.DataItem("group_title_name")
-        If Convert.ToInt32(e.Item.DataItem("income")) > 0 Then
+        'เข้า
+        If Convert.ToInt32(e.Item.DataItem("income")) <> 0 Then
             lblIncome.Text = "<a href='../rptGrid/rptDocList.aspx?vPage=rptKPI&rpType=INCOME"
             lblIncome.Text += "&gID=" & e.Item.DataItem("group_title_id") & "&orgID=" & reports.OrgID
             lblIncome.Text += IIf(lblOfficerID.Text.Trim <> "", "&OfficerID=" & lblOfficerID.Text.Trim, "")
@@ -154,6 +197,115 @@ Partial Class rptGrid_rptKPI
             sumIncome += Convert.ToInt32(e.Item.DataItem("income"))
         End If
 
+        'ค้างสะสม
+        If Convert.ToInt32(e.Item.DataItem("remain_over")) <> 0 Then
+            lblRemainOver.Text = "<a href='../rptGrid/rptDocList.aspx?vPage=rptKPI&rpType=RemainOver"
+            lblRemainOver.Text += "&gID=" & e.Item.DataItem("group_title_id") & "&orgID=" & reports.OrgID
+            lblRemainOver.Text += IIf(lblOfficerID.Text.Trim <> "", "&OfficerID=" & lblOfficerID.Text.Trim, "")
+            lblRemainOver.Text += "&DateFrom=" & reports.fromdate & "&DateTo=" & reports.todt & "&ExpFinish=" & Request("IsExpectedFinishDate") & "&rnd=" & DateTime.Now.Millisecond & "' target='_blank' >"
+            lblRemainOver.Text += e.Item.DataItem("remain_over").ToString
+            lblRemainOver.Text += "</a>"
+
+            sumRemOver += Convert.ToDouble(e.Item.DataItem("remain_over"))
+        End If
+        If Convert.ToDouble(e.Item.DataItem("remain_notover")) <> 0 Then
+            lblRemainNotOver.Text = "<a href='../rptGrid/rptDocList.aspx?vPage=rptKPI&rpType=RemainNotOver"
+            lblRemainNotOver.Text += "&gID=" & e.Item.DataItem("group_title_id") & "&orgID=" & reports.OrgID
+            lblRemainNotOver.Text += IIf(lblOfficerID.Text.Trim <> "", "&OfficerID=" & lblOfficerID.Text.Trim, "")
+            lblRemainNotOver.Text += "&DateFrom=" & reports.fromdate & "&DateTo=" & reports.todt & "&ExpFinish=" & Request("IsExpectedFinishDate") & "&rnd=" & DateTime.Now.Millisecond & "' target='_blank' >"
+            lblRemainNotOver.Text += e.Item.DataItem("remain_notover").ToString
+            lblRemainNotOver.Text += "</a>"
+
+            sumRemNotOver += Convert.ToDouble(e.Item.DataItem("remain_notover"))
+        End If
+        Dim vRemainTotal As Double = Convert.ToInt64(e.Item.DataItem("remain_over")) + Convert.ToInt64(e.Item.DataItem("remain_notover"))
+        If vRemainTotal <> 0 Then
+            lblRemainTotal.Text = "<a href='../rptGrid/rptDocList.aspx?vPage=rptKPI&rpType=RemainAll"
+            lblRemainTotal.Text += "&gID=" & e.Item.DataItem("group_title_id") & "&orgID=" & reports.OrgID
+            lblRemainTotal.Text += IIf(lblOfficerID.Text.Trim <> "", "&OfficerID=" & lblOfficerID.Text.Trim, "")
+            lblRemainTotal.Text += "&DateFrom=" & reports.fromdate & "&DateTo=" & reports.todt & "&ExpFinish=" & Request("IsExpectedFinishDate") & "&rnd=" & DateTime.Now.Millisecond & "' target='_blank' >"
+            lblRemainTotal.Text += vRemainTotal.ToString
+            lblRemainTotal.Text += "</a>"
+        End If
+
+        'ออก
+        If Convert.ToDouble(e.Item.DataItem("out_over")) <> 0 Then
+            lblOutOver.Text = "<a href='../rptGrid/rptDocList.aspx?vPage=rptKPI&rpType=OutOver"
+            lblOutOver.Text += "&gID=" & e.Item.DataItem("group_title_id") & "&orgID=" & reports.OrgID
+            lblOutOver.Text += IIf(lblOfficerID.Text.Trim <> "", "&OfficerID=" & lblOfficerID.Text.Trim, "")
+            lblOutOver.Text += "&DateFrom=" & reports.fromdate & "&DateTo=" & reports.todt & "&ExpFinish=" & Request("IsExpectedFinishDate") & "&rnd=" & DateTime.Now.Millisecond & "' target='_blank' >"
+            lblOutOver.Text += e.Item.DataItem("out_over").ToString
+            lblOutOver.Text += "</a>"
+
+            sumOutOver += Convert.ToDouble(e.Item.DataItem("out_over"))
+        End If
+        If Convert.ToDouble(e.Item.DataItem("out_notover")) <> 0 Then
+            lblOutNotOver.Text = "<a href='../rptGrid/rptDocList.aspx?vPage=rptKPI&rpType=OutNotOver"
+            lblOutNotOver.Text += "&gID=" & e.Item.DataItem("group_title_id") & "&orgID=" & reports.OrgID
+            lblOutNotOver.Text += IIf(lblOfficerID.Text.Trim <> "", "&OfficerID=" & lblOfficerID.Text.Trim, "")
+            lblOutNotOver.Text += "&DateFrom=" & reports.fromdate & "&DateTo=" & reports.todt & "&ExpFinish=" & Request("IsExpectedFinishDate") & "&rnd=" & DateTime.Now.Millisecond & "' target='_blank' >"
+            lblOutNotOver.Text += e.Item.DataItem("out_notover").ToString
+            lblOutNotOver.Text += "</a>"
+
+            sumOutNotOver += Convert.ToDouble(e.Item.DataItem("out_notover"))
+        End If
+        Dim vTotOut As Double = Convert.ToInt64(e.Item.DataItem("out_over")) + Convert.ToInt64(e.Item.DataItem("out_notover"))
+        If vTotOut <> 0 Then
+            lblOutTotal.Text = "<a href='../rptGrid/rptDocList.aspx?vPage=rptKPI&rpType=OutAll"
+            lblOutTotal.Text += "&gID=" & e.Item.DataItem("group_title_id") & "&orgID=" & reports.OrgID
+            lblOutTotal.Text += IIf(lblOfficerID.Text.Trim <> "", "&OfficerID=" & lblOfficerID.Text.Trim, "")
+            lblOutTotal.Text += "&DateFrom=" & reports.fromdate & "&DateTo=" & reports.todt & "&ExpFinish=" & Request("IsExpectedFinishDate") & "&rnd=" & DateTime.Now.Millisecond & "' target='_blank' >"
+            lblOutTotal.Text += vTotOut.ToString
+            lblOutTotal.Text += "</a>"
+        End If
+
+        'ค้างคงเหลือ
+        If Convert.ToInt64(e.Item.DataItem("remain_tot_over")) <> 0 Then
+            lblRemTotOver.Text = "<a href='../rptGrid/rptDocList.aspx?vPage=rptKPI&rpType=RemainTotOver"
+            lblRemTotOver.Text += "&gID=" & e.Item.DataItem("group_title_id") & "&orgID=" & reports.OrgID
+            lblRemTotOver.Text += IIf(lblOfficerID.Text.Trim <> "", "&OfficerID=" & lblOfficerID.Text.Trim, "")
+            lblRemTotOver.Text += "&DateFrom=" & reports.fromdate & "&DateTo=" & reports.todt & "&ExpFinish=" & Request("IsExpectedFinishDate") & "&rnd=" & DateTime.Now.Millisecond & "' target='_blank' >"
+            lblRemTotOver.Text += e.Item.DataItem("remain_tot_over").ToString
+            lblRemTotOver.Text += "</a>"
+
+            sumRemTotOver += Convert.ToInt64(e.Item.DataItem("remain_tot_over"))
+        End If
+        If Convert.ToInt64(e.Item.DataItem("remain_tot_notover")) <> 0 Then
+            lblRemTotOver.Text = "<a href='../rptGrid/rptDocList.aspx?vPage=rptKPI&rpType=RemainTotNotOver"
+            lblRemTotOver.Text += "&gID=" & e.Item.DataItem("group_title_id") & "&orgID=" & reports.OrgID
+            lblRemTotOver.Text += IIf(lblOfficerID.Text.Trim <> "", "&OfficerID=" & lblOfficerID.Text.Trim, "")
+            lblRemTotOver.Text += "&DateFrom=" & reports.fromdate & "&DateTo=" & reports.todt & "&ExpFinish=" & Request("IsExpectedFinishDate") & "&rnd=" & DateTime.Now.Millisecond & "' target='_blank' >"
+            lblRemTotOver.Text += e.Item.DataItem("remain_tot_notover").ToString
+            lblRemTotOver.Text += "</a>"
+            sumRemTotNotOver += Convert.ToInt64(e.Item.DataItem("remain_tot_notover"))
+        End If
+        Dim vRemTotOver As Double = Convert.ToInt64(e.Item.DataItem("remain_tot_over")) + Convert.ToInt64(e.Item.DataItem("remain_tot_notover"))
+        If vRemTotOver <> 0 Then
+            lblRemTotOver.Text = "<a href='../rptGrid/rptDocList.aspx?vPage=rptKPI&rpType=RemainTotAll"
+            lblRemTotOver.Text += "&gID=" & e.Item.DataItem("group_title_id") & "&orgID=" & reports.OrgID
+            lblRemTotOver.Text += IIf(lblOfficerID.Text.Trim <> "", "&OfficerID=" & lblOfficerID.Text.Trim, "")
+            lblRemTotOver.Text += "&DateFrom=" & reports.fromdate & "&DateTo=" & reports.todt & "&ExpFinish=" & Request("IsExpectedFinishDate") & "&rnd=" & DateTime.Now.Millisecond & "' target='_blank' >"
+            lblRemTotOver.Text += vRemTotOver.ToString
+            lblRemTotOver.Text += "</a>"
+        End If
+
+        'KPI
+        lblMaxProcPeriod.Text = Convert.ToDouble(e.Item.DataItem("max_proc_period"))
+
+        If Convert.ToInt64(e.Item.DataItem("out_over")) + Convert.ToInt64(e.Item.DataItem("out_notover")) <> 0 Then
+            Dim vKpiAvg As Double = (e.Item.DataItem("sumworkday") / (Convert.ToInt64(e.Item.DataItem("out_over")) + Convert.ToInt64(e.Item.DataItem("out_notover"))))
+            lblKpiAvg.Text = Math.Round(vKpiAvg, 2)
+        Else
+            lblKpiAvg.Text = "0"
+        End If
+
+        If Convert.IsDBNull(e.Item.DataItem("kpi_max")) = False Then
+            lblKpiMax.Text = e.Item.DataItem("kpi_max")
+        End If
+
+        If Convert.IsDBNull(e.Item.DataItem("kpi_min")) = False Then
+            lblKpiMin.Text = e.Item.DataItem("kpi_min")
+        End If
 
         iTitle += 1
     End Sub
