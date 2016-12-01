@@ -537,24 +537,26 @@
             
             function CheckCompanyDocNo() {
                 var vDocNo = document.getElementById("ctl00_ContentPlaceHolder1_txtCompanyDocNo_TextBox1");
-                //alert($(vDocNo).val());
-                var pageUrl = '<%=ResolveUrl("~/Template/AjaxScript.asmx")%>';
-                $.ajax({
-                    type: "POST",
-                    url: pageUrl + "/CheckCompanyDocNo",
-                    data: "{'vCompanyDocNo':'" + $(vDocNo).val() + "'}",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function(msg) {
-                        if (msg.d != "") {
-                            alert("เลขที่หนังสือองค์กรซ้ำ" + msg.d);
-                            //vDocNo.select();
-                            return false;
-                        } else {
-                            return true;
+                if ($(vDocNo).val() != ""){
+                    //alert($(vDocNo).val());
+                    var pageUrl = '<%=ResolveUrl("~/Template/AjaxScript.asmx")%>';
+                    $.ajax({
+                        type: "POST",
+                        url: pageUrl + "/CheckCompanyDocNo",
+                        data: "{'vCompanyDocNo':'" + $(vDocNo).val() + "'}",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function(msg) {
+                            if (msg.d != "") {
+                                alert("เลขที่หนังสือองค์กรซ้ำ" + msg.d);
+                                //vDocNo.select();
+                                return false;
+                            } else {
+                                return true;
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
 
             function ReceiveTypeChange(ReceiveType) {

@@ -58,6 +58,28 @@ Partial Class UserPageControls_ctlDocBookDetailShow
         eng = Nothing
     End Sub
 
+    Public Sub SearchBookNoForChangeCompany(ByVal vBookNo As String)
+        Dim trans As New Linq.Common.Utilities.TransactionDB
+        trans.CreateTransaction()
+        Dim para As New Para.TABLE.DocumentRegisterPara
+        Dim eng As New Engine.Document.DocumentRegisterENG
+        para = eng.GetDocumentParaByBookNo(vBookNo, trans)
+        If para.ID > 0 Then
+            If para.DOC_STATUS_ID = Constant.DocumentRegister.DocStatusID.JobClose Then
+                ShowDocDetail(para, trans, eng)
+            Else
+                ClearDocDetail()
+                Config.SetAlert("เลขที่หนังสือ " & vBookNo & " ไม่อยู่ในสถานะจบงาน", Me.Page)
+            End If
+        Else
+            ClearDocDetail()
+            Config.SetAlert("ไม่พบข้อมูล", Me.Page)
+        End If
+
+        trans.CommitTransaction()
+        eng = Nothing
+    End Sub
+
 
     Private Sub ShowDocDetail(ByVal para As Para.TABLE.DocumentRegisterPara, ByVal trans As Linq.Common.Utilities.TransactionDB, ByVal eng As Engine.Document.DocumentRegisterENG)
         lblID.Text = para.ID
@@ -109,7 +131,7 @@ Partial Class UserPageControls_ctlDocBookDetailShow
         lblOrgOwnName.Text = para.ORGANIZATION_NAME
         lblOfficerOwnName.Text = para.OFFICER_NAME
         lblBookNo.Text = para.BOOK_NO
-        Dim bookoutno As String = Engine.Document.DocumentRegisterENG.GetBookOutDetail(Request("id"), trans)
+        Dim bookoutno As String = Engine.Document.DocumentRegisterENG.GetBookOutDetail(lblID.Text, trans)
         lblBookoutNo.Text = bookoutno
 
         Dim sttPara As New Para.TABLE.DocStatusPara
