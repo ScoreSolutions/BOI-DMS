@@ -255,7 +255,7 @@
                                     <ItemStyle Width="15px" />
                                     <ItemTemplate>
                                         <asp:ImageButton ID="imgDownload" runat="server" ImageUrl="~/Images/download.png"
-                                            Text="Download" ToolTip="ดาวน์โหลด" />
+                                           OnClick="imgDownload_Click" ToolTip="ดาวน์โหลด" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                

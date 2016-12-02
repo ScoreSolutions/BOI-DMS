@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="frmDocBookDetailShow.aspx.vb" Inherits="WebApp_frmDocBookDetailShow"  %>
+﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="frmDocBookDetailShow.aspx.vb" Inherits="WebApp_frmDocBookDetailShow" EnableEventValidation="false" %>
 
 <%@ Register src="../UserPageControls/ctlDocBookDetailShow.ascx" tagname="ctlDocBookDetailShow" tagprefix="uc1" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
