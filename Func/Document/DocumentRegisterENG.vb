@@ -1015,6 +1015,13 @@ Namespace Document
             Return ret
         End Function
 
+        Public Shared Function GetBookOutTable(ByVal vRegisID As Long) As DataTable
+            Dim lnq As New Linq.TABLE.DocumentExtReceiverLinq
+            Dim dt As New DataTable
+            dt = lnq.GetDataList("document_register_id = '" & vRegisID & "'", "id", Nothing)
+            Return dt
+        End Function
+
         Public Shared Function GetBookOutDetail(ByVal vRegisID As Long, ByVal trans As Linq.Common.Utilities.TransactionDB) As String
             Dim ret As String = ""
             Dim lnq As New Linq.TABLE.DocumentExtReceiverLinq

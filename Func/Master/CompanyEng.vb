@@ -97,6 +97,19 @@ Namespace Master
 
             Return para
         End Function
+
+        Public Function GetCompanyParaByComID(ByVal ComID As String, ByVal trans As Linq.Common.Utilities.TransactionDB) As CompanyPara
+            Dim lnq As New CompanyLinq
+            
+            Dim para As New Para.TABLE.CompanyPara
+            If lnq.ChkDataByWhere("comid='" & ComID & "'", trans.Trans) = True Then
+                para = lnq.GetParameter(lnq.ID, trans.Trans)
+            End If
+            lnq = Nothing
+
+            Return para
+        End Function
+
         Public Function SaveCompany(ByVal para As CompanyPara, ByVal UserID As String, ByVal trans As TransactionDB) As Boolean
             Dim ret As Boolean = False
 
