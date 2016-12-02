@@ -997,15 +997,15 @@ Namespace Document
             'trans.CreateTransaction()
 
             Dim lnq As New Linq.TABLE.DocumentRegisterLinq()
-            Dim sql As String = " select top 1 id, book_no, title_name "
-            sql += " from document_register "
-            sql += " where company_doc_no = '" & vCompanyDocNo & "'"
-            sql += " order by register_date desc"
+            Dim sql As String = " select top 1 r.id, r.book_no, r.title_name,r.company_doc_no "
+            sql += " from document_register r"
+            sql += " where r.company_doc_no = '" & vCompanyDocNo & "'"
+            sql += " order by r.register_date desc"
 
             Dim ret As String = ""
             Dim dt As DataTable = lnq.GetListBySql(sql, Nothing)
             If dt.Rows.Count > 0 Then
-                ret = vbCrLf & "เลขที่หนังสือ : " & dt.Rows(0)("book_no") & vbCrLf & " ชื่อเรื่อง : " & dt.Rows(0)("title_name")
+                ret = vbCrLf & "เลขที่หนังสือ : " & dt.Rows(0)("book_no") & vbCrLf & " เลขที่หนังสือองค์กร : " & dt.Rows(0)("company_doc_no") & vbCrLf & " ชื่อเรื่อง : " & dt.Rows(0)("title_name")
             End If
 
             'trans.CommitTransaction()
@@ -1025,13 +1025,19 @@ Namespace Document
         Public Shared Function GetBookOutDetail(ByVal vRegisID As Long, ByVal trans As Linq.Common.Utilities.TransactionDB) As String
             Dim ret As String = ""
             Dim lnq As New Linq.TABLE.DocumentExtReceiverLinq
-            Dim dt As New DataTable
-            dt = lnq.GetDataList("document_register_id = '" & vRegisID & "'", "id", trans.Trans)
+
+            Dim sql As String = "select e.*,c.comid from Document_Ext_Receiver e"
+            sql &= " left join company c on e.company_id_receive=c.id where document_register_id='" & vRegisID & "'"
+            Dim dt As DataTable = lnq.GetListBySql(sql, trans.Trans)
+
+            'Dim dt As New DataTable
+            'dt = lnq.GetDataList("document_register_id = '" & vRegisID & "'", "id", trans.Trans)
 
             If dt.Rows.Count > 0 Then
                 For Each dr As DataRow In dt.Rows
                     Dim bookno As String = FunctionENG.GetThaiNumber(dr("bookout_no"))
                     Dim tmp = "<font color='Blue'>" & bookno & "</font> "
+                    tmp += " <font color='Black'> : เลขทะเบียนบริษัท :" & dr("comid")
                     tmp += " <font color='Gray'> : " & dr("company_name_receive")
                     tmp += " - ลงนาม " & Convert.ToDateTime(dr("approve_date")).ToString("d MMM yy")
                     tmp += ", ส่งออก " & Convert.ToDateTime(dr("send_date")).ToString("d MMM yy")

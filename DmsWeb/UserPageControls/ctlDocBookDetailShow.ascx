@@ -220,6 +220,60 @@
                          </asp:GridView>
                     </td>
                 </tr>
+                 <tr>
+                    <td align="right" class="Csslbl" >
+                        <b>เอกสารแนบ</b>
+                    </td>
+                    <td class="Csslbl" style="color: #000080">
+                        &nbsp;
+                    </td>
+                    <td align="right" class="Csslbl" width="15%">
+                        &nbsp;
+                    </td>
+                    <td class="Csslbl" style="color: #000080">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" colspan="6">
+                        <asp:GridView ID="gvFiles" runat="server" AutoGenerateColumns="False" 
+                            CssClass="mGrid" GridLines="Vertical" Width="100%">
+                            <AlternatingRowStyle CssClass="alt" />
+                            <Columns>
+                                <asp:BoundField DataField="no" HeaderText="ลำดับ" ItemStyle-Width="5%">
+                                    <ItemStyle Width="5%" HorizontalAlign="Center" />
+                                    <HeaderStyle HorizontalAlign="Center" />
+                                </asp:BoundField>
+                                <asp:TemplateField HeaderText="รายละเอียด">
+                                    <ItemStyle HorizontalAlign="Left" Width="95%" />
+                                    <HeaderStyle HorizontalAlign="Center" Width="95%" />
+                                    <ItemTemplate>
+                                        <asp:Label ID="likEdit" runat="server" Text='<%# Bind("description") %>' ></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField ShowHeader="False">
+                                    <ItemStyle Width="15px" />
+                                    <ItemTemplate>
+                                        <asp:ImageButton ID="imgDownload" runat="server" ImageUrl="~/Images/download.png"
+                                            Text="Download" ToolTip="ดาวน์โหลด" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                               
+                                <asp:BoundField DataField="id">
+                                    <ItemStyle CssClass="zHidden" />
+                                    <HeaderStyle CssClass="zHidden" />
+                                    <ControlStyle CssClass="zHidden" />
+                                    <FooterStyle CssClass="zHidden" />
+                                </asp:BoundField>
+                              
+                            </Columns>
+                            <PagerStyle CssClass="PagerStyle" />
+                            <HeaderStyle CssClass="HeaderStyle" />
+                            <AlternatingRowStyle CssClass="AltRowStyle" />
+                        </asp:GridView>
+                    </td>
+                </tr>
+                
                 <tr><td colspan="4">&nbsp;</td></tr>
                 <tr>
                     <td class="Csslbl" style="color: #000080" colspan="4" align="center" >
