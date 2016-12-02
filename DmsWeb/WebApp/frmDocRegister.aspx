@@ -87,6 +87,7 @@
             if (MyArgs != null) {
                 document.getElementById('<%=hdnCustValue.ClientID%>').value = MyArgs[0];
                 document.getElementById('<%=txtCustName.ClientID%>').value = MyArgs[1];
+                document.getElementById('<%=txtCompanyID.ClientID%>').value = MyArgs[2];
             }
         }
     </script>
@@ -203,6 +204,18 @@
                                 <ContentTemplate>
                                     <asp:Panel ID="pnlCompany" runat="server" BorderWidth="1" Width="95%" >
                                         <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                        
+                                        <tr style="height:25px">
+                                                <td align="right" class="Csslbl" >เลขทะเบียนบริษัท : </td>
+                                                <td align="left" class="Csslbl" >
+                                                     <uc2:txtBox ID="txtCompanyID" runat="server" AutoPosBack="True" TableName="COMPANY" FieldName="COMID"  MaxLength="13" />
+                                                </td>
+                                                <td align="right" class="Csslbl"></td>
+                                                <td align="left" >
+                                                   
+                                                </td>
+                                            </tr>
+                                        
                                             <tr style="height:25px">
                                                 <td align="right" class="Csslbl" >ชื่อองค์กร : </td>
                                                 <td colspan="3" align="left">
@@ -247,7 +260,7 @@
                                                      </cc1:AutoCompleteExtender>
                                                      <asp:TextBox ID="hdnCustValue" runat="server" CssClass="zHidden" ></asp:TextBox>
                                                      <asp:Button ID="btnSetCert" runat="server" CssClass="zHidden" />
-                                                     <asp:Button ID="btnAddCustomer" runat="server" Text="เพิ่ม" Width="40px" CssClass="CssBtn" OnClientClick="OpenCompanyPopup('../WebApp/popAddCompany.aspx?rnd=<%=DateTime.Now.Millisecond %>',600,300); return false;" />
+                                                     <asp:Button ID="btnAddCustomer" runat="server" Text="เพิ่ม" Width="40px" CssClass="CssBtn" OnClientClick="OpenCompanyPopup('../WebApp/popAddCompany.aspx?rnd=<%=DateTime.Now.Millisecond %>',600,400); return false;" />
                                                 </td>
                                             </tr>
                                             <tr style="height:25px">

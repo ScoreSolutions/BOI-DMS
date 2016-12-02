@@ -24,6 +24,7 @@
             var vZipcode = "";
             var ProvinceID = "0";
             var DistrictID = "0";
+            var vComID = document.getElementById("<%=txtCompanyID.ClientID %>");
 
             if ($(vCompanyType).val() == "0") {
                 alert("กรุณาเลือกประเภทองค์กร");
@@ -35,6 +36,16 @@
                 $(vThaiName).select();
                 return false;
             }
+            if ($(vComID).val() == "") {
+                alert("กรุณาระบุเลขทะเบียนบริษัท");
+                $(vComID).select();
+                return false;
+            }
+             if ($(vComID).val().length != 13) {
+                alert("กรุณาระบุเลขทะเบียนบริษัทจำนวน 13 หลัก");
+                $(vComID).select();
+                return false;
+            }
 
             AjaxScript.SaveTransLog("popAddCompany.aspx เพิ่มชื่อองค์กร : " + $(vThaiName).val(), '<%=Config.GetLoginHistoryID %>');
             
@@ -42,7 +53,7 @@
             $.ajax({
                 type: "POST",
                 url: pageUrl + "/SaveCompany",
-                data: "{'UserName':'" + vUserName + "','ThaiName':'" + $(vThaiName).val() + "','EngName':'" + $(vEngName).val() + "','vAddress':'" + $(vAddress).val() + "','CompanyType':'" + $(vCompanyType).val() + "','vTel':'" + $(vTel).val() + "','vFax':'" + $(vFax).val() + "','vZipcode':'" + vZipcode + "','ProvinceID':'" + ProvinceID + "','DistrictID':'" + DistrictID + "'}",
+                data: "{'UserName':'" + vUserName + "','ThaiName':'" + $(vThaiName).val() + "','EngName':'" + $(vEngName).val() + "','vAddress':'" + $(vAddress).val() + "','CompanyType':'" + $(vCompanyType).val() + "','vTel':'" + $(vTel).val() + "','vFax':'" + $(vFax).val() + "','vZipcode':'" + vZipcode + "','ProvinceID':'" + ProvinceID + "','DistrictID':'" + DistrictID + "','ComID':'" + $(vComID).val() + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(msg) {
@@ -50,6 +61,7 @@
                         var ret = new Array();
                         ret[0] = msg.d;
                         ret[1] = $(vThaiName).val();
+                        ret[2] = $(vComID).val();
                         window.returnValue = ret;
                     } else {
                         window.returnValue = null;
@@ -85,7 +97,7 @@
                                 <table width="100%">
                                     <tr><td colspan="2">&nbsp;</td></tr>
                                     <tr>
-                                        <td align="right" class="Csslbl" width="15%">
+                                        <td align="right" class="Csslbl" width="20%">
                                             ประเภทองค์กร :
                                         </td>
                                         <td align="left" class="Csslbl">
@@ -94,7 +106,15 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td align="right" class="Csslbl" width="15%">
+                                        <td align="right" class="Csslbl" width="20%">
+                                            เลขทะเบียนบริษัท :
+                                        </td>
+                                        <td align="left" class="Csslbl">
+                                            <uc4:txtBox ID="txtCompanyID" runat="server" IsNotNull="True" Width="400"  MaxLength="13" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right" class="Csslbl" width="20%">
                                             ชื่อไทย :
                                         </td>
                                         <td align="left" class="Csslbl">

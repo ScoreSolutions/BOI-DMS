@@ -239,7 +239,7 @@ Public Class AjaxScript
     End Function
 
     <WebMethod()> _
-    Public Function SaveCompany(ByVal UserName As String, ByVal ThaiName As String, ByVal EngName As String, ByVal vAddress As String, ByVal CompanyType As String, ByVal vTel As String, ByVal vFax As String, ByVal vZipcode As String, ByVal ProvinceID As String, ByVal DistrictID As String) As String
+    Public Function SaveCompany(ByVal UserName As String, ByVal ThaiName As String, ByVal EngName As String, ByVal vAddress As String, ByVal CompanyType As String, ByVal vTel As String, ByVal vFax As String, ByVal vZipcode As String, ByVal ProvinceID As String, ByVal DistrictID As String, ByVal ComID As String) As String
         Dim ret As String = "0"
 
         Dim para As New Para.TABLE.CompanyPara
@@ -253,6 +253,7 @@ Public Class AjaxScript
         para.PROVINCE_ID = ProvinceID
         para.DISTRICT_ID = DistrictID
         para.ACTIVE = "Y"
+        para.COMID = ComID
 
         Dim trans As New Linq.Common.Utilities.TransactionDB
         trans.CreateTransaction()

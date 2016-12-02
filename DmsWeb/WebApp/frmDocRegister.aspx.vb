@@ -42,6 +42,7 @@ Partial Class WebApp_frmDocRegister
             'cmbOwnerOrgID.Attributes.Add("onchange", "BindOrgIDChange('" & cmbOwnerOrgID.ClientID & "','" & cmbOwnerStaffID.ClientID & "');")
             'cmbReceiveOrgID.Attributes.Add("onchange", "BindOrgIDChange('" & cmbReceiveOrgID.ClientID & "','" & cmbReceiveStaffID.ClientID & "');")
             txtCompanyDocNo.Attributes.Add("onBlur", "return CheckCompanyDocNo();")
+            txtCompanyID.Attributes.Add("OnKeyPress", "ChkMinusInt(this,event);")
 
             If Request("RefDocID") IsNot Nothing Then
                 SetRefElecDoc(Request("RefDocID"))
@@ -1232,5 +1233,16 @@ Partial Class WebApp_frmDocRegister
 
     Protected Sub AutoCompleteExtender1_Unload(ByVal sender As Object, ByVal e As System.EventArgs) Handles AutoCompleteExtender1.Unload
         AutoCompleteExtender1.Dispose()
+    End Sub
+
+    Protected Sub txtCompanyID_TextChange(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtCompanyID.TextChange
+        Dim cmpENG As New CompanyEng
+        Dim dt As New DataTable
+        dt = cmpENG.GetDataCompanyList("comid='" & txtCompanyID.Text & "'", "")
+        If dt.Rows.Count > 0 Then
+            txtCustName.Text = dt.Rows(0)("thaiName").ToString()
+            hdnCustValue.Text = dt.Rows(0)("id").ToString()
+        End If
+
     End Sub
 End Class
