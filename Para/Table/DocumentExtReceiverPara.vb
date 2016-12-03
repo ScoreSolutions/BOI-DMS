@@ -41,7 +41,8 @@ Namespace TABLE
         Dim _APPROVE_DATE As  System.Nullable(Of DateTime)  = New DateTime(1,1,1)
         Dim _REF_OLD_SEND_ID As  String  = ""
         Dim _REF_OLD_RECEIVE_ID As  String  = ""
-        Dim _IS_SEND_THEGIF As  System.Nullable(Of Char)  = ""
+        Dim _IS_SEND_THEGIF As System.Nullable(Of Char) = ""
+        Dim _COMPANY_REGIS_NO As String = ""
 
         'Generate Field Property 
         <Column(Storage:="_ID", DbType:="BigInt NOT NULL ",CanBeNull:=false)>  _
@@ -314,7 +315,15 @@ Namespace TABLE
                _IS_SEND_THEGIF = value
             End Set
         End Property 
-
+        <Column(Storage:="_COMPANY_REGIS_NO", DbType:="VarChar(50)")> _
+        Public Property COMPANY_REGIS_NO() As String
+            Get
+                Return _COMPANY_REGIS_NO
+            End Get
+            Set(ByVal value As String)
+                _COMPANY_REGIS_NO = value
+            End Set
+        End Property
 
     End Class
 End Namespace

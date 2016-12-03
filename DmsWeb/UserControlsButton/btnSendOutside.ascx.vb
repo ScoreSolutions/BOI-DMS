@@ -126,6 +126,7 @@ Partial Class UserControls_Button_btnSendOutside
         If dt.Rows.Count > 0 Then
             hdnCustValue.Text = dt.Rows(0)("company_id")
             txtCustName.Text = dt.Rows(0)("company_name")
+            hdnCompanyRegisNo.Text = dt.Rows(0)("company_regis_no")
 
             Dim i As Integer = 0
             For Each dr As DataRow In dt.Rows
@@ -140,6 +141,7 @@ Partial Class UserControls_Button_btnSendOutside
                         rdr("CompanyNameReceive") = drTmp("company_name_receive")
                         rdr("officer_id") = drTmp("officer_id")
                         rdr("company_id") = drTmp("company_id_receive")
+                        rdr("company_regis_no") = drTmp("company_regis_no")
                         ret.Rows.Add(rdr)
                         i += 1
                     Next
@@ -182,6 +184,7 @@ Partial Class UserControls_Button_btnSendOutside
     Const ColCompanyNameReceive As Integer = 1
     Const ColCompanyID As Integer = 6
     Const ColCompanySource As Integer = 7
+    Const ColCompanyRegisNo As Integer = 8
 
     
 
@@ -236,8 +239,6 @@ Partial Class UserControls_Button_btnSendOutside
                             Dim cEng As New Engine.Master.CompanyEng
                             Dim cPara As New Para.TABLE.CompanyPara
                             cPara = cEng.GetCompanyPara(tmpDr("company_id"))
-                            para.COMPANY_ID_RECEIVE = Convert.ToInt64(cPara.ID)
-                            para.COMPANY_NAME_RECEIVE = tmpDr("CompanyNameReceive").ToString
                             If cPara.TH_EGIF_ORG_CODE.Trim <> "" Then
                                 para.IS_SEND_THEGIF = "N"c
                             Else
@@ -245,6 +246,10 @@ Partial Class UserControls_Button_btnSendOutside
                             End If
                             cPara = Nothing
                             cEng = Nothing
+
+                            para.COMPANY_ID_RECEIVE = Convert.ToInt64(tmpDr("company_id"))
+                            para.COMPANY_NAME_RECEIVE = tmpDr("CompanyNameReceive").ToString
+                            para.COMPANY_REGIS_NO = tmpDr("CompanyRegisNo").ToString
 
                             Dim sEng As New Engine.Master.OfficerEng
                             Dim sPara As New Para.TABLE.OfficerPara
@@ -321,6 +326,7 @@ Partial Class UserControls_Button_btnSendOutside
                                 srPara.OFFICER_NAME_POSSESS = dPara.OFFICER_NAME_POSSESS
                                 srPara.ADMINISTRATION_TYPE = "1"
                                 srPara.REMARKS = dPara.REMARKS
+                                srPara.COMPANY_REGIS_NO = dPara.COMPANY_REGIS_NO
                                 srPara.COMPANY_ID = dPara.COMPANY_ID
                                 srPara.COMPANY_NAME = dPara.COMPANY_NAME
                                 srPara.COMPANY_DOC_NO = dPara.COMPANY_DOC_NO
@@ -489,6 +495,7 @@ Partial Class UserControls_Button_btnSendOutside
                 dr("CompanyNameReceive") = grv.Cells(ColCompanyNameReceive).Text
                 dr("company_id") = grv.Cells(ColCompanyID).Text
                 dr("CompanySource") = grv.Cells(ColCompanySource).Text
+                dr("CompanyRegisNo") = grv.Cells(ColCompanyRegisNo).Text
                 ret.Rows.Add(dr)
             Next
         End If
@@ -519,6 +526,7 @@ Partial Class UserControls_Button_btnSendOutside
             dr("CompanyNameReceive") = CompanyName
             dr("company_id") = hdnCustValue.Text
             dr("CompanySource") = CompanySource
+            dr("CompanyRegisNo") = hdnCompanyRegisNo.Text
             If txtNo.Text.Trim = "" Then
                 dr("no") = dt.Rows.Count + 1
             Else
@@ -579,6 +587,7 @@ Partial Class UserControls_Button_btnSendOutside
         txtRemarks.Text = ""
         txtCustName.Text = ""
         hdnCustValue.Text = ""
+        hdnCompanyRegisNo.Text = ""
         txtRowID.Text = ""
         txtIsEdit.Text = "N"
         txtNo.Text = ""
@@ -593,6 +602,7 @@ Partial Class UserControls_Button_btnSendOutside
         ret.Columns.Add("CompanyNameReceive")
         ret.Columns.Add("company_id")
         ret.Columns.Add("CompanySource")
+        ret.Columns.Add("CompanyRegisNo")
         Return ret
     End Function
 

@@ -222,7 +222,7 @@
                 </tr>
                  <tr>
                     <td align="right" class="Csslbl" >
-                        <b>เอกสารแนบ</b>
+                        <b><asp:Label ID="lblAttachFile" runat="server" Text="เอกสารแนบ" Visible="false" ></asp:Label></b>
                     </td>
                     <td class="Csslbl" style="color: #000080">
                         &nbsp;

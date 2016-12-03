@@ -103,7 +103,8 @@ Namespace TABLE
         Dim _COMPANY_CERT_NO As  String  = ""
         Dim _COMPANY_NOTIFY_NO As  String  = ""
         Dim _REF_TH_EGIF_DOC_INBOUND_ID As  String  = ""
-        Dim _BOOKOUT_DATE As  System.Nullable(Of DateTime)  = New DateTime(1,1,1)
+        Dim _BOOKOUT_DATE As System.Nullable(Of DateTime) = New DateTime(1, 1, 1)
+        Dim _COMPANY_REGIS_NO As String = ""
 
         'Generate Field Property 
         <Column(Storage:="_ID", DbType:="BigInt NOT NULL ",CanBeNull:=false)>  _
@@ -609,7 +610,16 @@ Namespace TABLE
             Set(ByVal value As  System.Nullable(Of DateTime) )
                _BOOKOUT_DATE = value
             End Set
-        End Property 
+        End Property
+        <Column(Storage:="_COMPANY_REGIS_NO", DbType:="VarChar(50)")> _
+        Public Property COMPANY_REGIS_NO() As String
+            Get
+                Return _COMPANY_REGIS_NO
+            End Get
+            Set(ByVal value As String)
+                _COMPANY_REGIS_NO = value
+            End Set
+        End Property
 
 
         'Clear All Data
@@ -669,7 +679,8 @@ Namespace TABLE
             _COMPANY_CERT_NO = ""
             _COMPANY_NOTIFY_NO = ""
             _REF_TH_EGIF_DOC_INBOUND_ID = ""
-            _BOOKOUT_DATE = New DateTime(1,1,1)
+            _BOOKOUT_DATE = New DateTime(1, 1, 1)
+            _COMPANY_REGIS_NO = ""
         End Sub
 
        'Define Public Method 
@@ -983,7 +994,8 @@ Namespace TABLE
                         If Convert.IsDBNull(Rdr("company_cert_no")) = False Then _company_cert_no = Rdr("company_cert_no").ToString()
                         If Convert.IsDBNull(Rdr("company_notify_no")) = False Then _company_notify_no = Rdr("company_notify_no").ToString()
                         If Convert.IsDBNull(Rdr("ref_th_egif_doc_inbound_id")) = False Then _ref_th_egif_doc_inbound_id = Rdr("ref_th_egif_doc_inbound_id").ToString()
-                        If Convert.IsDBNull(Rdr("bookout_date")) = False Then _bookout_date = Convert.ToDateTime(Rdr("bookout_date"))
+                        If Convert.IsDBNull(Rdr("bookout_date")) = False Then _BOOKOUT_DATE = Convert.ToDateTime(Rdr("bookout_date"))
+                        If Convert.IsDBNull(Rdr("company_regis_no")) = False Then _COMPANY_REGIS_NO = Rdr("company_regis_no").ToString()
                     Else
                         ret = False
                         _error = MessageResources.MSGEV002
@@ -1076,7 +1088,8 @@ Namespace TABLE
                         If Convert.IsDBNull(Rdr("company_cert_no")) = False Then _company_cert_no = Rdr("company_cert_no").ToString()
                         If Convert.IsDBNull(Rdr("company_notify_no")) = False Then _company_notify_no = Rdr("company_notify_no").ToString()
                         If Convert.IsDBNull(Rdr("ref_th_egif_doc_inbound_id")) = False Then _ref_th_egif_doc_inbound_id = Rdr("ref_th_egif_doc_inbound_id").ToString()
-                        If Convert.IsDBNull(Rdr("bookout_date")) = False Then _bookout_date = Convert.ToDateTime(Rdr("bookout_date"))
+                        If Convert.IsDBNull(Rdr("bookout_date")) = False Then _BOOKOUT_DATE = Convert.ToDateTime(Rdr("bookout_date"))
+                        If Convert.IsDBNull(Rdr("company_regis_no")) = False Then _COMPANY_REGIS_NO = Rdr("company_regis_no").ToString()
 
                         'Generate Item For Child Table
                         'Child Table Name : DOCUMENT_CANCEL_CLOSE Column :document_register_id
@@ -1172,7 +1185,8 @@ Namespace TABLE
                         If Convert.IsDBNull(Rdr("company_cert_no")) = False Then ret.company_cert_no = Rdr("company_cert_no").ToString()
                         If Convert.IsDBNull(Rdr("company_notify_no")) = False Then ret.company_notify_no = Rdr("company_notify_no").ToString()
                         If Convert.IsDBNull(Rdr("ref_th_egif_doc_inbound_id")) = False Then ret.ref_th_egif_doc_inbound_id = Rdr("ref_th_egif_doc_inbound_id").ToString()
-                        If Convert.IsDBNull(Rdr("bookout_date")) = False Then ret.bookout_date = Convert.ToDateTime(Rdr("bookout_date"))
+                        If Convert.IsDBNull(Rdr("bookout_date")) = False Then ret.BOOKOUT_DATE = Convert.ToDateTime(Rdr("bookout_date"))
+                        If Convert.IsDBNull(Rdr("company_regis_no")) = False Then ret.COMPANY_REGIS_NO = Rdr("company_regis_no").ToString()
 
                         'Generate Item For Child Table
                         'Child Table Name : DOCUMENT_CANCEL_CLOSE Column :document_register_id
@@ -1206,7 +1220,7 @@ Namespace TABLE
         Private ReadOnly Property SqlInsert() As String 
             Get
                 Dim Sql As String=""
-                Sql += "INSERT INTO " & tableName  & " (ID, CREATE_BY, CREATE_ON, UPDATE_BY, UPDATE_ON, BOOK_NO, REQUEST_NO, GROUP_TITLE_ID, TITLE_NAME, REGISTER_DATE, EXPECT_FINISH_DATE, DOC_SECRET_ID, DOC_SPEED_ID, ORGANIZATION_ID_OWNER, ORGANIZATION_NAME, ORGANIZATION_APPNAME, OFFICER_ID_APPROVE, OFFICER_NAME, OFFICER_ORGANIZATION_ID, ADMINISTRATION_TYPE, REMARKS, BUSINESS_TYPE_ID, COMPANY_ID, COMPANY_NAME, COMPANY_DOC_NO, COMPANY_DOC_TYPE_ID, COMPANY_DOC_SYS_ID, COMPANY_REQ_ID, COMPANY_DOC_DATE, COMPANY_SIGN, COMPANY_SIGN_DATE, DOC_STATUS_ID, USERNAME_REGISTER, ORGANIZATION_ID_REGISTER, CLOSE_BY, CLOSE_BY_NAME, CLOSE_DATE, BOOKOUT_NO, ORGANIZATION_ID_PROCESS, ORGANIZATION_ID_STORAGE, ORGANIZATION_NAME_STORAGE, ID_MUST_RECEIVE_DOC, ELECTRONIC_DOC_ID, DOC_SYS_CODE, REF_OLD_ID, DOCUMENT_RECEIVE_TYPE, OFFICER_ID_POSSESS, OFFICER_NAME_POSSESS, REF_DOCUMENT_REGISTER_ID, CLOSE_REMARKS, ORGANIZATION_NAME_PROCESS, ORGANIZATION_ABBNAME_PROCESS, COMPANY_CERT_NO, COMPANY_NOTIFY_NO, REF_TH_EGIF_DOC_INBOUND_ID, BOOKOUT_DATE)"
+                Sql += "INSERT INTO " & TableName & " (ID, CREATE_BY, CREATE_ON, UPDATE_BY, UPDATE_ON, BOOK_NO, REQUEST_NO, GROUP_TITLE_ID, TITLE_NAME, REGISTER_DATE, EXPECT_FINISH_DATE, DOC_SECRET_ID, DOC_SPEED_ID, ORGANIZATION_ID_OWNER, ORGANIZATION_NAME, ORGANIZATION_APPNAME, OFFICER_ID_APPROVE, OFFICER_NAME, OFFICER_ORGANIZATION_ID, ADMINISTRATION_TYPE, REMARKS, BUSINESS_TYPE_ID, COMPANY_ID, COMPANY_NAME, COMPANY_DOC_NO, COMPANY_DOC_TYPE_ID, COMPANY_DOC_SYS_ID, COMPANY_REQ_ID, COMPANY_DOC_DATE, COMPANY_SIGN, COMPANY_SIGN_DATE, DOC_STATUS_ID, USERNAME_REGISTER, ORGANIZATION_ID_REGISTER, CLOSE_BY, CLOSE_BY_NAME, CLOSE_DATE, BOOKOUT_NO, ORGANIZATION_ID_PROCESS, ORGANIZATION_ID_STORAGE, ORGANIZATION_NAME_STORAGE, ID_MUST_RECEIVE_DOC, ELECTRONIC_DOC_ID, DOC_SYS_CODE, REF_OLD_ID, DOCUMENT_RECEIVE_TYPE, OFFICER_ID_POSSESS, OFFICER_NAME_POSSESS, REF_DOCUMENT_REGISTER_ID, CLOSE_REMARKS, ORGANIZATION_NAME_PROCESS, ORGANIZATION_ABBNAME_PROCESS, COMPANY_CERT_NO, COMPANY_NOTIFY_NO, REF_TH_EGIF_DOC_INBOUND_ID, BOOKOUT_DATE, COMPANY_REGIS_NO)"
                 Sql += " VALUES("
                 sql += DB.SetDouble(_ID) & ", "
                 sql += DB.SetString(_CREATE_BY) & ", "
@@ -1263,7 +1277,8 @@ Namespace TABLE
                 sql += DB.SetString(_COMPANY_CERT_NO) & ", "
                 sql += DB.SetString(_COMPANY_NOTIFY_NO) & ", "
                 sql += DB.SetString(_REF_TH_EGIF_DOC_INBOUND_ID) & ", "
-                sql += DB.SetDateTime(_BOOKOUT_DATE)
+                Sql += DB.SetDateTime(_BOOKOUT_DATE) & ", "
+                Sql += DB.SetString(_COMPANY_REGIS_NO) & " "
                 sql += ")"
                 Return sql
             End Get
@@ -1330,7 +1345,8 @@ Namespace TABLE
                 Sql += "COMPANY_CERT_NO = " & DB.SetString(_COMPANY_CERT_NO) & ", "
                 Sql += "COMPANY_NOTIFY_NO = " & DB.SetString(_COMPANY_NOTIFY_NO) & ", "
                 Sql += "REF_TH_EGIF_DOC_INBOUND_ID = " & DB.SetString(_REF_TH_EGIF_DOC_INBOUND_ID) & ", "
-                Sql += "BOOKOUT_DATE = " & DB.SetDateTime(_BOOKOUT_DATE) + ""
+                Sql += "BOOKOUT_DATE = " & DB.SetDateTime(_BOOKOUT_DATE) + ", "
+                Sql += "COMPANY_REGIS_NO = " & DB.SetString(_COMPANY_REGIS_NO) + " "
                 Return Sql
             End Get
         End Property

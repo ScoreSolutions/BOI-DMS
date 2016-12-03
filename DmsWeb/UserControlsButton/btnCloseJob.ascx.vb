@@ -153,6 +153,7 @@ Partial Class UserControls_Button_btnCloseJob
                                 srPara.OFFICER_NAME_POSSESS = dPara.OFFICER_NAME_POSSESS
                                 srPara.ADMINISTRATION_TYPE = "1"
                                 srPara.REMARKS = dPara.REMARKS
+                                srPara.COMPANY_REGIS_NO = dPara.COMPANY_REGIS_NO
                                 srPara.COMPANY_ID = dPara.COMPANY_ID
                                 srPara.COMPANY_NAME = dPara.COMPANY_NAME
                                 srPara.COMPANY_DOC_NO = dPara.COMPANY_DOC_NO

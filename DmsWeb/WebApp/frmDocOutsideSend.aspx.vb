@@ -126,6 +126,8 @@ Partial Class WebApp_frmDocOutsideSend
                 dt.Columns.Add("dates_app", GetType(Date))
                 dt.Columns.Add("company_name")
                 dt.Columns.Add("company_id")
+                dt.Columns.Add("company_regis_no")
+                dt.Columns.Add("company_doc_sys_id")
 
                 Dim trans As New Linq.Common.Utilities.TransactionDB
                 trans.CreateTransaction()
@@ -139,7 +141,9 @@ Partial Class WebApp_frmDocOutsideSend
                     dr("book_title") = dPara.TITLE_NAME
                     dr("dates_app") = DateTime.Now
                     dr("company_name") = dPara.COMPANY_NAME
-                    dr("company_id") = dPara.ID
+                    dr("company_id") = dPara.COMPANY_ID
+                    dr("company_regis_no") = dPara.COMPANY_REGIS_NO
+                    dr("company_doc_sys_id") = dPara.COMPANY_DOC_SYS_ID
                     dt.Rows.Add(dr)
 
                     Config.SaveTransLog("frmOutsideSend.aspx คลิกปุ่มส่งออกนอกสำนักงาน เลขที่หนังสือ " & dPara.BOOK_NO)

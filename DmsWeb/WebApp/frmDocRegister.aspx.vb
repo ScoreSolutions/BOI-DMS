@@ -351,6 +351,7 @@ Partial Class WebApp_frmDocRegister
         cdlReceiveStaffID.SelectedValue = uPara.OFFICER_DATA.ID
         txtRemarks.Text = ""
         rdiReceiveType.SelectedIndex = 0 'การลงทะเบียนรับจากภายนอก/ลงทะเบียนรับจากภายใน
+        txtCompanyID.Text = ""
         txtCustName.Text = ""
         hdnCustValue.Text = ""
         txtCompanyDocNo.Text = ""
@@ -504,6 +505,7 @@ Partial Class WebApp_frmDocRegister
         sPara = Nothing
 
         'Set Compary ที่เป็นข้อมูลที่มาจากแต่ละที่
+        para.COMPANY_REGIS_NO = txtCompanyID.Text.Trim
         para.COMPANY_NAME = txtCustName.Text
         If rdiReceiveType.SelectedValue = "0" Then
             'ลงทะเบียนรับจากหน่วยงานภายนอก
@@ -1035,6 +1037,8 @@ Partial Class WebApp_frmDocRegister
                     dt.Columns.Add("dates_app", GetType(Date))
                     dt.Columns.Add("company_name")
                     dt.Columns.Add("company_id")
+                    dt.Columns.Add("company_regis_no")
+                    dt.Columns.Add("company_doc_sys_id")
 
                     Dim dr As DataRow = dt.NewRow
                     dr("id") = dPara.ID
@@ -1043,6 +1047,8 @@ Partial Class WebApp_frmDocRegister
                     dr("dates_app") = DateTime.Now
                     dr("company_name") = dPara.COMPANY_NAME
                     dr("company_id") = dPara.COMPANY_ID
+                    dr("company_regis_no") = dPara.COMPANY_REGIS_NO
+                    dr("company_doc_sys_id") = dPara.COMPANY_DOC_SYS_ID
                     dt.Rows.Add(dr)
 
                     Config.SaveTransLog("frmDocumentRegister.aspx คลิกปุ่มส่งออกภายนอกสำนักงาน")

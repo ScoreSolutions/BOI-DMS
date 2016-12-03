@@ -24,8 +24,10 @@
             document.getElementById('<%=txtCustName.ClientID%>').style.backgroundImage = 'none';
         }
         function OnCustomerSelected(source, eventArgs) {
-            var custVal = eventArgs.get_value();
+            var retVal = eventArgs.get_value().split("|");
+            var custVal = retVal[0];
             document.getElementById('<%=hdnCustValue.ClientID%>').value = custVal;
+            document.getElementById('<%=txtCompanyID.ClientID%>').value = retVal[1];
 
             var chk = document.getElementById("<%=chkCertNo.ClientID %>");
             if (chk != null)

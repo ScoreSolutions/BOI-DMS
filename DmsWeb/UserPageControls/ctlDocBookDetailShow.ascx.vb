@@ -181,30 +181,32 @@ Partial Class UserPageControls_ctlDocBookDetailShow
         End If
 
 
+        If para.DOC_STATUS_ID = Constant.DocumentRegister.DocStatusID.JobClose Then
+            'ต้องเป็นเอกสารที่จบงานแล้วเท่านั้น
 
-        eng = New Engine.Document.DocumentRegisterENG
-        dt = eng.GetAttachFileList(para.ID)
-        dt.Columns.Add("no")
-        dt.Columns.Add("file_byte", GetType(Byte()))
-        If dt.Rows.Count > 0 Then
-            Dim uPara As Para.Common.UserProfilePara = Config.GetLogOnUser
-            For i As Integer = 0 To dt.Rows.Count - 1
-                dt.Rows(i)("no") = (i + 1)
-                If File.Exists(Engine.Common.FunctionENG.GetFileUploadPath & dt.Rows(i)("file_name")) = True Then
-                    dt.Rows(i)("file_byte") = File.ReadAllBytes(Engine.Common.FunctionENG.GetFileUploadPath & dt.Rows(i)("file_name"))
-                End If
-                If Convert.IsDBNull(dt.Rows(i)("description")) = True Then
-                    dt.Rows(i)("description") = "-"
-                End If
-            Next
+            eng = New Engine.Document.DocumentRegisterENG
+            dt = eng.GetAttachFileList(para.ID)
+            dt.Columns.Add("no")
+            dt.Columns.Add("file_byte", GetType(Byte()))
+            If dt.Rows.Count > 0 Then
+                Dim uPara As Para.Common.UserProfilePara = Config.GetLogOnUser
+                For i As Integer = 0 To dt.Rows.Count - 1
+                    dt.Rows(i)("no") = (i + 1)
+                    If File.Exists(Engine.Common.FunctionENG.GetFileUploadPath & dt.Rows(i)("file_name")) = True Then
+                        dt.Rows(i)("file_byte") = File.ReadAllBytes(Engine.Common.FunctionENG.GetFileUploadPath & dt.Rows(i)("file_name"))
+                    End If
+                    If Convert.IsDBNull(dt.Rows(i)("description")) = True Then
+                        dt.Rows(i)("description") = "-"
+                    End If
+                Next
+                lblAttachFile.Visible = True
+                gvFiles.DataSource = dt
+                gvFiles.DataBind()
+            End If
+            eng = Nothing
+
         End If
-        eng = Nothing
-
-        Session(Constant.SessFileUploadList) = dt
-        gvFiles.DataSource = dt
-        gvFiles.DataBind()
-
-
+        
         Config.SaveTransLog("แสดงรายละเอียดหนังสือเลขที่ :" & para.BOOK_NO, Config.GetLoginHistoryID)
 
         SearchEng = Nothing

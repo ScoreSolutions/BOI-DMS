@@ -227,7 +227,11 @@ Public Class AjaxScript
             eng = Nothing
             If dt.Rows.Count > 0 Then
                 For i As Integer = 0 To dt.Rows.Count - 1
-                    itemsCust.Insert(i, AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(dt.Rows(i)("company_name").ToString, dt.Rows(i)("id").ToString))
+                    Dim retValue As String = dt.Rows(i)("id").ToString & "|"
+                    If Convert.IsDBNull(dt.Rows(i)("company_regis_id")) = False Then
+                        retValue += dt.Rows(i)("company_regis_id")
+                    End If
+                    itemsCust.Insert(i, AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(dt.Rows(i)("company_name").ToString, retValue))
                 Next
                 dt = Nothing
             Else

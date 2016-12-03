@@ -29,7 +29,7 @@ Namespace Master
             Dim dt As New DataTable
             Dim trans As New Linq.Common.Utilities.TransactionDB
             trans.CreateTransaction()
-            Dim sql As String = " select top 100 id, case when ltrim(thaiName)='' then engName else thaiName end + ' (" & Para.Common.Utilities.Constant.CompanySourceType.DMS & ")' company_name "
+            Dim sql As String = " select top 100 id, case when ltrim(thaiName)='' then engName else thaiName end + ' (" & Para.Common.Utilities.Constant.CompanySourceType.DMS & ")' company_name, comid company_regis_id "
             sql += " from company "
             sql += " where ltrim(case when ltrim(thaiName)='' then engName else thaiName end)<>'' "
             sql += " and ltrim(case when ltrim(thaiName)='' then engName else thaiName end) like '" & WhText & "%' "
@@ -48,6 +48,7 @@ Namespace Master
                         Dim dr As DataRow = dt.NewRow
                         dr("id") = cDr("id")
                         dr("company_name") = cDr("company_name")
+                        dr("company_regis_id") = cDr("company_regis_id")
                         dt.Rows.Add(dr)
                     Next
                 End If

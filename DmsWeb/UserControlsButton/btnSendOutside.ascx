@@ -22,11 +22,14 @@
         document.getElementById('<%=txtCustName.ClientID%>').style.backgroundImage = 'none';
     }
     function OutOnCustomerSelected(source, eventArgs) {
-        document.getElementById('<%=hdnCustValue.ClientID%>').value = eventArgs.get_value();
+        var retVal = eventArgs.get_value().split("|");
+        document.getElementById('<%=hdnCustValue.ClientID%>').value = retVal[0];
+        document.getElementById('<%=hdnCompanyRegisNo.ClientID%>').value = retVal[1];
     }
     function OutClearTxtCustValue() {
         if (document.getElementById('<%=txtCustName.ClientID%>').value == "") {
             document.getElementById('<%=hdnCustValue.ClientID%>').value = "";
+            document.getElementById('<%=hdnCompanyRegisNo.ClientID%>').value = "";
         }
     }
 </script>
@@ -138,6 +141,7 @@
                                 </Animations>
                              </cc1:AutoCompleteExtender>
                              <asp:TextBox ID="hdnCustValue" runat="server" CssClass="zHidden"  ></asp:TextBox>
+                             <asp:TextBox ID="hdnCompanyRegisNo" runat="server" ></asp:TextBox>
                         </td>
                         <td align="right" width="10%" class="Csslbl">ผู้ลงนาม : </td>
                         <td width="30%" align="left" >
@@ -178,7 +182,7 @@
                 <div style="width:95%;height:250px;overflow:scroll;overflow-x:hidden;"  >
                     <table width="95%" border="0" cellpadding="0" cellspacing="0">
                         <tr>
-                            <td align="right" colspan="4">
+                            <td align="right">
                                 <asp:GridView ID="gvSendList" runat="server" 
                                     AutoGenerateColumns="False" CssClass="mGrid" 
                                     GridLines="Vertical" Width="100%">
@@ -221,6 +225,12 @@
                                             <FooterStyle CssClass="zHidden" />
                                         </asp:BoundField>
                                         <asp:BoundField DataField="CompanySource"  >
+                                            <HeaderStyle CssClass="zHidden" />
+                                            <ItemStyle CssClass="zHidden" />
+                                            <ControlStyle CssClass="zHidden" />
+                                            <FooterStyle CssClass="zHidden" />
+                                        </asp:BoundField>
+                                        <asp:BoundField DataField="CompanyRegisNo"  >
                                             <HeaderStyle CssClass="zHidden" />
                                             <ItemStyle CssClass="zHidden" />
                                             <ControlStyle CssClass="zHidden" />

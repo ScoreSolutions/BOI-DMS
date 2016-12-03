@@ -311,6 +311,8 @@ Partial Class WebApp_frmDocInsideReceive
                 dt.Columns.Add("dates_app", GetType(Date))
                 dt.Columns.Add("company_name")
                 dt.Columns.Add("company_id")
+                dt.Columns.Add("company_regis_no")
+                dt.Columns.Add("company_doc_sys_id")
 
                 Dim trans As New Linq.Common.Utilities.TransactionDB
                 trans.CreateTransaction()
@@ -325,6 +327,8 @@ Partial Class WebApp_frmDocInsideReceive
                     dr("dates_app") = dPara.REGISTER_DATE.Value
                     dr("company_name") = dPara.COMPANY_NAME
                     dr("company_id") = dPara.COMPANY_ID
+                    dr("company_regis_no") = dPara.COMPANY_REGIS_NO
+                    dr("company_doc_sys_id") = dPara.COMPANY_DOC_SYS_ID
                     dt.Rows.Add(dr)
                 Next
                 trans.CommitTransaction()

@@ -77,7 +77,8 @@ Namespace TABLE
         Dim _APPROVE_DATE As  System.Nullable(Of DateTime)  = New DateTime(1,1,1)
         Dim _REF_OLD_SEND_ID As  String  = ""
         Dim _REF_OLD_RECEIVE_ID As  String  = ""
-        Dim _IS_SEND_THEGIF As  System.Nullable(Of Char)  = ""
+        Dim _IS_SEND_THEGIF As System.Nullable(Of Char) = ""
+        Dim _COMPANY_REGIS_NO As String = ""
 
         'Generate Field Property 
         <Column(Storage:="_ID", DbType:="BigInt NOT NULL ",CanBeNull:=false)>  _
@@ -349,7 +350,16 @@ Namespace TABLE
             Set(ByVal value As  System.Nullable(Of Char) )
                _IS_SEND_THEGIF = value
             End Set
-        End Property 
+        End Property
+        <Column(Storage:="_COMPANY_REGIS_NO", DbType:="VarChar(50)")> _
+        Public Property COMPANY_REGIS_NO() As String
+            Get
+                Return _COMPANY_REGIS_NO
+            End Get
+            Set(ByVal value As String)
+                _COMPANY_REGIS_NO = value
+            End Set
+        End Property
 
 
         'Clear All Data
@@ -384,6 +394,7 @@ Namespace TABLE
             _REF_OLD_SEND_ID = ""
             _REF_OLD_RECEIVE_ID = ""
             _IS_SEND_THEGIF = ""
+            _COMPANY_REGIS_NO = ""
         End Sub
 
        'Define Public Method 
@@ -735,7 +746,8 @@ Namespace TABLE
                         If Convert.IsDBNull(Rdr("approve_date")) = False Then _approve_date = Convert.ToDateTime(Rdr("approve_date"))
                         If Convert.IsDBNull(Rdr("ref_old_send_id")) = False Then _ref_old_send_id = Rdr("ref_old_send_id").ToString()
                         If Convert.IsDBNull(Rdr("ref_old_receive_id")) = False Then _ref_old_receive_id = Rdr("ref_old_receive_id").ToString()
-                        If Convert.IsDBNull(Rdr("is_send_thegif")) = False Then _is_send_thegif = Rdr("is_send_thegif").ToString()
+                        If Convert.IsDBNull(Rdr("is_send_thegif")) = False Then _IS_SEND_THEGIF = Rdr("is_send_thegif").ToString()
+                        If Convert.IsDBNull(Rdr("company_regis_no")) = False Then _COMPANY_REGIS_NO = Rdr("company_regis_no").ToString()
                     Else
                         ret = False
                         _error = MessageResources.MSGEV002
@@ -802,7 +814,8 @@ Namespace TABLE
                         If Convert.IsDBNull(Rdr("approve_date")) = False Then _approve_date = Convert.ToDateTime(Rdr("approve_date"))
                         If Convert.IsDBNull(Rdr("ref_old_send_id")) = False Then _ref_old_send_id = Rdr("ref_old_send_id").ToString()
                         If Convert.IsDBNull(Rdr("ref_old_receive_id")) = False Then _ref_old_receive_id = Rdr("ref_old_receive_id").ToString()
-                        If Convert.IsDBNull(Rdr("is_send_thegif")) = False Then _is_send_thegif = Rdr("is_send_thegif").ToString()
+                        If Convert.IsDBNull(Rdr("is_send_thegif")) = False Then _IS_SEND_THEGIF = Rdr("is_send_thegif").ToString()
+                        If Convert.IsDBNull(Rdr("company_regis_no")) = False Then _COMPANY_REGIS_NO = Rdr("company_regis_no").ToString()
 
                         'Generate Item For Child Table
                     Else
@@ -868,7 +881,8 @@ Namespace TABLE
                         If Convert.IsDBNull(Rdr("approve_date")) = False Then ret.approve_date = Convert.ToDateTime(Rdr("approve_date"))
                         If Convert.IsDBNull(Rdr("ref_old_send_id")) = False Then ret.ref_old_send_id = Rdr("ref_old_send_id").ToString()
                         If Convert.IsDBNull(Rdr("ref_old_receive_id")) = False Then ret.ref_old_receive_id = Rdr("ref_old_receive_id").ToString()
-                        If Convert.IsDBNull(Rdr("is_send_thegif")) = False Then ret.is_send_thegif = Rdr("is_send_thegif").ToString()
+                        If Convert.IsDBNull(Rdr("is_send_thegif")) = False Then ret.IS_SEND_THEGIF = Rdr("is_send_thegif").ToString()
+                        If Convert.IsDBNull(Rdr("company_regis_no")) = False Then ret.COMPANY_REGIS_NO = Rdr("company_regis_no").ToString()
 
                         'Generate Item For Child Table
 
@@ -897,7 +911,7 @@ Namespace TABLE
         Private ReadOnly Property SqlInsert() As String 
             Get
                 Dim Sql As String=""
-                Sql += "INSERT INTO " & tableName  & " (ID, CREATE_BY, CREATE_ON, UPDATE_BY, UPDATE_ON, DOCUMENT_REGISTER_ID, ORGANIZATION_ID_SEND, ORGANIZATION_NAME_SEND, ORGANIZATION_APPNAME_SEND, SEND_DATE, SENDER_OFFICER_USERNAME, SENDER_OFFICER_FULLNAME, BOOKOUT_NO, COMPANY_ID_RECEIVE, COMPANY_NAME_RECEIVE, COMPANY_DOC_SYSTEM_ID, OFFICER_USERNAME, OFFICER_FULLNAME, REMARKS, SLOT_NO, RECEIVE_STATUS_ID, PUBLISH_TYPE_ID, ORGANIZATION_ID_STORAGE, ORGANIZATION_NAME_STORAGE, EXPECT_FINISH_DATE, MAXIMUM_PROCESSING_PERIOD, APPROVE_DATE, REF_OLD_SEND_ID, REF_OLD_RECEIVE_ID, IS_SEND_THEGIF)"
+                Sql += "INSERT INTO " & TableName & " (ID, CREATE_BY, CREATE_ON, UPDATE_BY, UPDATE_ON, DOCUMENT_REGISTER_ID, ORGANIZATION_ID_SEND, ORGANIZATION_NAME_SEND, ORGANIZATION_APPNAME_SEND, SEND_DATE, SENDER_OFFICER_USERNAME, SENDER_OFFICER_FULLNAME, BOOKOUT_NO, COMPANY_ID_RECEIVE, COMPANY_NAME_RECEIVE, COMPANY_DOC_SYSTEM_ID, OFFICER_USERNAME, OFFICER_FULLNAME, REMARKS, SLOT_NO, RECEIVE_STATUS_ID, PUBLISH_TYPE_ID, ORGANIZATION_ID_STORAGE, ORGANIZATION_NAME_STORAGE, EXPECT_FINISH_DATE, MAXIMUM_PROCESSING_PERIOD, APPROVE_DATE, REF_OLD_SEND_ID, REF_OLD_RECEIVE_ID, IS_SEND_THEGIF, COMPANY_REGIS_NO)"
                 Sql += " VALUES("
                 sql += DB.SetDouble(_ID) & ", "
                 sql += DB.SetString(_CREATE_BY) & ", "
@@ -928,7 +942,8 @@ Namespace TABLE
                 sql += DB.SetDateTime(_APPROVE_DATE) & ", "
                 sql += DB.SetString(_REF_OLD_SEND_ID) & ", "
                 sql += DB.SetString(_REF_OLD_RECEIVE_ID) & ", "
-                Sql += DB.SetString(_IS_SEND_THEGIF)
+                Sql += DB.SetString(_IS_SEND_THEGIF) & ", "
+                Sql += DB.SetString(_COMPANY_REGIS_NO) & " "
                 sql += ")"
                 Return sql
             End Get
@@ -969,7 +984,8 @@ Namespace TABLE
                 Sql += "APPROVE_DATE = " & DB.SetDateTime(_APPROVE_DATE) & ", "
                 Sql += "REF_OLD_SEND_ID = " & DB.SetString(_REF_OLD_SEND_ID) & ", "
                 Sql += "REF_OLD_RECEIVE_ID = " & DB.SetString(_REF_OLD_RECEIVE_ID) & ", "
-                Sql += "IS_SEND_THEGIF = " & DB.SetString(_IS_SEND_THEGIF) + ""
+                Sql += "IS_SEND_THEGIF = " & DB.SetString(_IS_SEND_THEGIF) + ", "
+                Sql += "COMPANY_REGIS_NO = " & DB.SetString(_COMPANY_REGIS_NO) + " "
                 Return Sql
             End Get
         End Property

@@ -106,6 +106,7 @@ Namespace Document
             lnq.SENDER_OFFICER_FULLNAME = para.SENDER_OFFICER_FULLNAME
             lnq.BOOKOUT_NO = para.BOOKOUT_NO
             lnq.COMPANY_ID_RECEIVE = para.COMPANY_ID_RECEIVE
+            lnq.COMPANY_REGIS_NO = para.COMPANY_REGIS_NO
             lnq.COMPANY_NAME_RECEIVE = para.COMPANY_NAME_RECEIVE
             lnq.COMPANY_DOC_SYSTEM_ID = para.COMPANY_DOC_SYSTEM_ID
             lnq.OFFICER_USERNAME = para.OFFICER_USERNAME
@@ -456,6 +457,7 @@ Namespace Document
             lnq.REMARKS = para.REMARKS
             lnq.BUSINESS_TYPE_ID = para.BUSINESS_TYPE_ID
             lnq.COMPANY_ID = para.COMPANY_ID
+            lnq.COMPANY_REGIS_NO = para.COMPANY_REGIS_NO
             lnq.COMPANY_NAME = para.COMPANY_NAME
             lnq.COMPANY_DOC_NO = para.COMPANY_DOC_NO
             lnq.COMPANY_DOC_TYPE_ID = para.COMPANY_DOC_TYPE_ID
@@ -879,7 +881,7 @@ Namespace Document
 
             Dim sql As String = ""
             sql += " select gd.company_id company_id_receive, c.thaiName company_name_receive, gd.remarks,"
-            sql += "'' username, '' staff_name, 0 officer_id"
+            sql += "'' username, '' staff_name, 0 officer_id, c.comid company_regis_no"
             sql += " from GROUP_TITLE_COMPANY_DEFAULT gd"
             sql += " inner join COMPANY c on c.id=gd.company_id"
             sql += " inner join DOCUMENT_REGISTER dr on gd.group_title_id=dr.group_title_id"
@@ -1026,8 +1028,8 @@ Namespace Document
             Dim ret As String = ""
             Dim lnq As New Linq.TABLE.DocumentExtReceiverLinq
 
-            Dim sql As String = "select e.*,c.comid from Document_Ext_Receiver e"
-            sql &= " left join company c on e.company_id_receive=c.id where document_register_id='" & vRegisID & "'"
+            Dim sql As String = "select e.* from Document_Ext_Receiver e"
+            sql &= " where document_register_id='" & vRegisID & "'"
             Dim dt As DataTable = lnq.GetListBySql(sql, trans.Trans)
 
             'Dim dt As New DataTable
@@ -1037,7 +1039,11 @@ Namespace Document
                 For Each dr As DataRow In dt.Rows
                     Dim bookno As String = FunctionENG.GetThaiNumber(dr("bookout_no"))
                     Dim tmp = "<font color='Blue'>" & bookno & "</font> "
-                    tmp += " <font color='Black'> : เลขทะเบียนบริษัท :" & dr("comid")
+                    If Convert.IsDBNull(dr("company_regis_no")) = False Then
+                        If dr("company_regis_no").ToString.Trim <> "" Then
+                            tmp += " <font color='Black'> : เลขทะเบียนบริษัท :" & dr("company_regis_no")
+                        End If
+                    End If
                     tmp += " <font color='Gray'> : " & dr("company_name_receive")
                     tmp += " - ลงนาม " & Convert.ToDateTime(dr("approve_date")).ToString("d MMM yy")
                     tmp += ", ส่งออก " & Convert.ToDateTime(dr("send_date")).ToString("d MMM yy")
