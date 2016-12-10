@@ -78,6 +78,7 @@
         function ClearTxtCustValue() {
             if (document.getElementById('<%=txtCustName.ClientID%>').value == "") {
                 document.getElementById('<%=hdnCustValue.ClientID%>').value = "";
+                document.getElementById('<%=txtCompanyID.ClientID%>').value = "";
             }
         }
 
@@ -207,7 +208,7 @@
                                     <asp:Panel ID="pnlCompany" runat="server" BorderWidth="1" Width="95%" >
                                         <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                         
-                                        <tr style="height:25px">
+                                            <tr style="height:25px">
                                                 <td align="right" class="Csslbl" >เลขทะเบียนบริษัท : </td>
                                                 <td align="left" class="Csslbl" >
                                                      <uc2:txtBox ID="txtCompanyID" runat="server" AutoPosBack="True" TableName="COMPANY" FieldName="COMPANY_REGIS_NO"  MaxLength="13" />
