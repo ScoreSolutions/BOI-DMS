@@ -67,7 +67,10 @@ Namespace TABLE
         Dim _FAX As  String  = ""
         Dim _ZIPCODE As  String  = ""
         Dim _PROVINCE_ID As  System.Nullable(Of Long)  = 0
-        Dim _DISTRICT_ID As  System.Nullable(Of Long)  = 0
+        Dim _DISTRICT_ID As System.Nullable(Of Long) = 0
+        Dim _DIRECTOR_POSITION As String = ""
+        Dim _COMPANY_REGIS_NO As String = ""
+
 
         'Generate Field Property 
         <Column(Storage:="_ID", DbType:="BigInt NOT NULL ",CanBeNull:=false)>  _
@@ -249,8 +252,25 @@ Namespace TABLE
             Set(ByVal value As  System.Nullable(Of Long) )
                _DISTRICT_ID = value
             End Set
-        End Property 
-
+        End Property
+        <Column(Storage:="_DIRECTOR_POSITION", DbType:="VarChar(255)")> _
+        Public Property DIRECTOR_POSITION() As String
+            Get
+                Return _DIRECTOR_POSITION
+            End Get
+            Set(ByVal value As String)
+                _DIRECTOR_POSITION = value
+            End Set
+        End Property
+        <Column(Storage:="_COMPANY_REGIS_NO", DbType:="VarChar(50)")> _
+        Public Property COMPANY_REGIS_NO() As String
+            Get
+                Return _COMPANY_REGIS_NO
+            End Get
+            Set(ByVal value As String)
+                _COMPANY_REGIS_NO = value
+            End Set
+        End Property
 
         'Clear All Data
         Private Sub ClearData()
@@ -274,6 +294,8 @@ Namespace TABLE
             _ZIPCODE = ""
             _PROVINCE_ID = 0
             _DISTRICT_ID = 0
+            _DIRECTOR_POSITION = ""
+            _COMPANY_REGIS_NO = ""
         End Sub
 
        'Define Public Method 
@@ -564,7 +586,9 @@ Namespace TABLE
                         If Convert.IsDBNull(Rdr("fax")) = False Then _fax = Rdr("fax").ToString()
                         If Convert.IsDBNull(Rdr("zipcode")) = False Then _zipcode = Rdr("zipcode").ToString()
                         If Convert.IsDBNull(Rdr("province_id")) = False Then _province_id = Convert.ToInt64(Rdr("province_id"))
-                        If Convert.IsDBNull(Rdr("district_id")) = False Then _district_id = Convert.ToInt64(Rdr("district_id"))
+                        If Convert.IsDBNull(Rdr("district_id")) = False Then _DISTRICT_ID = Convert.ToInt64(Rdr("district_id"))
+                        If Convert.IsDBNull(Rdr("director_position")) = False Then _DIRECTOR_POSITION = Rdr("director_position").ToString()
+                        If Convert.IsDBNull(Rdr("company_regis_no")) = False Then _COMPANY_REGIS_NO = Rdr("company_regis_no").ToString()
                     Else
                         ret = False
                         _error = MessageResources.MSGEV002
@@ -621,7 +645,9 @@ Namespace TABLE
                         If Convert.IsDBNull(Rdr("fax")) = False Then _fax = Rdr("fax").ToString()
                         If Convert.IsDBNull(Rdr("zipcode")) = False Then _zipcode = Rdr("zipcode").ToString()
                         If Convert.IsDBNull(Rdr("province_id")) = False Then _province_id = Convert.ToInt64(Rdr("province_id"))
-                        If Convert.IsDBNull(Rdr("district_id")) = False Then _district_id = Convert.ToInt64(Rdr("district_id"))
+                        If Convert.IsDBNull(Rdr("district_id")) = False Then _DISTRICT_ID = Convert.ToInt64(Rdr("district_id"))
+                        If Convert.IsDBNull(Rdr("director_position")) = False Then _DIRECTOR_POSITION = Rdr("director_position").ToString()
+                        If Convert.IsDBNull(Rdr("company_regis_no")) = False Then _COMPANY_REGIS_NO = Rdr("company_regis_no").ToString()
 
                         'Generate Item For Child Table
                         'Child Table Name : GROUP_TITLE_COMPANY_DEFAULT Column :company_id
@@ -681,7 +707,9 @@ Namespace TABLE
                         If Convert.IsDBNull(Rdr("fax")) = False Then ret.fax = Rdr("fax").ToString()
                         If Convert.IsDBNull(Rdr("zipcode")) = False Then ret.zipcode = Rdr("zipcode").ToString()
                         If Convert.IsDBNull(Rdr("province_id")) = False Then ret.province_id = Convert.ToInt64(Rdr("province_id"))
-                        If Convert.IsDBNull(Rdr("district_id")) = False Then ret.district_id = Convert.ToInt64(Rdr("district_id"))
+                        If Convert.IsDBNull(Rdr("district_id")) = False Then ret.DISTRICT_ID = Convert.ToInt64(Rdr("district_id"))
+                        If Convert.IsDBNull(Rdr("director_position")) = False Then ret.DIRECTOR_POSITION = Rdr("director_position").ToString()
+                        If Convert.IsDBNull(Rdr("company_regis_no")) = False Then ret.COMPANY_REGIS_NO = Rdr("company_regis_no").ToString()
 
                         'Generate Item For Child Table
                         'Child Table Name : GROUP_TITLE_COMPANY_DEFAULT Column :company_id
@@ -715,7 +743,7 @@ Namespace TABLE
         Private ReadOnly Property SqlInsert() As String 
             Get
                 Dim Sql As String=""
-                Sql += "INSERT INTO " & tableName  & " (ID, CREATE_BY, CREATE_ON, UPDATE_BY, UPDATE_ON, COMPANY_TYPE_ID, THAINAME, ENGNAME, ADDRESSID, COMID, DESCRIPTION, ACTIVE, REF_OLD_ID, REF_ORG_ID, TH_EGIF_ORG_CODE, TEL, FAX, ZIPCODE, PROVINCE_ID, DISTRICT_ID)"
+                Sql += "INSERT INTO " & TableName & " (ID, CREATE_BY, CREATE_ON, UPDATE_BY, UPDATE_ON, COMPANY_TYPE_ID, THAINAME, ENGNAME, ADDRESSID, COMID, DESCRIPTION, ACTIVE, REF_OLD_ID, REF_ORG_ID, TH_EGIF_ORG_CODE, TEL, FAX, ZIPCODE, PROVINCE_ID, DISTRICT_ID, DIRECTOR_POSITION, COMPANY_REGIS_NO)"
                 Sql += " VALUES("
                 sql += DB.SetDouble(_ID) & ", "
                 sql += DB.SetString(_CREATE_BY) & ", "
@@ -736,7 +764,9 @@ Namespace TABLE
                 sql += DB.SetString(_FAX) & ", "
                 sql += DB.SetString(_ZIPCODE) & ", "
                 sql += DB.SetDouble(_PROVINCE_ID) & ", "
-                sql += DB.SetDouble(_DISTRICT_ID)
+                Sql += DB.SetDouble(_DISTRICT_ID) & ", "
+                Sql += DB.SetString(_DIRECTOR_POSITION) & ", "
+                Sql += DB.SetString(_COMPANY_REGIS_NO) & " "
                 sql += ")"
                 Return sql
             End Get
@@ -767,7 +797,9 @@ Namespace TABLE
                 Sql += "FAX = " & DB.SetString(_FAX) & ", "
                 Sql += "ZIPCODE = " & DB.SetString(_ZIPCODE) & ", "
                 Sql += "PROVINCE_ID = " & DB.SetDouble(_PROVINCE_ID) & ", "
-                Sql += "DISTRICT_ID = " & DB.SetDouble(_DISTRICT_ID) + ""
+                Sql += "DISTRICT_ID = " & DB.SetDouble(_DISTRICT_ID) + ", "
+                Sql += "DIRECTOR_POSITION = " & DB.SetString(_DIRECTOR_POSITION) & ", "
+                Sql += "COMPANY_REGIS_NO = " & DB.SetString(_COMPANY_REGIS_NO) & " "
                 Return Sql
             End Get
         End Property

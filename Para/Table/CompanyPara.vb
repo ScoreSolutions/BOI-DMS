@@ -31,7 +31,9 @@ Namespace TABLE
         Dim _FAX As  String  = ""
         Dim _ZIPCODE As  String  = ""
         Dim _PROVINCE_ID As  System.Nullable(Of Long)  = 0
-        Dim _DISTRICT_ID As  System.Nullable(Of Long)  = 0
+        Dim _DISTRICT_ID As System.Nullable(Of Long) = 0
+        Dim _DIRECTOR_POSITION As String = ""
+        Dim _COMPANY_REGIS_NO As String = ""
 
         'Generate Field Property 
         <Column(Storage:="_ID", DbType:="BigInt NOT NULL ",CanBeNull:=false)>  _
@@ -213,7 +215,25 @@ Namespace TABLE
             Set(ByVal value As  System.Nullable(Of Long) )
                _DISTRICT_ID = value
             End Set
-        End Property 
+        End Property
+        <Column(Storage:="_DIRECTOR_POSITION", DbType:="VarChar(255)")> _
+        Public Property DIRECTOR_POSITION() As String
+            Get
+                Return _DIRECTOR_POSITION
+            End Get
+            Set(ByVal value As String)
+                _DIRECTOR_POSITION = value
+            End Set
+        End Property
+        <Column(Storage:="_COMPANY_REGIS_NO", DbType:="VarChar(50)")> _
+        Public Property COMPANY_REGIS_NO() As String
+            Get
+                Return _COMPANY_REGIS_NO
+            End Get
+            Set(ByVal value As String)
+                _COMPANY_REGIS_NO = value
+            End Set
+        End Property
 
 
             'Define Child Table 
