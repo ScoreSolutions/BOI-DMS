@@ -450,28 +450,10 @@ Partial Class WebApp_frmDocRegister
 #End Region
 
 
-    Public Function InsertDocRegis(ByVal RefDocRegisID As Long, ByVal RefDocRegisBookNo As String, ByVal ReceiveAbbName As String, ByVal trans As Linq.Common.Utilities.TransactionDB, ByVal uPara As Para.Common.UserProfilePara) As Para.TABLE.DocumentRegisterPara 'ลงทะเบียน
+    Public Function InsertDocRegis(ByVal RefDocRegisID As Long, ByVal RefDocRegisBookNo As String, ByVal ReceiveAbbName As String, ByVal SendType As String, ByVal trans As Linq.Common.Utilities.TransactionDB, ByVal uPara As Para.Common.UserProfilePara) As Para.TABLE.DocumentRegisterPara 'ลงทะเบียน
         Dim para As New Para.TABLE.DocumentRegisterPara
-        If RefDocRegisID = 0 Then
-            para.BOOK_NO = RefDocRegisBookNo
-        Else
-            para.BOOK_NO = RefDocRegisBookNo & "/" & ReceiveAbbName
-        End If
 
-        If ReceiveAbbName.Trim = "" Then
-            'ถ้าเป็นเลขต้น ถึงจะ Gen เลขที่คำขอ
-            Dim gEng As New Engine.Master.GroupTitleEng
-            Dim gPara As Para.TABLE.GroupTitlePara = gEng.GetGroupTitlePara(cmbGroupTitle.SelectedValue)
-            If gPara.IS_GEN_REQ = "Y" Then
-                para.REQUEST_NO = Engine.Document.BookRunningENG.GetRequestNo(trans)
-                txtRequestNo.Text = para.REQUEST_NO
-            End If
-            gEng = Nothing
-            gPara = Nothing
-        Else
-            para.REQUEST_NO = txtRequestNo.Text.Trim
-        End If
-
+        para.BOOK_NO = DateTime.Now.ToString("yyyyMMddHHmmssffff")  'Temp Data Record
         para.GROUP_TITLE_ID = cmbGroupTitle.SelectedValue
         para.TITLE_NAME = txtTitle.Text
         para.REGISTER_DATE = txtReceiveDate.DateValue
@@ -481,7 +463,7 @@ Partial Class WebApp_frmDocRegister
         para.DOC_STATUS_ID = Constant.DocumentRegister.DocStatusID.JobIncome
 
         Dim oEng As New Engine.Master.OrganizationEng
-        Dim oPara As Para.TABLE.OrganizationPara = oEng.GetOrgPara(cmbOwnerOrgID.SelectedValue)
+        Dim oPara As Para.TABLE.OrganizationPara = oEng.GetOrgPara(cmbOwnerOrgID.SelectedValue, trans)
         para.ORGANIZATION_ID_OWNER = oPara.ID
         para.ORGANIZATION_NAME = oPara.ORG_NAME
         para.ORGANIZATION_APPNAME = oPara.NAME_ABB
@@ -493,7 +475,7 @@ Partial Class WebApp_frmDocRegister
         oEng = Nothing
 
         Dim sEng As New Engine.Master.OfficerEng
-        Dim sPara As Para.TABLE.OfficerPara = sEng.GetOfficerPara(cmbOwnerStaffID.SelectedValue)
+        Dim sPara As Para.TABLE.OfficerPara = sEng.GetOfficerPara(cmbOwnerStaffID.SelectedValue, trans)
         para.OFFICER_ID_APPROVE = sPara.ID
         para.OFFICER_NAME = cmbOwnerStaffID.SelectedItem.Text
         para.OFFICER_ORGANIZATION_ID = sPara.ORGANIZATION_ID
@@ -522,7 +504,7 @@ Partial Class WebApp_frmDocRegister
         Else
             'ลงทะเบียนรับจากหน่วยงานภายใน
             Dim cEng As New Engine.Master.CompanyEng
-            Dim cPara As Para.TABLE.CompanyPara = cEng.GetCompanyPara(hdnCustValue.Text)
+            Dim cPara As Para.TABLE.CompanyPara = cEng.GetCompanyPara(hdnCustValue.Text, trans)
             If cPara.ID <> 0 Then
                 para.COMPANY_ID = cPara.ID
                 para.COMPANY_NAME = cPara.THAINAME
@@ -549,7 +531,40 @@ Partial Class WebApp_frmDocRegister
         Dim eng As New Engine.Document.DocumentRegisterENG
         Dim _ID As Long = eng.SaveDocumentRegister(uPara.UserName, para, Session(Constant.SessFileUploadList), txtScanJobID.Text, trans)
         If _ID > 0 Then
-            para.ID = _ID
+            'ให้มีการ Insert Document Register โดยที่ฟิลด์ BOOK_NO กับ  REQUEST_NO  เป็นค่า null ไปก่อนเพื่อให้ Lock Transaction
+            para = New DocumentRegisterPara
+            para = eng.GetDocumentPara(_ID, trans)
+
+            'เลขที่หนังสือ
+            If RefDocRegisID = 0 Then
+                para.BOOK_NO = Engine.Document.BookRunningENG.GetBookNo(rdiReceiveType.SelectedValue, SendType, uPara.ORG_DATA.NAME_ABB, trans)
+            Else
+                para.BOOK_NO = RefDocRegisBookNo & "/" & ReceiveAbbName
+            End If
+
+            'ถ้าเป็นเลขต้น ถึงจะ Gen เลขที่คำขอ
+            If ReceiveAbbName.Trim = "" Then
+                Dim gEng As New Engine.Master.GroupTitleEng
+                Dim gPara As Para.TABLE.GroupTitlePara = gEng.GetGroupTitlePara(cmbGroupTitle.SelectedValue, trans)
+                If gPara.IS_GEN_REQ = "Y" Then
+                    para.REQUEST_NO = Engine.Document.BookRunningENG.GetRequestNo(trans)
+                    txtRequestNo.Text = para.REQUEST_NO
+                End If
+                gEng = Nothing
+                gPara = Nothing
+            Else
+                para.REQUEST_NO = txtRequestNo.Text.Trim
+            End If
+
+            _ID = 0  'Reset ก่อน เพื่อให้แน่ใจว่าเป็นข้อมูลใหม่แน่ๆ
+            _ID = eng.SaveDocumentRegister(uPara.UserName, para, Session(Constant.SessFileUploadList), txtScanJobID.Text, trans)
+
+            If _ID > 0 Then
+                para.ID = _ID
+            Else
+                para.ID = 0
+            End If
+
         End If
         eng = Nothing
         Return para
@@ -689,12 +704,11 @@ Partial Class WebApp_frmDocRegister
         If dt.Rows.Count > 0 Then
             Dim SendType As String = "I"
             Dim dPara As New Para.TABLE.DocumentRegisterPara
-            Dim NewBookNo As String = Engine.Document.BookRunningENG.GetBookNo(rdiReceiveType.SelectedValue, SendType, uPara.ORG_DATA.NAME_ABB, trans)
-            dPara = InsertDocRegis(0, NewBookNo, "", trans, uPara)   'SendType=I  ส่งภายในสำนักงาน
+            'Dim NewBookNo As String = Engine.Document.BookRunningENG.GetBookNo(rdiReceiveType.SelectedValue, SendType, uPara.ORG_DATA.NAME_ABB, trans)
+            dPara = InsertDocRegis(0, "", "", SendType, trans, uPara)   'SendType=I  ส่งภายในสำนักงาน
             If dPara.ID > 0 Then
                 txtID.Text = dPara.ID
-                'Dim dt As New DataTable
-                'dt = DirectCast(Session(SessSendList), DataTable).Copy
+
                 ' กรณีส่งหาหลายคน
                 If dt.Rows.Count > 1 Then
                     'ต้นเรื่องให้ส่งหาผู้พิจารณา
@@ -715,7 +729,7 @@ Partial Class WebApp_frmDocRegister
                     If ret = True Then
                         Dim i As Integer = 0
                         For Each dr As DataRow In dt.Rows
-                            Dim OrgDocRegisID As Long = InsertDocRegis(txtID.Text, dPara.BOOK_NO, dr("OrgAbbNameReceive") & "-" & (i + 1), trans, uPara).ID
+                            Dim OrgDocRegisID As Long = InsertDocRegis(txtID.Text, dPara.BOOK_NO, dr("OrgAbbNameReceive") & "-" & (i + 1), SendType, trans, uPara).ID
                             If OrgDocRegisID > 0 Then
                                 ret = SaveInsideSend(OrgDocRegisID, dr, trans, uPara)
                             Else
@@ -732,8 +746,10 @@ Partial Class WebApp_frmDocRegister
                     Dim dr As DataRow = dt.Rows(0)
                     ret = SaveInsideSend(dPara.ID, dr, trans, uPara)
                 End If
+
+                Config.SaveTransLog("frmDocRegister.aspx ส่งภายในสำนักงาน เลขที่หนังสือ " & dPara.BOOK_NO)
             End If
-            Config.SaveTransLog("frmDocRegister.aspx ส่งภายในสำนักงาน เลขที่หนังสือ " & dPara.BOOK_NO)
+
             dPara = Nothing
         End If
         dt.Dispose()
@@ -821,8 +837,8 @@ Partial Class WebApp_frmDocRegister
                 trans.CreateTransaction()
                 Dim SendType As String = "I"
                 Dim dPara As New Para.TABLE.DocumentRegisterPara
-                Dim NewBookNo As String = Engine.Document.BookRunningENG.GetBookNo(rdiReceiveType.SelectedValue, SendType, uPara.ORG_DATA.NAME_ABB, trans)
-                dPara = InsertDocRegis(0, NewBookNo, "", trans, uPara)   'SendType=I  ส่งภายในสำนักงาน
+                'Dim NewBookNo As String = Engine.Document.BookRunningENG.GetBookNo(rdiReceiveType.SelectedValue, SendType, uPara.ORG_DATA.NAME_ABB, trans)
+                dPara = InsertDocRegis(0, "", "", SendType, trans, uPara)   'SendType=I  ส่งภายในสำนักงาน
 
                 If dPara.ID > 0 Then
                     trans.CommitTransaction()
@@ -1023,8 +1039,8 @@ Partial Class WebApp_frmDocRegister
                 trans.CreateTransaction()
                 Dim SendType As String = "I"    'การลงทะเบียนพร้อมจบงาน จะต้อง Gen เลขลงทะเบียนก่อน
                 Dim dPara As New Para.TABLE.DocumentRegisterPara
-                Dim NewBookNo As String = Engine.Document.BookRunningENG.GetBookNo(rdiReceiveType.SelectedValue, SendType, uPara.ORG_DATA.NAME_ABB, trans)
-                dPara = InsertDocRegis(0, NewBookNo, "", trans, uPara)   'SendType=I  ส่งภายในสำนักงาน
+                'Dim NewBookNo As String = Engine.Document.BookRunningENG.GetBookNo(rdiReceiveType.SelectedValue, SendType, uPara.ORG_DATA.NAME_ABB, trans)
+                dPara = InsertDocRegis(0, "", "", SendType, trans, uPara)   'SendType=I  ส่งภายในสำนักงาน
 
                 If dPara.ID > 0 Then
                     trans.CommitTransaction()
@@ -1137,7 +1153,7 @@ Partial Class WebApp_frmDocRegister
         Dim SendType As String = "I"
         Dim dPara As New Para.TABLE.DocumentRegisterPara
         Dim NewBookNo As String = Engine.Document.BookRunningENG.GetBookNo(rdiReceiveType.SelectedValue, SendType, uPara.ORG_DATA.NAME_ABB, trans)
-        dPara = InsertDocRegis(0, NewBookNo, "", trans, uPara)   'SendType=I  ส่งภายในสำนักงาน
+        dPara = InsertDocRegis(0, "", "", SendType, trans, uPara)   'SendType=I  ส่งภายในสำนักงาน
 
         If dPara.ID > 0 Then
             txtID.Text = dPara.ID
@@ -1160,7 +1176,7 @@ Partial Class WebApp_frmDocRegister
                 If ret = True Then
                     para.BOOK_NO = dPara.BOOK_NO
                     For Each dr As DataRow In dt.Rows
-                        Dim OrgDocRegisID As Long = InsertDocRegis(dPara.ID, dPara.BOOK_NO, dr("OrgAbbNameReceive"), trans, uPara).ID
+                        Dim OrgDocRegisID As Long = InsertDocRegis(dPara.ID, dPara.BOOK_NO, dr("OrgAbbNameReceive"), SendType, trans, uPara).ID
                         If OrgDocRegisID > 0 Then
                             Dim seDr As DataRow = para.SEND_LIST.NewRow
                             seDr("book_no") = dPara.BOOK_NO & "/" & dr("OrgAbbNameReceive")
@@ -1244,7 +1260,7 @@ Partial Class WebApp_frmDocRegister
     Protected Sub txtCompanyID_TextChange(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtCompanyID.TextChange
         Dim cmpENG As New CompanyEng
         Dim dt As New DataTable
-        dt = cmpENG.GetDataCompanyList("comid='" & txtCompanyID.Text & "'", "")
+        dt = cmpENG.GetDataCompanyList("company_regis_no='" & txtCompanyID.Text & "'", "")
         If dt.Rows.Count > 0 Then
             txtCustName.Text = dt.Rows(0)("thaiName").ToString()
             hdnCustValue.Text = dt.Rows(0)("id").ToString()

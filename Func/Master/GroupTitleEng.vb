@@ -43,6 +43,13 @@ Namespace Master
             Return para
         End Function
 
+        Public Function GetGroupTitlePara(ByVal ID As Long, ByVal trans As Linq.Common.Utilities.TransactionDB) As GroupTitlePara
+            Dim lnq As New GroupTitleLinq
+            Dim para As New GroupTitlePara
+            para = lnq.GetParameter(ID, trans.Trans)
+            Return para
+        End Function
+
         Public Function GetGroupTitleOrgList(ByVal vID As Long) As DataTable
             Dim sql As String = ""
             sql += " select o.id, o.organization_type_id org_sector_id, "

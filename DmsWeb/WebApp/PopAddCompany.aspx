@@ -24,26 +24,26 @@
             var vZipcode = "";
             var ProvinceID = "0";
             var DistrictID = "0";
-            var vComID = document.getElementById("<%=txtCompanyID.ClientID %>");
+            var vComRegisNo = document.getElementById("<%=txtCompanyRegisNo.ClientID %>");
+            var vComRequireRegisNo = document.getElementById("<%=txtCompanyRequireRegisNo.ClientID %>");
 
             if ($(vCompanyType).val() == "0") {
                 alert("กรุณาเลือกประเภทองค์กร");
                 $(vCompanyType).focus();
                 return false;
             }
+            
+            if ($(vComRequireRegisNo).val() == "Y") {
+                if ($(vComRegisNo).val().length != 13) {
+                    alert("กรุณาระบุเลขทะเบียนบริษัทจำนวน 13 หลัก");
+                    $(vComRegisNo).select();
+                    return false;
+                }
+            }
+            
             if ($(vThaiName).val() == "") {
                 alert("กรุณาระบุชื่อองค์กร");
                 $(vThaiName).select();
-                return false;
-            }
-            if ($(vComID).val() == "") {
-                alert("กรุณาระบุเลขทะเบียนบริษัท");
-                $(vComID).select();
-                return false;
-            }
-             if ($(vComID).val().length != 13) {
-                alert("กรุณาระบุเลขทะเบียนบริษัทจำนวน 13 หลัก");
-                $(vComID).select();
                 return false;
             }
 
@@ -53,7 +53,7 @@
             $.ajax({
                 type: "POST",
                 url: pageUrl + "/SaveCompany",
-                data: "{'UserName':'" + vUserName + "','ThaiName':'" + $(vThaiName).val() + "','EngName':'" + $(vEngName).val() + "','vAddress':'" + $(vAddress).val() + "','CompanyType':'" + $(vCompanyType).val() + "','vTel':'" + $(vTel).val() + "','vFax':'" + $(vFax).val() + "','vZipcode':'" + vZipcode + "','ProvinceID':'" + ProvinceID + "','DistrictID':'" + DistrictID + "','ComID':'" + $(vComID).val() + "'}",
+                data: "{'UserName':'" + vUserName + "','ThaiName':'" + $(vThaiName).val() + "','EngName':'" + $(vEngName).val() + "','vAddress':'" + $(vAddress).val() + "','CompanyType':'" + $(vCompanyType).val() + "','vTel':'" + $(vTel).val() + "','vFax':'" + $(vFax).val() + "','vZipcode':'" + vZipcode + "','ProvinceID':'" + ProvinceID + "','DistrictID':'" + DistrictID + "','ComRegisNo':'" + $(vComRegisNo).val() + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(msg) {
@@ -61,7 +61,7 @@
                         var ret = new Array();
                         ret[0] = msg.d;
                         ret[1] = $(vThaiName).val();
-                        ret[2] = $(vComID).val();
+                        ret[2] = $(vComRegisNo).val();
                         window.returnValue = ret;
                     } else {
                         window.returnValue = null;
@@ -69,6 +69,29 @@
                     window.close();
                 }
             });
+        }
+
+        function ChkDupCompanyRegisNo() {
+            var vComRegisNo = document.getElementById("<%=txtCompanyRegisNo.ClientID %>");
+            if ($(vComRegisNo).val() != "") {
+                AjaxScript.SaveTransLog("popAddCompany.aspx ตรวจสอบเลขทะเบียนบริษัทซ้ำ : " + $(vComRegisNo).val(), '<%=Config.GetLoginHistoryID %>');
+
+                var pageUrl = '<%=ResolveUrl("~/Template/AjaxScript.asmx")%>';
+                $.ajax({
+                    type: "POST",
+                    url: pageUrl + "/ChkDupCompanyRegisNo",
+                    data: "{'vComRegisNo':'" + $(vComRegisNo).val() + "','CompanyID':'0'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(msg) {
+                        if (msg.d == "true") {
+                            alert("เลขทะเบียนบริษัทซ้ำ");
+                            $(vComRegisNo).select();
+                            return false;
+                        }
+                    }
+                });
+            }
         }
     </script>
 </head>
@@ -101,8 +124,9 @@
                                             ประเภทองค์กร :
                                         </td>
                                         <td align="left" class="Csslbl">
-                                            <asp:DropDownList ID="cmbCompanyType" runat="server" Width="400"></asp:DropDownList>
+                                            <asp:DropDownList ID="cmbCompanyType" runat="server" Width="400" AutoPostBack="true" ></asp:DropDownList>
                                             <font color="red">*</font>
+                                            <asp:TextBox ID="txtCompanyRequireRegisNo" runat="server" CssClass="zHidden" ></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -110,7 +134,7 @@
                                             เลขทะเบียนบริษัท :
                                         </td>
                                         <td align="left" class="Csslbl">
-                                            <uc4:txtBox ID="txtCompanyID" runat="server" IsNotNull="True" Width="400"  MaxLength="13" />
+                                            <uc4:txtBox ID="txtCompanyRegisNo" runat="server" TextKey="TextInt" IsNotNull="True" Width="400"  MaxLength="13" />
                                         </td>
                                     </tr>
                                     <tr>

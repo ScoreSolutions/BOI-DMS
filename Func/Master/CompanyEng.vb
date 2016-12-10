@@ -25,11 +25,13 @@ Namespace Master
             Return dt
         End Function
 
+
+
         Public Function GetCompanyDDList(ByVal WhText As String) As DataTable
             Dim dt As New DataTable
             Dim trans As New Linq.Common.Utilities.TransactionDB
             trans.CreateTransaction()
-            Dim sql As String = " select top 100 id, case when ltrim(thaiName)='' then engName else thaiName end + ' (" & Para.Common.Utilities.Constant.CompanySourceType.DMS & ")' company_name, comid company_regis_id "
+            Dim sql As String = " select top 10 id, case when ltrim(thaiName)='' then engName else thaiName end + ' (" & Para.Common.Utilities.Constant.CompanySourceType.DMS & ")' company_name, company_regis_no "
             sql += " from company "
             sql += " where ltrim(case when ltrim(thaiName)='' then engName else thaiName end)<>'' "
             sql += " and ltrim(case when ltrim(thaiName)='' then engName else thaiName end) like '" & WhText & "%' "
@@ -39,22 +41,8 @@ Namespace Master
             trans.CommitTransaction()
             lnq = Nothing
 
-            ''ดึงข้อมูลจาก BOICENTRAL
-            If Engine.Common.BOICentralENG.PingServer() = True Then
-                Dim cDt As New DataTable
-                cDt = Engine.Common.BOICentralENG.GetCompanyList(WhText)
-                If cDt.Rows.Count > 0 Then
-                    For Each cDr As DataRow In cDt.Rows
-                        Dim dr As DataRow = dt.NewRow
-                        dr("id") = cDr("id")
-                        dr("company_name") = cDr("company_name")
-                        dr("company_regis_id") = cDr("company_regis_id")
-                        dt.Rows.Add(dr)
-                    Next
-                End If
-                cDt = Nothing
-            End If
             
+
 
             ''ข้อมูลจาก WebService
             'Dim ws As New LinqWS.OneDB.CompanyInfoLinqWS
@@ -99,6 +87,18 @@ Namespace Master
             Return para
         End Function
 
+        Public Function GetCompanyPara(ByVal DocCompanyID As Long, ByVal trans As Linq.Common.Utilities.TransactionDB) As CompanyPara
+            Dim lnq As New CompanyLinq
+            'Dim trans As New Linq.Common.Utilities.TransactionDB
+            'trans.CreateTransaction()
+            Dim para As New Para.TABLE.CompanyPara
+            para = lnq.GetParameter(DocCompanyID, trans.Trans)
+            'trans.CommitTransaction()
+            lnq = Nothing
+
+            Return para
+        End Function
+
         Public Function GetCompanyParaByComID(ByVal ComID As String, ByVal trans As Linq.Common.Utilities.TransactionDB) As CompanyPara
             Dim lnq As New CompanyLinq
             
@@ -111,6 +111,20 @@ Namespace Master
             Return para
         End Function
 
+        Public Function CheckDupCompanyRegisNo(ByVal ComRegisNo As String, ByVal CompanyID As Long, ByVal trans As Linq.Common.Utilities.TransactionDB) As String
+            Dim ret As String = "false"
+            Dim lnq As New CompanyLinq
+            lnq.ChkDataByWhere("company_regis_no = '" & ComRegisNo & "' and id<>" & CompanyID, trans.Trans)
+            If lnq.ID > 0 Then
+                ret = "true"
+            Else
+                Dim sql As String = "select "
+            End If
+            lnq = Nothing
+
+            Return ret
+        End Function
+
         Public Function SaveCompany(ByVal para As CompanyPara, ByVal UserID As String, ByVal trans As TransactionDB) As Boolean
             Dim ret As Boolean = False
 
@@ -121,6 +135,7 @@ Namespace Master
 
             lnq.COMPANY_TYPE_ID = para.COMPANY_TYPE_ID
             lnq.COMID = para.COMID
+            lnq.COMPANY_REGIS_NO = para.COMPANY_REGIS_NO
             lnq.THAINAME = para.THAINAME
             lnq.ENGNAME = para.ENGNAME
             lnq.ADDRESSID = para.ADDRESSID

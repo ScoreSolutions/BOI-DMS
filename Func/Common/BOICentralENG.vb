@@ -36,7 +36,7 @@ Namespace Common
         End Function
 
         Public Shared Function GetCompanyList(ByVal WhText As String) As DataTable
-            Dim sql As String = "select top 100 loid as id, case when ltrim(tName)='' then eName else tName end + ' (" & Para.Common.Utilities.Constant.CompanySourceType.BOICENTRAL & ")' company_name, registerid company_regis_id"
+            Dim sql As String = "select top 10 loid as id, case when ltrim(tName)='' then eName else tName end + ' (" & Para.Common.Utilities.Constant.CompanySourceType.BOICENTRAL & ")' company_name, registerid company_regis_no"
             sql += " from company "
             sql += " where ltrim(case when ltrim(tName)='' then eName else tName end)<>'' "
             sql += " and ltrim(case when ltrim(tName)='' then eName else tName end) like '" & WhText & "%' "

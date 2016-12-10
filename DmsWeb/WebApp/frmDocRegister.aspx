@@ -210,7 +210,7 @@
                                         <tr style="height:25px">
                                                 <td align="right" class="Csslbl" >เลขทะเบียนบริษัท : </td>
                                                 <td align="left" class="Csslbl" >
-                                                     <uc2:txtBox ID="txtCompanyID" runat="server" AutoPosBack="True" TableName="COMPANY" FieldName="COMID"  MaxLength="13" />
+                                                     <uc2:txtBox ID="txtCompanyID" runat="server" AutoPosBack="True" TableName="COMPANY" FieldName="COMPANY_REGIS_NO"  MaxLength="13" />
                                                 </td>
                                                 <td align="right" class="Csslbl"></td>
                                                 <td align="left" >
@@ -225,7 +225,7 @@
                                                     <cc1:AutoCompleteExtender
                                                         runat="server" ID="AutoCompleteExtender1" 
                                                         TargetControlID="txtCustName" ServicePath="~/Template/AjaxScript.asmx" ServiceMethod = "GetAllCompanyForDDL"
-                                                        MinimumPrefixLength="3" CompletionInterval="1000" UseContextKey="true" EnableCaching="true"
+                                                        MinimumPrefixLength="3" CompletionInterval="200" UseContextKey="true" EnableCaching="true"
                                                         CompletionSetCount="20" FirstRowSelected="true" 
                                                         CompletionListCssClass="autocomplete_completionListElement" 
                                                         CompletionListItemCssClass="autocomplete_listItem" 
