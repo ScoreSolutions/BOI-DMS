@@ -60,6 +60,7 @@ Partial Class WebApp_frmDocRegisterEdit
             txtBookNo.Text = para.BOOK_NO
             txtRequestNo.Text = para.REQUEST_NO
             cmbGroupTitle.SelectedValue = para.GROUP_TITLE_ID
+            txtGroupTiltleID.Text = para.GROUP_TITLE_ID
             txtTitle.Text = para.TITLE_NAME
             txtReceiveDate.DateValue = para.REGISTER_DATE.Value
             txtExpectDate.DateValue = para.EXPECT_FINISH_DATE.Value
@@ -381,6 +382,10 @@ Partial Class WebApp_frmDocRegisterEdit
                 Config.SetAlert("บันทึกข้อมูลเรียบร้อย", Me)
                 trans.CommitTransaction()
                 Config.SaveTransLog("บันทึกการแก้ไขข้อมูลเลขที่ :" & txtBookNo.Text & " ชื่อเรื่อง :" & txtTitle.Text, Config.GetLogOnUser.LOGIN_HISTORY_ID)
+
+                If txtGroupTiltleID.Text <> cmbGroupTitle.SelectedValue.ToString Then
+                    Config.SaveTransLog("บันทึกการแก้ไขกลุ่มเรื่อง :จาก" & txtGroupTiltleID.Text & " เป็น :" & cmbGroupTitle.SelectedValue & "ข้อมูลเลขที่ :" & txtBookNo.Text & " ชื่อเรื่อง :" & txtTitle.Text, Config.GetLogOnUser.LOGIN_HISTORY_ID)
+                End If
             Else
                 Config.SetAlert("เกิดความผิดพลาดในขณะแก้ไขข้อมูล ไม่สามารถบันทึกข้อมูลได้", Me)
                 trans.RollbackTransaction()
