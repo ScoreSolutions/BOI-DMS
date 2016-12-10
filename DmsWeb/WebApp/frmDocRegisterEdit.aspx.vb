@@ -243,7 +243,9 @@ Partial Class WebApp_frmDocRegisterEdit
 
 
     Public Function SaveDocRegis(ByVal RefDocRegisID As Long, ByVal trans As Linq.Common.Utilities.TransactionDB) As Para.TABLE.DocumentRegisterPara 'ลงทะเบียน
-        Dim para As New Para.TABLE.DocumentRegisterPara
+
+        Dim eng As New Engine.Document.DocumentRegisterENG
+        Dim para As Para.TABLE.DocumentRegisterPara = eng.GetDocumentPara(txtID.Text, trans)
 
         para.ID = txtID.Text
         para.REQUEST_NO = txtRequestNo.Text
@@ -317,7 +319,6 @@ Partial Class WebApp_frmDocRegisterEdit
         para.ELECTRONIC_DOC_ID = txtDocRefID.Text
         para.REF_TH_EGIF_DOC_INBOUND_ID = txtTHeGIFDocID.Text
 
-        Dim eng As New Engine.Document.DocumentRegisterENG
         Dim _ID As Long = eng.SaveDocumentRegister(Config.GetLogOnUser.UserName, para, Session(Constant.SessFileUploadList), txtScanJobID.Text, trans)
         If _ID > 0 Then
             para.ID = _ID
