@@ -240,6 +240,7 @@
                                                                           <td align="right" class="Csslbl"  >
                                                                                 กลุ่มเรื่อง : </td>
                                                                             <td colspan="3" valign="buttom" >
+                                                                             <asp:TextBox ID="txtGroupTiltleID" runat="server" Text="0" CssClass="zHidden" ></asp:TextBox>
                                                                                 <asp:DropDownList ID="cmbGroupTitle" runat="server" CssClass="zComboBox" Width="770px" onchange="BindGroupTitleChange();"  >
                                                                                 </asp:DropDownList>
                                                                                 <font color="red">*</font>
