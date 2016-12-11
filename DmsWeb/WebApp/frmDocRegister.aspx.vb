@@ -43,6 +43,7 @@ Partial Class WebApp_frmDocRegister
             'cmbReceiveOrgID.Attributes.Add("onchange", "BindOrgIDChange('" & cmbReceiveOrgID.ClientID & "','" & cmbReceiveStaffID.ClientID & "');")
             txtCompanyDocNo.Attributes.Add("onBlur", "return CheckCompanyDocNo();")
             txtCompanyID.Attributes.Add("OnKeyPress", "ChkMinusInt(this,event);")
+            txtCompanyID.Attributes.Add("onBlur", "return SetCompanyByRegisNo();")
 
             If Request("RefDocID") IsNot Nothing Then
                 SetRefElecDoc(Request("RefDocID"))
@@ -932,42 +933,9 @@ Partial Class WebApp_frmDocRegister
 #Region "ลงทะเบียนพร้อมส่งออกภายนอก"
     Protected Sub btnSendOutside1_AfterExportClick(ByVal sender As Object, ByVal e As System.EventArgs, ByVal uPara As Para.Common.UserProfilePara) Handles btnSendOutside1.AfterExportClick
 
-        'If Session(SessSendList) IsNot Nothing Then
-        '    dtt = Session(SessSendList)
-        'Else
-
-        'If dtt.Rows.Count > 0 Then
-        '    Dim dr As DataRow = dtt.NewRow
-        '    Dim oPara As New OrganizationPara
-        '    Dim oEng As New Engine.Master.OrganizationEng
-        '    oPara = oEng.GetOrgPara(cmbOwnerOrgID.SelectedValue)
-        '    dr("OrgNameReceive") = cmbOwnerOrgID.Text
-        '    dr("OrgNameReceiveID") = cmbOwnerOrgID.SelectedValue
-        '    dr("OrgAbbNameReceive") = oPara.NAME_ABB
-        '    oPara = Nothing
-        '    oEng = Nothing
-
-        '    Dim sPara As New OfficerPara
-        '    Dim sEng As New OfficerEng
-        '    sPara = sEng.GetOfficerPara(cmbOwnerStaffID.SelectedValue)
-        '    dr("StaffNameReceiveID") = sPara.ID
-        '    dr("StaffNameReceive") = sPara.FIRST_NAME & " " & sPara.LAST_NAME
-        '    sPara = Nothing
-        '    sEng = Nothing
-
-        '    dr("Purpose") = ""
-        '    dr("PurposeID") = "0"
-        '    dr("remark_receive") = ""
-
-        '    dtt.Rows.Add(dr)
-        '    'End If
-        'End If
-
         Dim dtt As New DataTable
         dtt = GetSendList()
         If dtt.Rows.Count > 0 Then
-            'Dim uPara As New Para.Common.UserProfilePara
-            'uPara = Config.GetLogOnUser
             If uPara.UserName.Trim <> "" Then
                 Dim trans As New Linq.Common.Utilities.TransactionDB
                 If trans.CreateTransaction() = True Then
@@ -1152,7 +1120,7 @@ Partial Class WebApp_frmDocRegister
         Dim ret As Boolean = False
         Dim SendType As String = "I"
         Dim dPara As New Para.TABLE.DocumentRegisterPara
-        Dim NewBookNo As String = Engine.Document.BookRunningENG.GetBookNo(rdiReceiveType.SelectedValue, SendType, uPara.ORG_DATA.NAME_ABB, trans)
+        'Dim NewBookNo As String = Engine.Document.BookRunningENG.GetBookNo(rdiReceiveType.SelectedValue, SendType, uPara.ORG_DATA.NAME_ABB, trans)
         dPara = InsertDocRegis(0, "", "", SendType, trans, uPara)   'SendType=I  ส่งภายในสำนักงาน
 
         If dPara.ID > 0 Then
@@ -1257,14 +1225,4 @@ Partial Class WebApp_frmDocRegister
         AutoCompleteExtender1.Dispose()
     End Sub
 
-    Protected Sub txtCompanyID_TextChange(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtCompanyID.TextChange
-        Dim cmpENG As New CompanyEng
-        Dim dt As New DataTable
-        dt = cmpENG.GetDataCompanyList("company_regis_no='" & txtCompanyID.Text & "'", "")
-        If dt.Rows.Count > 0 Then
-            txtCustName.Text = dt.Rows(0)("thaiName").ToString()
-            hdnCustValue.Text = dt.Rows(0)("id").ToString()
-        End If
-
-    End Sub
 End Class

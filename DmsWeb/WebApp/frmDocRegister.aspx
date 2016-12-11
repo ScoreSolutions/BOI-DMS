@@ -211,7 +211,23 @@
                                             <tr style="height:25px">
                                                 <td align="right" class="Csslbl" >เลขทะเบียนบริษัท : </td>
                                                 <td align="left" class="Csslbl" >
-                                                     <uc2:txtBox ID="txtCompanyID" runat="server" AutoPosBack="True" TableName="COMPANY" FieldName="COMPANY_REGIS_NO"  MaxLength="13" />
+                                                     <asp:TextBox ID="txtCompanyID" runat="server" CssClass="TextBox" AutoComplete="false" Width="300px"  MaxLength="13" />
+                                                     <cc1:AutoCompleteExtender
+                                                        runat="server" 
+                                                        ID="companyIDAutocomplete" 
+                                                        TargetControlID="txtCompanyID"
+                                                        ServicePath="~/Template/AjaxScript.asmx"
+                                                        ServiceMethod = "GetAutoCompleteCompanyID"
+                                                        MinimumPrefixLength="1" 
+                                                        CompletionInterval="500"
+                                                        UseContextKey="true"
+                                                        EnableCaching="true"
+                                                        CompletionSetCount="10" FirstRowSelected="true"
+                                                        CompletionListCssClass="autocomplete_completionListElement" 
+                                                        CompletionListItemCssClass="autocomplete_listItem" 
+                                                        CompletionListHighlightedItemCssClass="autocomplete_highlightedListItem"
+                                                        ShowOnlyCurrentWordInCompletionListItem="true"  >
+                                                     </cc1:AutoCompleteExtender>
                                                 </td>
                                                 <td align="right" class="Csslbl"></td>
                                                 <td align="left" >
@@ -353,8 +369,6 @@
                                     <tr style="height:30px">
                                         <td align="right" width="10%" class="Csslbl" >หน่วยงานที่รับ : </td>
                                         <td width="35%"  align="left"  valign="top">
-                                            <%--<uc7:cmbAutoComplete ID="cmbReceiveOrgID" runat="server" Width="250px" AutoPosBack="true" />--%>
-                                            
                                             <asp:DropDownList ID="cmbReceiveOrgID" runat="server" CssClass="zComboBox" Width="300px"  >
                                             </asp:DropDownList>
                                             <cc1:ListSearchExtender id="ListSearchExtender2" runat="server" TargetControlID="cmbReceiveOrgID" PromptText=""
@@ -365,7 +379,6 @@
                                         </td>
                                         <td align="right" width="15%" class="Csslbl">เจ้าหน้าที่รับ : </td>
                                         <td width="40%" align="left" valign="top" >
-                                            <%--<uc7:cmbAutoComplete ID="cmbReceiveStaffID" runat="server" Width="280px"  />--%>
                                             <asp:DropDownList ID="cmbReceiveStaffID" runat="server" CssClass="zComboBox" Width="300px" >
                                             </asp:DropDownList>
                                             <cc1:CascadingDropDown ID="cdlReceiveStaffID" runat="server" TargetControlID="cmbReceiveStaffID"
@@ -578,6 +591,7 @@
             function ReceiveTypeChange(ReceiveType) {
                 var hdnCustValue = document.getElementById('<%=hdnCustValue.ClientID%>');
                 var txtCustName = document.getElementById('<%=txtCustName.ClientID%>');
+                var txtCompanyRegisNo = document.getElementById('<%=txtCompanyID.ClientID%>');
                 
                 if (ReceiveType == "1") {
                     var vOrgID = '<%=Config.GetLogOnUser.ORG_DATA.ID %>';                    
@@ -592,14 +606,39 @@
                             var ret = msg.d;
                             hdnCustValue.value = ret[0];
                             txtCustName.value = ret[1];
+                            txtCompanyRegisNo.value = ret[2];
+                            
                             txtCustName.disabled = true;
+                            txtCompanyRegisNo.disabled = true;
                         }
                     });
                 } else {
                     hdnCustValue.value = "";
                     txtCustName.value = "";
                     txtCustName.disabled = false;
+                    txtCompanyRegisNo.disabled = false;
                 }
+            }
+            
+            function SetCompanyByRegisNo(){
+                var hdnCustValue = document.getElementById('<%=hdnCustValue.ClientID%>');
+                var txtCustName = document.getElementById('<%=txtCustName.ClientID%>');
+                var txtCompanyRegisNo = document.getElementById('<%=txtCompanyID.ClientID%>');
+                
+                var pageUrl = '<%=ResolveUrl("~/Template/AjaxScript.asmx")%>';
+                $.ajax({
+                    type: "POST",
+                    url: pageUrl + "/GetCompanyNameByRegisNo",
+                    data: "{'CompanyRegisNo':'" + $(txtCompanyRegisNo).val() + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(msg) {
+                        var ret = msg.d;
+                        hdnCustValue.value = ret[0];
+                        txtCustName.value = ret[1];
+                        return true;
+                    }
+                });
             }
     </script>
 </asp:Content>

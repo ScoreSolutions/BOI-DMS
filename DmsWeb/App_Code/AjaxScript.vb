@@ -25,6 +25,32 @@ Public Class AjaxScript
     End Function
 
     <WebMethod()> _
+    Public Function GetAutoCompleteCompanyID(ByVal prefixText As String, ByVal count As Integer, ByVal contextKey As String) As String()
+        Dim result() As String
+        Dim dt As DataTable = Engine.Common.BOICentralENG.GetAutoCompleteCompanyID(prefixText)
+        Dim items As New List(Of String)
+        If dt.Rows.Count > 0 Then
+            For Each dr As DataRow In dt.Rows
+                items.Add(dr("company_regis_no").ToString())
+            Next
+        End If
+
+        Dim Str As String = "select top 10 company_regis_no "
+        Str += " from company "
+        Str += " where company_regis_no like '" & prefixText & "%' "
+        Str += " order by company_regis_no"
+        dt = Linq.Common.Utilities.SqlDB.ExecuteTable(Str)
+        If dt.Rows.Count > 0 Then
+            For Each dr As DataRow In dt.Rows
+                items.Add(dr("company_regis_no").ToString())
+            Next
+        End If
+
+        result = items.ToArray()
+        Return result
+    End Function
+
+    <WebMethod()> _
     Public Sub SaveTransLog(ByVal TransDesc As String, ByVal LoginHisID As Long)
         Config.SaveTransLog(TransDesc, LoginHisID)
     End Sub
@@ -309,10 +335,39 @@ Public Class AjaxScript
 
     <WebMethod()> _
     Public Function GetCompanyNameByOrgID(ByVal OrgID As String) As String()
-        Dim ret() As String = {"", ""}
+        Dim ret() As String = {"", "", ""}
         Dim eng As New Engine.Master.CompanyEng
         ret = eng.GetCompanyNameByOrgID(OrgID)
         eng = Nothing
+        Return ret
+    End Function
+
+    <WebMethod()> _
+    Public Function GetCompanyNameByRegisNo(ByVal CompanyRegisNo As String) As String()
+        Dim ret() As String = {"", ""}
+
+        Dim dt As New DataTable
+        If Engine.Common.BOICentralENG.PingServer() = True Then
+            dt = Engine.Common.BOICentralENG.GetCompanyByRegisID(CompanyRegisNo) 'cmpENG.GetDataCompanyList("company_regis_no='" & txtCompanyID.Text & "'", "")
+        End If
+
+        If dt.Rows.Count > 0 Then
+            'txtCustName.Text = dt.Rows(0)("company_name").ToString()
+            'hdnCustValue.Text = dt.Rows(0)("id").ToString()
+
+            ret(0) = dt.Rows(0)("id").ToString()
+            ret(1) = dt.Rows(0)("company_name").ToString()
+        Else
+            Dim cmpENG As New Engine.Master.CompanyEng
+            dt = cmpENG.GetDataCompanyByCompanyRegisNo(CompanyRegisNo)
+            If dt.Rows.Count > 0 Then
+                ret(0) = dt.Rows(0)("id").ToString()
+                ret(1) = dt.Rows(0)("company_name").ToString()
+            End If
+            cmpENG = Nothing
+        End If
+        dt.Dispose()
+
         Return ret
     End Function
 

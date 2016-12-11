@@ -75,6 +75,21 @@ Namespace Master
             lnq = Nothing
             Return dt
         End Function
+
+        Public Function GetDataCompanyByCompanyRegisNo(ByVal CompanyRegisNo As String) As DataTable
+            Dim dt As New DataTable
+            Dim trans As New Linq.Common.Utilities.TransactionDB
+            trans.CreateTransaction()
+            Dim sql As String = " select top 10 id, case when ltrim(thaiName)='' then engName else thaiName end + ' (" & Para.Common.Utilities.Constant.CompanySourceType.DMS & ")' company_name, company_regis_no "
+            sql += " from company "
+            sql += " where company_regis_no='" & CompanyRegisNo & "'"
+            Dim lnq As New CompanyLinq
+            dt = lnq.GetListBySql(sql, trans.Trans)
+            trans.CommitTransaction()
+            lnq = Nothing
+            Return dt
+        End Function
+
         Public Function GetCompanyPara(ByVal DocCompanyID As Long) As CompanyPara
             Dim lnq As New CompanyLinq
             Dim trans As New Linq.Common.Utilities.TransactionDB
@@ -119,6 +134,15 @@ Namespace Master
                 ret = "true"
             Else
                 Dim sql As String = "select "
+
+                Dim dt As DataTable = Engine.Common.BOICentralENG.GetCompanyByRegisID(ComRegisNo)
+                If dt.Rows.Count > 0 Then
+                    dt.DefaultView.RowFilter = "id <> '" & CompanyID & "'"
+                    If dt.DefaultView.Count > 0 Then
+                        ret = "true"
+                    End If
+                End If
+                dt.Dispose()
             End If
             lnq = Nothing
 
@@ -197,7 +221,7 @@ Namespace Master
         End Function
 
         Public Function GetCompanyNameByOrgID(ByVal OrgID As String) As String()
-            Dim ret() As String = {"", ""}
+            Dim ret() As String = {"", "", ""}
             Dim dt As New DataTable
             dt = GetDataCompanyList("ref_org_id = '" & OrgID & "'", "")
             If dt.Rows.Count > 0 Then
@@ -213,6 +237,11 @@ Namespace Master
                         ret(1) = dt.Rows(0)("engName").ToString.Trim
                     End If
                 End If
+
+                If Convert.IsDBNull(dt.Rows(0)("company_regis_no")) = False Then
+                    ret(2) = dt.Rows(0)("company_regis_no")
+                End If
+
                 dt = Nothing
             End If
             Return ret
