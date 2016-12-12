@@ -60,6 +60,7 @@ Partial Class WebApp_frmDocRegisterEdit
             txtBookNo.Text = para.BOOK_NO
             txtRequestNo.Text = para.REQUEST_NO
             cmbGroupTitle.SelectedValue = para.GROUP_TITLE_ID
+            txtGroupTiltleName.Text = cmbGroupTitle.SelectedItem.Text
             txtTitle.Text = para.TITLE_NAME
             txtReceiveDate.DateValue = para.REGISTER_DATE.Value
             txtExpectDate.DateValue = para.EXPECT_FINISH_DATE.Value
@@ -243,7 +244,9 @@ Partial Class WebApp_frmDocRegisterEdit
 
 
     Public Function SaveDocRegis(ByVal RefDocRegisID As Long, ByVal trans As Linq.Common.Utilities.TransactionDB) As Para.TABLE.DocumentRegisterPara 'ลงทะเบียน
-        Dim para As New Para.TABLE.DocumentRegisterPara
+
+        Dim eng As New Engine.Document.DocumentRegisterENG
+        Dim para As Para.TABLE.DocumentRegisterPara = eng.GetDocumentPara(txtID.Text, trans)
 
         para.ID = txtID.Text
         para.REQUEST_NO = txtRequestNo.Text
@@ -317,7 +320,6 @@ Partial Class WebApp_frmDocRegisterEdit
         para.ELECTRONIC_DOC_ID = txtDocRefID.Text
         para.REF_TH_EGIF_DOC_INBOUND_ID = txtTHeGIFDocID.Text
 
-        Dim eng As New Engine.Document.DocumentRegisterENG
         Dim _ID As Long = eng.SaveDocumentRegister(Config.GetLogOnUser.UserName, para, Session(Constant.SessFileUploadList), txtScanJobID.Text, trans)
         If _ID > 0 Then
             para.ID = _ID
@@ -380,6 +382,12 @@ Partial Class WebApp_frmDocRegisterEdit
                 Config.SetAlert("บันทึกข้อมูลเรียบร้อย", Me)
                 trans.CommitTransaction()
                 Config.SaveTransLog("บันทึกการแก้ไขข้อมูลเลขที่ :" & txtBookNo.Text & " ชื่อเรื่อง :" & txtTitle.Text, Config.GetLogOnUser.LOGIN_HISTORY_ID)
+
+                If txtGroupTiltleName.Text <> cmbGroupTitle.SelectedItem.Text Then
+                    Config.SaveTransLog("EditGroupTitle, บันทึกการแก้ไขกลุ่มเรื่อง, จาก : " & txtGroupTiltleName.Text & ", เป็น :" & cmbGroupTitle.SelectedItem.Text & ", เลขที่หนังสือ :" & txtBookNo.Text & ", ชื่อเรื่อง :" & txtTitle.Text, Config.GetLogOnUser.LOGIN_HISTORY_ID)
+                    txtGroupTiltleName.Text = cmbGroupTitle.SelectedItem.Text
+                End If
+
             Else
                 Config.SetAlert("เกิดความผิดพลาดในขณะแก้ไขข้อมูล ไม่สามารถบันทึกข้อมูลได้", Me)
                 trans.RollbackTransaction()

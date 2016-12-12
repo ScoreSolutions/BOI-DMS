@@ -25,6 +25,32 @@ Public Class AjaxScript
     End Function
 
     <WebMethod()> _
+    Public Function GetAutoCompleteCompanyID(ByVal prefixText As String, ByVal count As Integer, ByVal contextKey As String) As String()
+        Dim result() As String
+        Dim dt As DataTable = Engine.Common.BOICentralENG.GetAutoCompleteCompanyID(prefixText)
+        Dim items As New List(Of String)
+        If dt.Rows.Count > 0 Then
+            For Each dr As DataRow In dt.Rows
+                items.Add(dr("company_regis_no").ToString())
+            Next
+        End If
+
+        Dim Str As String = "select top 10 company_regis_no "
+        Str += " from company "
+        Str += " where company_regis_no like '" & prefixText & "%' "
+        Str += " order by company_regis_no"
+        dt = Linq.Common.Utilities.SqlDB.ExecuteTable(Str)
+        If dt.Rows.Count > 0 Then
+            For Each dr As DataRow In dt.Rows
+                items.Add(dr("company_regis_no").ToString())
+            Next
+        End If
+
+        result = items.ToArray()
+        Return result
+    End Function
+
+    <WebMethod()> _
     Public Sub SaveTransLog(ByVal TransDesc As String, ByVal LoginHisID As Long)
         Config.SaveTransLog(TransDesc, LoginHisID)
     End Sub
@@ -221,20 +247,52 @@ Public Class AjaxScript
         If prefixText.ToLower.Equals("select") Then
             itemsCust.Add("No Records Found !")
         Else
+            Dim iCount As Integer = 0
             Dim dt As New DataTable
             Dim eng As New Engine.Master.CompanyEng
             dt = eng.GetCompanyDDList(prefixText)
             eng = Nothing
+
+            Dim i As Integer = 0
             If dt.Rows.Count > 0 Then
-                For i As Integer = 0 To dt.Rows.Count - 1
+                For i = 0 To dt.Rows.Count - 1
                     Dim retValue As String = dt.Rows(i)("id").ToString & "|"
-                    If Convert.IsDBNull(dt.Rows(i)("company_regis_id")) = False Then
-                        retValue += dt.Rows(i)("company_regis_id")
+                    If Convert.IsDBNull(dt.Rows(i)("company_regis_no")) = False Then
+                        retValue += dt.Rows(i)("company_regis_no")
                     End If
                     itemsCust.Insert(i, AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(dt.Rows(i)("company_name").ToString, retValue))
                 Next
                 dt = Nothing
-            Else
+                'Else
+                '    itemsCust.Add("No Records Found !")
+            End If
+
+            ''ดึงข้อมูลจาก BOICENTRAL
+            If Engine.Common.BOICentralENG.PingServer() = True Then
+                Dim cDt As New DataTable
+                cDt = Engine.Common.BOICentralENG.GetCompanyList(prefixText)
+
+                If cDt.Rows.Count > 0 Then
+                    For j As Integer = 0 To cDt.Rows.Count - 1
+                        Dim cDr As DataRow = cDt.Rows(j)
+                        i += j
+                        'Dim dr As DataRow = dt.NewRow
+                        'dr("id") = cDr("id")
+                        'dr("company_name") = cDr("company_name")
+                        'dr("company_regis_no") = cDr("company_regis_no")
+                        'dt.Rows.Add(dr)
+
+                        Dim retValue As String = cDr("id").ToString & "|"
+                        If Convert.IsDBNull(cDr("company_regis_no")) = False Then
+                            retValue += cDr("company_regis_no")
+                        End If
+                        itemsCust.Insert(i, AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(dt.Rows(i)("company_name").ToString, retValue))
+                    Next
+                End If
+                cDt = Nothing
+            End If
+
+            If i = 0 Then
                 itemsCust.Add("No Records Found !")
             End If
         End If
@@ -243,7 +301,7 @@ Public Class AjaxScript
     End Function
 
     <WebMethod()> _
-    Public Function SaveCompany(ByVal UserName As String, ByVal ThaiName As String, ByVal EngName As String, ByVal vAddress As String, ByVal CompanyType As String, ByVal vTel As String, ByVal vFax As String, ByVal vZipcode As String, ByVal ProvinceID As String, ByVal DistrictID As String, ByVal ComID As String) As String
+    Public Function SaveCompany(ByVal UserName As String, ByVal ThaiName As String, ByVal EngName As String, ByVal vAddress As String, ByVal CompanyType As String, ByVal vTel As String, ByVal vFax As String, ByVal vZipcode As String, ByVal ProvinceID As String, ByVal DistrictID As String, ByVal ComRegisNo As String) As String
         Dim ret As String = "0"
 
         Dim para As New Para.TABLE.CompanyPara
@@ -257,7 +315,7 @@ Public Class AjaxScript
         para.PROVINCE_ID = ProvinceID
         para.DISTRICT_ID = DistrictID
         para.ACTIVE = "Y"
-        para.COMID = ComID
+        para.COMPANY_REGIS_NO = ComRegisNo
 
         Dim trans As New Linq.Common.Utilities.TransactionDB
         trans.CreateTransaction()
@@ -277,10 +335,39 @@ Public Class AjaxScript
 
     <WebMethod()> _
     Public Function GetCompanyNameByOrgID(ByVal OrgID As String) As String()
-        Dim ret() As String = {"", ""}
+        Dim ret() As String = {"", "", ""}
         Dim eng As New Engine.Master.CompanyEng
         ret = eng.GetCompanyNameByOrgID(OrgID)
         eng = Nothing
+        Return ret
+    End Function
+
+    <WebMethod()> _
+    Public Function GetCompanyNameByRegisNo(ByVal CompanyRegisNo As String) As String()
+        Dim ret() As String = {"", ""}
+
+        Dim dt As New DataTable
+        If Engine.Common.BOICentralENG.PingServer() = True Then
+            dt = Engine.Common.BOICentralENG.GetCompanyByRegisID(CompanyRegisNo) 'cmpENG.GetDataCompanyList("company_regis_no='" & txtCompanyID.Text & "'", "")
+        End If
+
+        If dt.Rows.Count > 0 Then
+            'txtCustName.Text = dt.Rows(0)("company_name").ToString()
+            'hdnCustValue.Text = dt.Rows(0)("id").ToString()
+
+            ret(0) = dt.Rows(0)("id").ToString()
+            ret(1) = dt.Rows(0)("company_name").ToString()
+        Else
+            Dim cmpENG As New Engine.Master.CompanyEng
+            dt = cmpENG.GetDataCompanyByCompanyRegisNo(CompanyRegisNo)
+            If dt.Rows.Count > 0 Then
+                ret(0) = dt.Rows(0)("id").ToString()
+                ret(1) = dt.Rows(0)("company_name").ToString()
+            End If
+            cmpENG = Nothing
+        End If
+        dt.Dispose()
+
         Return ret
     End Function
 
@@ -290,6 +377,17 @@ Public Class AjaxScript
         Dim eng As New Engine.Master.OrganizationEng
         ret = eng.GetOrgPara(OrgID).DIRECTOR
         eng = Nothing
+        Return ret
+    End Function
+
+    <WebMethod()> _
+    Public Function ChkDupCompanyRegisNo(ByVal vComRegisNo As String, ByVal CompanyID As String) As String
+        Dim ret As String = "false"
+        Dim eng As New Engine.Master.CompanyEng
+        Dim trans As New Linq.Common.Utilities.TransactionDB
+        trans.CreateTransaction()
+        ret = eng.CheckDupCompanyRegisNo(vComRegisNo, CompanyID, trans)
+        trans.CommitTransaction()
         Return ret
     End Function
 

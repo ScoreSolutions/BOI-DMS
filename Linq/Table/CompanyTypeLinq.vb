@@ -58,7 +58,10 @@ Namespace TABLE
         Dim _COMPANY_TYPE_NAME As String = ""
         Dim _DESCRIPTION As String = ""
         Dim _IS_DISPLAY As  System.Nullable(Of Char)  = ""
-        Dim _IS_DEFALT As  System.Nullable(Of Char)  = ""
+        Dim _IS_DEFALT As System.Nullable(Of Char) = ""
+        Dim _PREFIX_NAME As String = ""
+        Dim _SUBFIX_NAME As String = ""
+        Dim _REQUIRE_REGIS_NO As Char = "Y"
 
         'Generate Field Property 
         <Column(Storage:="_ID", DbType:="BigInt NOT NULL ",CanBeNull:=false)>  _
@@ -159,7 +162,35 @@ Namespace TABLE
             Set(ByVal value As  System.Nullable(Of Char) )
                _IS_DEFALT = value
             End Set
-        End Property 
+        End Property
+        <Column(Storage:="_PREFIX_NAME", DbType:="VarChar(255)")> _
+Public Property PREFIX_NAME() As Char
+            Get
+                Return _PREFIX_NAME
+            End Get
+            Set(ByVal value As Char)
+                _PREFIX_NAME = value
+            End Set
+        End Property
+        <Column(Storage:="_SUBFIX_NAME", DbType:="VarChar(255)")> _
+        Public Property SUBFIX_NAME() As Char
+            Get
+                Return _SUBFIX_NAME
+            End Get
+            Set(ByVal value As Char)
+                _SUBFIX_NAME = value
+            End Set
+        End Property
+        <Column(Storage:="_REQUIRE_REGIS_NO", DbType:="Char(1) NOT NULL ", CanBeNull:=False)> _
+        Public Property REQUIRE_REGIS_NO() As String
+            Get
+                Return _REQUIRE_REGIS_NO
+            End Get
+            Set(ByVal value As String)
+                _REQUIRE_REGIS_NO = value
+            End Set
+        End Property
+
 
 
         'Clear All Data
@@ -175,6 +206,9 @@ Namespace TABLE
             _DESCRIPTION = ""
             _IS_DISPLAY = ""
             _IS_DEFALT = ""
+            _PREFIX_NAME = ""
+            _SUBFIX_NAME = ""
+            _REQUIRE_REGIS_NO = "Y"
         End Sub
 
        'Define Public Method 
@@ -422,7 +456,10 @@ Namespace TABLE
                         If Convert.IsDBNull(Rdr("company_type_name")) = False Then _company_type_name = Rdr("company_type_name").ToString()
                         If Convert.IsDBNull(Rdr("description")) = False Then _description = Rdr("description").ToString()
                         If Convert.IsDBNull(Rdr("is_display")) = False Then _is_display = Rdr("is_display").ToString()
-                        If Convert.IsDBNull(Rdr("is_defalt")) = False Then _is_defalt = Rdr("is_defalt").ToString()
+                        If Convert.IsDBNull(Rdr("is_defalt")) = False Then _IS_DEFALT = Rdr("is_defalt").ToString()
+                        If Convert.IsDBNull(Rdr("prefix_name")) = False Then _PREFIX_NAME = Rdr("prefix_name").ToString()
+                        If Convert.IsDBNull(Rdr("subfix_name")) = False Then _SUBFIX_NAME = Rdr("subfix_name").ToString()
+                        If Convert.IsDBNull(Rdr("require_regis_no")) = False Then _REQUIRE_REGIS_NO = Rdr("require_regis_no").ToString()
                     Else
                         ret = False
                         _error = MessageResources.MSGEV002
@@ -470,7 +507,10 @@ Namespace TABLE
                         If Convert.IsDBNull(Rdr("company_type_name")) = False Then _company_type_name = Rdr("company_type_name").ToString()
                         If Convert.IsDBNull(Rdr("description")) = False Then _description = Rdr("description").ToString()
                         If Convert.IsDBNull(Rdr("is_display")) = False Then _is_display = Rdr("is_display").ToString()
-                        If Convert.IsDBNull(Rdr("is_defalt")) = False Then _is_defalt = Rdr("is_defalt").ToString()
+                        If Convert.IsDBNull(Rdr("is_defalt")) = False Then _IS_DEFALT = Rdr("is_defalt").ToString()
+                        If Convert.IsDBNull(Rdr("prefix_name")) = False Then _PREFIX_NAME = Rdr("prefix_name").ToString()
+                        If Convert.IsDBNull(Rdr("subfix_name")) = False Then _SUBFIX_NAME = Rdr("subfix_name").ToString()
+                        If Convert.IsDBNull(Rdr("require_regis_no")) = False Then _REQUIRE_REGIS_NO = Rdr("require_regis_no").ToString()
 
                         'Generate Item For Child Table
                     Else
@@ -517,7 +557,10 @@ Namespace TABLE
                         If Convert.IsDBNull(Rdr("company_type_name")) = False Then ret.company_type_name = Rdr("company_type_name").ToString()
                         If Convert.IsDBNull(Rdr("description")) = False Then ret.description = Rdr("description").ToString()
                         If Convert.IsDBNull(Rdr("is_display")) = False Then ret.is_display = Rdr("is_display").ToString()
-                        If Convert.IsDBNull(Rdr("is_defalt")) = False Then ret.is_defalt = Rdr("is_defalt").ToString()
+                        If Convert.IsDBNull(Rdr("is_defalt")) = False Then ret.IS_DEFALT = Rdr("is_defalt").ToString()
+                        If Convert.IsDBNull(Rdr("prefix_name")) = False Then ret.PREFIX_NAME = Rdr("prefix_name").ToString()
+                        If Convert.IsDBNull(Rdr("subfix_name")) = False Then ret.SUBFIX_NAME = Rdr("subfix_name").ToString()
+                        If Convert.IsDBNull(Rdr("require_regis_no")) = False Then ret.REQUIRE_REGIS_NO = Rdr("require_regis_no").ToString()
 
                         'Generate Item For Child Table
 
@@ -546,7 +589,7 @@ Namespace TABLE
         Private ReadOnly Property SqlInsert() As String 
             Get
                 Dim Sql As String=""
-                Sql += "INSERT INTO " & tableName  & " (ID, CREATE_BY, CREATE_ON, UPDATE_BY, UPDATE_ON, COMPANY_TYPE_ID, LANGUAGE, COMPANY_TYPE_NAME, DESCRIPTION, IS_DISPLAY, IS_DEFALT)"
+                Sql += "INSERT INTO " & TableName & " (ID, CREATE_BY, CREATE_ON, UPDATE_BY, UPDATE_ON, COMPANY_TYPE_ID, LANGUAGE, COMPANY_TYPE_NAME, DESCRIPTION, IS_DISPLAY, IS_DEFALT, PREFIX_NAME, SUBFIX_NAME, REQUIRE_REGIS_NO)"
                 Sql += " VALUES("
                 sql += DB.SetDouble(_ID) & ", "
                 sql += DB.SetString(_CREATE_BY) & ", "
@@ -558,7 +601,10 @@ Namespace TABLE
                 sql += DB.SetString(_COMPANY_TYPE_NAME) & ", "
                 sql += DB.SetString(_DESCRIPTION) & ", "
                 sql += DB.SetString(_IS_DISPLAY) & ", "
-                sql += DB.SetString(_IS_DEFALT)
+                Sql += DB.SetString(_IS_DEFALT) & ", "
+                Sql += DB.SetString(_PREFIX_NAME) & ", "
+                Sql += DB.SetString(_SUBFIX_NAME) & ", "
+                Sql += DB.SetString(_REQUIRE_REGIS_NO) & " "
                 sql += ")"
                 Return sql
             End Get
@@ -580,7 +626,10 @@ Namespace TABLE
                 Sql += "COMPANY_TYPE_NAME = " & DB.SetString(_COMPANY_TYPE_NAME) & ", "
                 Sql += "DESCRIPTION = " & DB.SetString(_DESCRIPTION) & ", "
                 Sql += "IS_DISPLAY = " & DB.SetString(_IS_DISPLAY) & ", "
-                Sql += "IS_DEFALT = " & DB.SetString(_IS_DEFALT) + ""
+                Sql += "IS_DEFALT = " & DB.SetString(_IS_DEFALT) + ", "
+                Sql += "PREFIX_NAME = " & DB.SetString(_PREFIX_NAME) & ", "
+                Sql += "SUBFIX_NAME = " & DB.SetString(_SUBFIX_NAME) & ", "
+                Sql += "REQUIRE_REGIS_NO = " & DB.SetString(_REQUIRE_REGIS_NO) & " "
                 Return Sql
             End Get
         End Property

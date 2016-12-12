@@ -22,7 +22,10 @@ Namespace TABLE
         Dim _COMPANY_TYPE_NAME As String = ""
         Dim _DESCRIPTION As String = ""
         Dim _IS_DISPLAY As  System.Nullable(Of Char)  = ""
-        Dim _IS_DEFALT As  System.Nullable(Of Char)  = ""
+        Dim _IS_DEFALT As System.Nullable(Of Char) = ""
+        Dim _PREFIX_NAME As String = ""
+        Dim _SUBFIX_NAME As String = ""
+        Dim _REQUIRE_REGIS_NO As Char = "Y"
 
         'Generate Field Property 
         <Column(Storage:="_ID", DbType:="BigInt NOT NULL ",CanBeNull:=false)>  _
@@ -123,8 +126,34 @@ Namespace TABLE
             Set(ByVal value As  System.Nullable(Of Char) )
                _IS_DEFALT = value
             End Set
-        End Property 
-
+        End Property
+        <Column(Storage:="_PREFIX_NAME", DbType:="VarChar(255)")> _
+        Public Property PREFIX_NAME() As Char
+            Get
+                Return _PREFIX_NAME
+            End Get
+            Set(ByVal value As Char)
+                _PREFIX_NAME = value
+            End Set
+        End Property
+        <Column(Storage:="_SUBFIX_NAME", DbType:="VarChar(255)")> _
+        Public Property SUBFIX_NAME() As Char
+            Get
+                Return _SUBFIX_NAME
+            End Get
+            Set(ByVal value As Char)
+                _SUBFIX_NAME = value
+            End Set
+        End Property
+        <Column(Storage:="_REQUIRE_REGIS_NO", DbType:="Char(1) NOT NULL ", CanBeNull:=False)> _
+        Public Property REQUIRE_REGIS_NO() As String
+            Get
+                Return _REQUIRE_REGIS_NO
+            End Get
+            Set(ByVal value As String)
+                _REQUIRE_REGIS_NO = value
+            End Set
+        End Property
 
     End Class
 End Namespace

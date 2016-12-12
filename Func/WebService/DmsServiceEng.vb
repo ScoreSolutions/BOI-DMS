@@ -24,6 +24,8 @@ Namespace WebService
             Return items.ToArray()
         End Function
 
+        
+
         Public Function StartProcSendDocLastStatus(ByVal SystemID As String, ByVal RecordCount As Integer) As Para.DmsService.StartSendDocumentResPara
             Dim ret As New Para.DmsService.StartSendDocumentResPara
             Dim trans As New Linq.Common.Utilities.TransactionDB

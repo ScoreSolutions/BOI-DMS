@@ -50,7 +50,7 @@ Partial Public Class frmTestTHEGif
         p.SignerPartyMinistryOrganizationID = "11"
         p.SignerPartyDepartmentOrganizationID = "11008"
 
-        LinqWS.THeGIF.RequestTHeGIFLinqWS.SetURI = "http://ega-ecms.mict.go.th/ecms-ws01/service2"
+        LinqWS.THeGIF.RequestTHeGIFLinqWS.SetURI = "http://dev.exchange.ecms.ega.or.th/thegif_2" '"http://ega-ecms.mict.go.th/ecms-ws01/service2"
 
         Response.Write(LinqWS.THeGIF.RequestTHeGIFLinqWS.CorrespondenceLetterOutboundRequest(p).GovernmentDocument)
 

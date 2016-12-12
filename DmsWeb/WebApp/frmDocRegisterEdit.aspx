@@ -114,8 +114,10 @@
             document.getElementById('<%=txtCustName.ClientID%>').style.backgroundImage = 'none';
         }
         function OnCustomerSelected(source, eventArgs) {
-            var custVal = eventArgs.get_value();
+            var retVal = eventArgs.get_value().split("|");
+            var custVal = retVal[0];
             document.getElementById('<%=hdnCustValue.ClientID%>').value = custVal;
+            document.getElementById('<%=txtCompanyID.ClientID%>').value = retVal[1];
 
             var chk = document.getElementById("<%=chkCertNo.ClientID %>");
             if (chk != null)
@@ -142,7 +144,7 @@
                 }
             });
 
-            oXmlHttp.setRequestHeader("Connection", "close");
+            //oXmlHttp.setRequestHeader("Connection", "close");
 
 
             //เลขที่หนังสือแจ้งมติ
@@ -168,6 +170,7 @@
         function ClearTxtCustValue() {
             if (document.getElementById('<%=txtCustName.ClientID%>').value == "") {
                 document.getElementById('<%=hdnCustValue.ClientID%>').value = "";
+                document.getElementById('<%=txtCompanyID.ClientID%>').value = "";
             }
         }
 
@@ -202,10 +205,6 @@
                                         <table width="100%" border="1" height="510px"  >
                                             <tr valign="top">
                                                 <td>
-                                                    
-                                                    
-                                                    
-                                                    
                                                         <table width="100%" border="0" cellpadding="2" cellspacing="0" >
                                                             <tr>
                                                                 <td class="CssHead" colspan="4" align="left" >แก้ไขรายละเอียดหนังสือ</td>
@@ -240,6 +239,7 @@
                                                                           <td align="right" class="Csslbl"  >
                                                                                 กลุ่มเรื่อง : </td>
                                                                             <td colspan="3" valign="buttom" >
+                                                                             <asp:TextBox ID="txtGroupTiltleName" runat="server" Text="" CssClass="zHidden" ></asp:TextBox>
                                                                                 <asp:DropDownList ID="cmbGroupTitle" runat="server" CssClass="zComboBox" Width="770px" onchange="BindGroupTitleChange();"  >
                                                                                 </asp:DropDownList>
                                                                                 <font color="red">*</font>
@@ -312,12 +312,24 @@
                                                                                 </asp:RadioButtonList>
                                                                             </td>
                                                                         </tr>
+                                                                        
+                                                                        
                                                                         <tr>
                                                                             <td colspan="4" align="center">
                                                                                 <asp:UpdatePanel ID="UpdatePanel2" runat="server">
                                                                                     <ContentTemplate>
                                                                                         <asp:Panel ID="pnlCompany" runat="server" BorderWidth="1" Width="95%" >
                                                                                             <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                                                                <tr style="height:25px">
+                                                                                                    <td align="right" class="Csslbl" >เลขทะเบียนบริษัท : </td>
+                                                                                                    <td align="left" class="Csslbl" >
+                                                                                                         <uc2:txtBox ID="txtCompanyID" runat="server" AutoPosBack="True" TableName="COMPANY" FieldName="COMPANY_REGIS_NO"  MaxLength="13" />
+                                                                                                    </td>
+                                                                                                    <td align="right" class="Csslbl"></td>
+                                                                                                    <td align="left" >
+                                                                                                       
+                                                                                                    </td>
+                                                                                                </tr>
                                                                                                 <tr style="height:25px">
                                                                                                     <td align="right" class="Csslbl" >ชื่อองค์กร : </td>
                                                                                                     <td colspan="3" align="left">

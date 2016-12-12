@@ -249,7 +249,7 @@ Partial Class UserControls_Button_btnSendOutside
 
                             para.COMPANY_ID_RECEIVE = Convert.ToInt64(tmpDr("company_id"))
                             para.COMPANY_NAME_RECEIVE = tmpDr("CompanyNameReceive").ToString
-                            para.COMPANY_REGIS_NO = tmpDr("CompanyRegisNo").ToString
+                            para.COMPANY_REGIS_NO = tmpDr("CompanyRegisNo").ToString.Replace("&nbsp;", "")
 
                             Dim sEng As New Engine.Master.OfficerEng
                             Dim sPara As New Para.TABLE.OfficerPara

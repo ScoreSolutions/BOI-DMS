@@ -36,11 +36,19 @@ Namespace Common
         End Function
 
         Public Shared Function GetCompanyList(ByVal WhText As String) As DataTable
-            Dim sql As String = "select top 100 loid as id, case when ltrim(tName)='' then eName else tName end + ' (" & Para.Common.Utilities.Constant.CompanySourceType.BOICENTRAL & ")' company_name, registerid company_regis_id"
+            Dim sql As String = "select top 10 loid as id, case when ltrim(tName)='' then eName else tName end + ' (" & Para.Common.Utilities.Constant.CompanySourceType.BOICENTRAL & ")' company_name, registerid company_regis_no"
             sql += " from company "
             sql += " where ltrim(case when ltrim(tName)='' then eName else tName end)<>'' "
             sql += " and ltrim(case when ltrim(tName)='' then eName else tName end) like '" & WhText & "%' "
             'sql += " order by case when ltrim(tName)='' then eName else tName end"
+            Dim dt As DataTable = SqlBoiCentralDB.ExecuteTable(sql)
+            Return dt
+        End Function
+
+        Public Shared Function GetCompanyByRegisID(ByVal RegisterID As String) As DataTable
+            Dim sql As String = "select top 10 loid as id, case when ltrim(tName)='' then eName else tName end + ' (" & Para.Common.Utilities.Constant.CompanySourceType.BOICENTRAL & ")' company_name, registerid company_regis_no"
+            sql += " from company "
+            sql += " where registerid = '" & RegisterID & "' "
             Dim dt As DataTable = SqlBoiCentralDB.ExecuteTable(sql)
             Return dt
         End Function
@@ -50,6 +58,18 @@ Namespace Common
             sql += " from company "
             sql += " where loid = '" & Loid & "' "
             Dim dt As DataTable = SqlBoiCentralDB.ExecuteTable(sql)
+            Return dt
+        End Function
+
+        Public Shared Function GetAutoCompleteCompanyID(ByVal prefixText As String) As DataTable
+            Dim str As String = ""
+            str += " select top 10 registerid company_regis_no "
+            str += " from company"
+            str += " where registerid like '" & prefixText & "%' "
+            str += " order by registerid"
+
+            Dim dt As DataTable = SqlBoiCentralDB.ExecuteTable(str)
+            'Return items.ToArray()
             Return dt
         End Function
 

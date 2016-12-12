@@ -141,7 +141,7 @@
                                 </Animations>
                              </cc1:AutoCompleteExtender>
                              <asp:TextBox ID="hdnCustValue" runat="server" CssClass="zHidden"  ></asp:TextBox>
-                             <asp:TextBox ID="hdnCompanyRegisNo" runat="server" ></asp:TextBox>
+                             <asp:TextBox ID="hdnCompanyRegisNo" runat="server" CssClass="zHidden"  ></asp:TextBox>
                         </td>
                         <td align="right" width="10%" class="Csslbl">ผู้ลงนาม : </td>
                         <td width="30%" align="left" >

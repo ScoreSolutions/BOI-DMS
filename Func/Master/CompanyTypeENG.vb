@@ -16,7 +16,7 @@ Namespace Master
         End Function
 
         Public Function GetCompanyTypeID(ByVal id As Long) As DataTable
-            Dim sql As String = "select id,company_type_name "
+            Dim sql As String = "select id,company_type_name, require_regis_no "
             sql += " from COMPANY_TYPE "
             sql += " where id = " & id
             sql += " order by id"
