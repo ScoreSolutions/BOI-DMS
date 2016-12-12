@@ -170,14 +170,13 @@ Namespace TABLE
         '/// <returns>true if insert data successfully; otherwise, false.</returns>
         Public Function InsertData(LoginName As String,trans As SQLTransaction) As Boolean
             If trans IsNot Nothing Then 
-                _ID = DB.GetNextID("ID",tableName, trans)
                 _CREATE_BY = LoginName
                 _CREATE_ON = DateTime.Now
                 Return doInsert(trans)
-            Else 
+            Else
                 _error = "Transaction Is not null"
                 Return False
-            End If 
+            End If
         End Function
 
 
@@ -300,14 +299,21 @@ Namespace TABLE
             Dim ret As Boolean = True
             If _haveData = False Then
                 Try
-
-                    ret = (DB.ExecuteNonQuery(SqlInsert, trans) > 0)
-                    If ret = False Then
-                        _error = DB.ErrorMessage
+                    Dim dt As DataTable = DB.ExecuteTable(SqlInsert, trans)
+                    'ret = ( > 0)
+                    If dt.Rows.Count > 0 Then
+                        ret = Convert.ToInt64(dt.Rows(0)("id")) > 0
+                        If ret = False Then
+                            _error = DB.ErrorMessage
+                        Else
+                            _haveData = True
+                        End If
+                        _information = MessageResources.MSGIN001
                     Else
-                        _haveData = True
+                        ret = False
+                        _error = DB.ErrorMessage
                     End If
-                    _information = MessageResources.MSGIN001
+                    dt.Dispose()
                 Catch ex As ApplicationException
                     ret = false
                     _error = ex.Message & "ApplicationException :" & ex.ToString() & "### SQL:" & SqlInsert
@@ -522,9 +528,9 @@ Namespace TABLE
         Private ReadOnly Property SqlInsert() As String 
             Get
                 Dim Sql As String=""
-                Sql += "INSERT INTO " & tableName  & " (ID, CREATE_BY, CREATE_ON, UPDATE_BY, UPDATE_ON, LOGIN_HIS_ID, TRANS_DATE, TRANS_DESC)"
+                Sql += "INSERT INTO " & TableName & " (CREATE_BY, CREATE_ON, UPDATE_BY, UPDATE_ON, LOGIN_HIS_ID, TRANS_DATE, TRANS_DESC)"
+                Sql += " OUTPUT inserted.id "
                 Sql += " VALUES("
-                sql += DB.SetDouble(_ID) & ", "
                 sql += DB.SetString(_CREATE_BY) & ", "
                 sql += DB.SetDateTime(_CREATE_ON) & ", "
                 sql += DB.SetString(_UPDATE_BY) & ", "
