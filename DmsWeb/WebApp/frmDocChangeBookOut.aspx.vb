@@ -20,8 +20,8 @@ Partial Class WebApp_frmDocChangeBookOut
 
         'ต้องมีการทำรายการด้วย เช่น เลือกชื่อบริษัท หรือ เลือกชื่อหน่วยงาน
         'ไม่สามารถเป็นค่าว่างทั้งหมดได้
-        If txtCompanyComID.Text.Trim = "" And txtNewBookNo.Text.Trim = "" Then
-            Config.SetAlert("กรุณาระบุเลขทะเบียนบริษัทหรือเลขที่หนังสือ", Me, txtCompanyComID.ClientID)
+        If txtCompanyID.Text.Trim = "" And txtNewBookNo.Text.Trim = "" Then
+            Config.SetAlert("กรุณาระบุเลขทะเบียนบริษัทหรือเลขที่หนังสือ", Me, txtCompanyID.ClientID)
             Return False
         End If
 
@@ -30,8 +30,10 @@ Partial Class WebApp_frmDocChangeBookOut
 
     Private Sub ClearForm()
         cmbBookOutNo.SelectedValue = "0"
-        txtCompanyComID.Text = ""
-        cdlSendOrgID.SelectedValue = lblSendOrgID.Text
+        txtCompanyID.Text = ""
+        'cdlSendOrgID.SelectedValue = lblSendOrgID.Text
+        txtCustName.Text = ""
+        hdnCustValue.Text = ""
         txtNewBookNo.Text = ""
         lblNewDocumentRegisterID.Text = "0"
     End Sub
@@ -47,8 +49,8 @@ Partial Class WebApp_frmDocChangeBookOut
             Dim eng As New Engine.Document.DocumentRegisterENG
             para = eng.GetDocumentParaByBookNo(txtSearchBookNo.Text.Trim, trans)
             If para.ID > 0 Then
-                cdlSendOrgID.SelectedValue = para.ORGANIZATION_ID_OWNER
-                lblSendOrgID.Text = para.ORGANIZATION_ID_OWNER
+                'cdlSendOrgID.SelectedValue = para.ORGANIZATION_ID_OWNER
+                'lblSendOrgID.Text = para.ORGANIZATION_ID_OWNER
             End If
             trans.CommitTransaction()
         End If
@@ -73,14 +75,16 @@ Partial Class WebApp_frmDocChangeBookOut
 
         Dim dt As New DataTable
         dt.Columns.Add("book_no")
-        dt.Columns.Add("comid")
-        dt.Columns.Add("org_name")
+        dt.Columns.Add("company_id")
+        dt.Columns.Add("company_name")
+        dt.Columns.Add("company_regis_no")
         dt.Columns.Add("bookout_no")
         Dim dr As DataRow = dt.NewRow
 
         dr("book_no") = txtNewBookNo.Text
-        dr("comid") = txtCompanyComID.Text
-        dr("org_name") = cmbSendOrgID.SelectedItem.Text
+        dr("company_id") = hdnCustValue.Text
+        dr("company_name") = txtCustName.Text
+        dr("company_regis_no") = txtCompanyID.Text
         dr("bookout_no") = cmbBookOutNo.SelectedText
         dt.Rows.Add(dr)
 
@@ -103,17 +107,17 @@ Partial Class WebApp_frmDocChangeBookOut
         Dim lnq As New Linq.TABLE.DocumentExtReceiverLinq
         lnq.GetDataByPK(cmbBookOutNo.SelectedValue, trans.Trans)
         If lnq.ID > 0 Then
-            If txtCompanyComID.Text.Trim <> "" And txtNewBookNo.Text.Trim <> "" Then
+            If txtCompanyID.Text.Trim <> "" And txtNewBookNo.Text.Trim <> "" Then
                 'New Company and Now Bookno
                 Dim cmEng As New Engine.Master.CompanyEng
-                Dim cmPara As Para.TABLE.CompanyPara = cmEng.GetCompanyParaByComID(txtCompanyComID.Text, trans)
+                Dim cmPara As Para.TABLE.CompanyPara = cmEng.GetCompanyParaByComID(txtCompanyID.Text, trans)
                 lnq.COMPANY_ID_RECEIVE = cmPara.ID
                 lnq.COMPANY_NAME_RECEIVE = cmPara.THAINAME
                 lnq.DOCUMENT_REGISTER_ID = lblNewDocumentRegisterID.Text
-            ElseIf txtCompanyComID.Text.Trim <> "" Then
+            ElseIf txtCompanyID.Text.Trim <> "" Then
                 'New Company Only
                 Dim cmEng As New Engine.Master.CompanyEng
-                Dim cmPara As Para.TABLE.CompanyPara = cmEng.GetCompanyParaByComID(txtCompanyComID.Text, trans)
+                Dim cmPara As Para.TABLE.CompanyPara = cmEng.GetCompanyParaByComID(txtCompanyID.Text, trans)
                 lnq.COMPANY_ID_RECEIVE = cmPara.ID
                 lnq.COMPANY_NAME_RECEIVE = cmPara.THAINAME
             ElseIf txtNewBookNo.Text.Trim <> "" Then

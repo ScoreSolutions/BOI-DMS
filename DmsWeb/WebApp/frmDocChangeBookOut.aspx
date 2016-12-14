@@ -29,7 +29,15 @@
         function endRequest(sender, args) {
             $get('pageContent').className = '';
         }
-
+        function LoadImage() {
+            document.getElementById('<%=hdnCustValue.ClientID%>').value = '';
+            document.getElementById('<%=txtCustName.ClientID%>').style.backgroundImage = 'url(../images/loading.gif)';
+            document.getElementById('<%=txtCustName.ClientID%>').style.backgroundRepeat = 'no-repeat';
+            document.getElementById('<%=txtCustName.ClientID%>').style.backgroundPosition = 'right';
+        }
+        function HideImage() {
+            document.getElementById('<%=txtCustName.ClientID%>').style.backgroundImage = 'none';
+        }
         function SaveTransLog(TransDesc, LoginHisID) {
             //AjaxScript.SaveTransLog(TransDesc, LoginHisID);
             var pageUrl = '<%=ResolveUrl("~/Template/AjaxScript.asmx")%>';
@@ -44,6 +52,20 @@
                 }
             });
         }
+         function ClearTxtCustValue() {
+            if (document.getElementById('<%=txtCustName.ClientID%>').value == "") {
+                document.getElementById('<%=hdnCustValue.ClientID%>').value = "";
+                document.getElementById('<%=txtCompanyID.ClientID%>').value = "";
+            }
+        }
+        function OnCustomerSelected(source, eventArgs) {
+            var retVal = eventArgs.get_value().split("|");
+            var custVal = retVal[0];
+            document.getElementById('<%=hdnCustValue.ClientID%>').value = custVal;
+            document.getElementById('<%=txtCompanyID.ClientID%>').value = retVal[1];
+
+
+            }
 
         function HideMenu() {
             var mnuMenu = document.getElementById("divMenu");
@@ -134,21 +156,62 @@
                                                     </td>
                                                     <td align="right" width="15%" class="Csslbl">เลขทะเบียนบริษัท : </td>
                                                     <td width="40%" align="left" valign="top" >
-                                                        <uc2:txtBox ID="txtCompanyComID" runat="server" TableName="COMPANY" FieldName="ComID" Width ="300px" />
+                                                        <uc2:txtBox ID="txtCompanyID" runat="server" TableName="COMPANY" FieldName="ComID" Width ="300px" />
                                                         
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>&nbsp;</td>
                                                     <td>&nbsp;</td>
-                                                    <td align="right" width="15%" class="Csslbl">หน่วยงานที่ส่งออก : </td>
+                                                    <td align="right" width="15%" class="Csslbl">ชื่อองค์กร : </td>
                                                     <td align="left" valign="top" >
-                                                        <asp:DropDownList ID="cmbSendOrgID" runat="server" CssClass="zComboBox" Width="300px" Enabled="false" >
+                                                       <%-- <asp:DropDownList ID="cmbSendOrgID" runat="server" CssClass="zComboBox" Width="300px" Enabled="false" >
                                                         </asp:DropDownList>
                                                         <cc1:CascadingDropDown ID="cdlSendOrgID" runat="server" TargetControlID="cmbSendOrgID"
                                                             Category="ReceiveOrg" PromptText="เลือก" 
                                                             ServicePath="~/Template/AjaxScript.asmx" ServiceMethod="GetOrgIDForDDL" />
-                                                        <asp:Label ID="lblSendOrgID" runat="server" Text="" Visible="false" ></asp:Label>
+                                                        <asp:Label ID="lblSendOrgID" runat="server" Text="" Visible="false" ></asp:Label>--%>
+                                                        
+                                                        <asp:TextBox runat="server" ID="txtCustName" Width="300" CssClass="TextBox" autocomplete="off" onBlur="ClearTxtCustValue()" ></asp:TextBox>&nbsp;
+                                                        <cc1:AutoCompleteExtender
+                                                        runat="server" ID="AutoCompleteExtender1" 
+                                                        TargetControlID="txtCustName" ServicePath="~/Template/AjaxScript.asmx" ServiceMethod = "GetAllCompanyForDDL"
+                                                        MinimumPrefixLength="3" CompletionInterval="200" UseContextKey="true" EnableCaching="true"
+                                                        CompletionSetCount="20" FirstRowSelected="true" 
+                                                        CompletionListCssClass="autocomplete_completionListElement" 
+                                                        CompletionListItemCssClass="autocomplete_listItem" 
+                                                        CompletionListHighlightedItemCssClass="autocomplete_highlightedListItem"
+                                                        DelimiterCharacters="*" BehaviorID="AutoCompleteEx" 
+                                                        ShowOnlyCurrentWordInCompletionListItem="true"
+                                                        OnClientPopulating="LoadImage" OnClientPopulated="HideImage" OnClientItemSelected="OnCustomerSelected"  >
+                                                        <Animations>
+                                                            <OnShow>
+                                                                <Sequence>
+                                                                    <OpacityAction Opacity="0" />
+                                                                    <HideAction Visible="true" />
+                                                                    <ScriptAction Script="
+                                                                        // Cache the size and setup the initial size
+                                                                        var behavior = $find('AutoCompleteEx');
+                                                                        if (!behavior._height) {
+                                                                            var target = behavior.get_completionList();
+                                                                            behavior._height = target.offsetHeight - 2;
+                                                                            target.style.height = '0px';
+                                                                        }" />
+                                                                    <Parallel Duration=".4">
+                                                                        <FadeIn />
+                                                                        <Length PropertyKey="height" StartValue="0" EndValueScript="$find('AutoCompleteEx')._height" />
+                                                                    </Parallel>
+                                                                </Sequence>
+                                                            </OnShow>
+                                                            <OnHide>
+                                                                <Parallel Duration=".4">
+                                                                    <FadeOut />
+                                                                    <Length PropertyKey="height" StartValueScript="$find('AutoCompleteEx')._height" EndValue="0" />
+                                                                </Parallel>
+                                                            </OnHide>
+                                                        </Animations>
+                                                     </cc1:AutoCompleteExtender>
+                                                      <asp:TextBox ID="hdnCustValue" runat="server" CssClass="zHidden" ></asp:TextBox>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -205,11 +268,15 @@
                                                                     <HeaderStyle  />
                                                                     <ItemStyle HorizontalAlign="Left" />
                                                                 </asp:BoundField>
-                                                                <asp:BoundField DataField="comid" HeaderText="เลขทะเบียนบริษัท" >
+                                                               <%-- <asp:BoundField DataField="company_id" HeaderText="เลขทะเบียนบริษัท" >
+                                                                    <HeaderStyle Width="120px" />
+                                                                    <ItemStyle HorizontalAlign="Left" Width="120px" />
+                                                                </asp:BoundField>--%>
+                                                                <asp:BoundField DataField="company_name" HeaderText="ชื่อองค์กร" >
                                                                     <HeaderStyle Width="120px" />
                                                                     <ItemStyle HorizontalAlign="Left" Width="120px" />
                                                                 </asp:BoundField>
-                                                                <asp:BoundField DataField="org_name" HeaderText="หน่วยงานที่ส่งออก" >
+                                                                <asp:BoundField DataField="company_regis_no" HeaderText="เลขทะเบียนบริษัท" >
                                                                     <HeaderStyle Width="150px" />
                                                                     <ItemStyle HorizontalAlign="Left" Width="150px" />
                                                                 </asp:BoundField>
