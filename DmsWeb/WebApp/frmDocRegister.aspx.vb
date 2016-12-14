@@ -43,7 +43,7 @@ Partial Class WebApp_frmDocRegister
             'cmbReceiveOrgID.Attributes.Add("onchange", "BindOrgIDChange('" & cmbReceiveOrgID.ClientID & "','" & cmbReceiveStaffID.ClientID & "');")
             txtCompanyDocNo.Attributes.Add("onBlur", "return CheckCompanyDocNo();")
             txtCompanyID.Attributes.Add("OnKeyPress", "ChkMinusInt(this,event);")
-            txtCompanyID.Attributes.Add("onBlur", "return SetCompanyByRegisNo();")
+
 
             If Request("RefDocID") IsNot Nothing Then
                 SetRefElecDoc(Request("RefDocID"))

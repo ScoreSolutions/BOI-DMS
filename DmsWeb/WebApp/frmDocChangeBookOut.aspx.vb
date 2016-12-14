@@ -8,6 +8,7 @@ Partial Class WebApp_frmDocChangeBookOut
         If IsPostBack = False Then
             Me.Title = ctlDocBookDetailShow1.PageTitle
 
+            'txtCompanyID.Attributes.Add("onBlur", "return SetCompanyByRegisNo();")
         End If
     End Sub
 
@@ -110,16 +111,18 @@ Partial Class WebApp_frmDocChangeBookOut
             If txtCompanyID.Text.Trim <> "" And txtNewBookNo.Text.Trim <> "" Then
                 'New Company and Now Bookno
                 Dim cmEng As New Engine.Master.CompanyEng
-                Dim cmPara As Para.TABLE.CompanyPara = cmEng.GetCompanyParaByComID(txtCompanyID.Text, trans)
+                Dim cmPara As Para.TABLE.CompanyPara = cmEng.GetCompanyPara(hdnCustValue.Text, trans)
                 lnq.COMPANY_ID_RECEIVE = cmPara.ID
                 lnq.COMPANY_NAME_RECEIVE = cmPara.THAINAME
                 lnq.DOCUMENT_REGISTER_ID = lblNewDocumentRegisterID.Text
+                lnq.COMPANY_REGIS_NO = txtCompanyID.Text
             ElseIf txtCompanyID.Text.Trim <> "" Then
                 'New Company Only
                 Dim cmEng As New Engine.Master.CompanyEng
-                Dim cmPara As Para.TABLE.CompanyPara = cmEng.GetCompanyParaByComID(txtCompanyID.Text, trans)
+                Dim cmPara As Para.TABLE.CompanyPara = cmEng.GetCompanyPara(hdnCustValue.Text, trans)
                 lnq.COMPANY_ID_RECEIVE = cmPara.ID
                 lnq.COMPANY_NAME_RECEIVE = cmPara.THAINAME
+                lnq.COMPANY_REGIS_NO = txtCompanyID.Text
             ElseIf txtNewBookNo.Text.Trim <> "" Then
                 'New Bookno Only
                 lnq.DOCUMENT_REGISTER_ID = lblNewDocumentRegisterID.Text

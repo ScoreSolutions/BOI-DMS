@@ -709,7 +709,7 @@ Namespace TABLE
         '/// <returns>true if insert data successfully; otherwise, false.</returns>
         Public Function InsertData(LoginName As String,trans As SQLTransaction) As Boolean
             If trans IsNot Nothing Then 
-                _id = DB.GetNextID("id",tableName, trans)
+                '_id = DB.GetNextID("id",tableName, trans)
                 _CREATE_BY = LoginName
                 _CREATE_ON = DateTime.Now
                 Return doInsert(trans)
@@ -827,13 +827,28 @@ Namespace TABLE
             If _haveData = False Then
                 Try
 
-                    ret = (DB.ExecuteNonQuery(SqlInsert, trans) > 0)
-                    If ret = False Then
-                        _error = DB.ErrorMessage
+                    'ret = (DB.ExecuteNonQuery(SqlInsert, trans) > 0)
+                    'If ret = False Then
+                    '    _error = DB.ErrorMessage
+                    'Else
+                    '    _haveData = True
+                    'End If
+                    '_information = MessageResources.MSGIN001
+
+                    Dim dt As DataTable = DB.ExecuteTable(SqlInsert, trans)
+                    If dt.Rows.Count > 0 Then
+                        _ID = Convert.ToInt64(dt.Rows(0)("id"))
+                        ret = (_ID > 0)
+                        If ret = False Then
+                            _error = DB.ErrorMessage
+                        Else
+                            _haveData = True
+                        End If
+                        _information = MessageResources.MSGIN001
                     Else
-                        _haveData = True
+                        ret = False
                     End If
-                    _information = MessageResources.MSGIN001
+                    dt.Dispose()
                 Catch ex As ApplicationException
                     ret = false
                     _error = ex.Message
@@ -1220,9 +1235,9 @@ Namespace TABLE
         Private ReadOnly Property SqlInsert() As String 
             Get
                 Dim Sql As String=""
-                Sql += "INSERT INTO " & TableName & " (ID, CREATE_BY, CREATE_ON, UPDATE_BY, UPDATE_ON, BOOK_NO, REQUEST_NO, GROUP_TITLE_ID, TITLE_NAME, REGISTER_DATE, EXPECT_FINISH_DATE, DOC_SECRET_ID, DOC_SPEED_ID, ORGANIZATION_ID_OWNER, ORGANIZATION_NAME, ORGANIZATION_APPNAME, OFFICER_ID_APPROVE, OFFICER_NAME, OFFICER_ORGANIZATION_ID, ADMINISTRATION_TYPE, REMARKS, BUSINESS_TYPE_ID, COMPANY_ID, COMPANY_NAME, COMPANY_DOC_NO, COMPANY_DOC_TYPE_ID, COMPANY_DOC_SYS_ID, COMPANY_REQ_ID, COMPANY_DOC_DATE, COMPANY_SIGN, COMPANY_SIGN_DATE, DOC_STATUS_ID, USERNAME_REGISTER, ORGANIZATION_ID_REGISTER, CLOSE_BY, CLOSE_BY_NAME, CLOSE_DATE, BOOKOUT_NO, ORGANIZATION_ID_PROCESS, ORGANIZATION_ID_STORAGE, ORGANIZATION_NAME_STORAGE, ID_MUST_RECEIVE_DOC, ELECTRONIC_DOC_ID, DOC_SYS_CODE, REF_OLD_ID, DOCUMENT_RECEIVE_TYPE, OFFICER_ID_POSSESS, OFFICER_NAME_POSSESS, REF_DOCUMENT_REGISTER_ID, CLOSE_REMARKS, ORGANIZATION_NAME_PROCESS, ORGANIZATION_ABBNAME_PROCESS, COMPANY_CERT_NO, COMPANY_NOTIFY_NO, REF_TH_EGIF_DOC_INBOUND_ID, BOOKOUT_DATE, COMPANY_REGIS_NO)"
+                Sql += "INSERT INTO " & TableName & " ( CREATE_BY, CREATE_ON, UPDATE_BY, UPDATE_ON, BOOK_NO, REQUEST_NO, GROUP_TITLE_ID, TITLE_NAME, REGISTER_DATE, EXPECT_FINISH_DATE, DOC_SECRET_ID, DOC_SPEED_ID, ORGANIZATION_ID_OWNER, ORGANIZATION_NAME, ORGANIZATION_APPNAME, OFFICER_ID_APPROVE, OFFICER_NAME, OFFICER_ORGANIZATION_ID, ADMINISTRATION_TYPE, REMARKS, BUSINESS_TYPE_ID, COMPANY_ID, COMPANY_NAME, COMPANY_DOC_NO, COMPANY_DOC_TYPE_ID, COMPANY_DOC_SYS_ID, COMPANY_REQ_ID, COMPANY_DOC_DATE, COMPANY_SIGN, COMPANY_SIGN_DATE, DOC_STATUS_ID, USERNAME_REGISTER, ORGANIZATION_ID_REGISTER, CLOSE_BY, CLOSE_BY_NAME, CLOSE_DATE, BOOKOUT_NO, ORGANIZATION_ID_PROCESS, ORGANIZATION_ID_STORAGE, ORGANIZATION_NAME_STORAGE, ID_MUST_RECEIVE_DOC, ELECTRONIC_DOC_ID, DOC_SYS_CODE, REF_OLD_ID, DOCUMENT_RECEIVE_TYPE, OFFICER_ID_POSSESS, OFFICER_NAME_POSSESS, REF_DOCUMENT_REGISTER_ID, CLOSE_REMARKS, ORGANIZATION_NAME_PROCESS, ORGANIZATION_ABBNAME_PROCESS, COMPANY_CERT_NO, COMPANY_NOTIFY_NO, REF_TH_EGIF_DOC_INBOUND_ID, BOOKOUT_DATE, COMPANY_REGIS_NO)"
+                Sql += " OUTPUT INSERTED.ID "
                 Sql += " VALUES("
-                sql += DB.SetDouble(_ID) & ", "
                 sql += DB.SetString(_CREATE_BY) & ", "
                 sql += DB.SetDateTime(_CREATE_ON) & ", "
                 sql += DB.SetString(_UPDATE_BY) & ", "
@@ -1290,7 +1305,6 @@ Namespace TABLE
             Get
                 Dim Sql As String = ""
                 Sql += "UPDATE " & tableName & " SET "
-                Sql += "ID = " & DB.SetDouble(_ID) & ", "
                 Sql += "CREATE_BY = " & DB.SetString(_CREATE_BY) & ", "
                 Sql += "CREATE_ON = " & DB.SetDateTime(_CREATE_ON) & ", "
                 Sql += "UPDATE_BY = " & DB.SetString(_UPDATE_BY) & ", "
