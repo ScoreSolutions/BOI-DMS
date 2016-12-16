@@ -224,6 +224,31 @@ Public Class Config
         Return req.Url.Host & ConfigurationManager.AppSettings("UploadURL").ToString()
     End Function
 
+    Public Shared Sub SaveLogEditDocument(ByVal LoginHisID As Long, ByVal UserName As String, ByVal DocRegisID As Long, ByVal GroupTitleIDOld As Long, ByVal GroupTitleIDNew As Long, ByVal GroupTitleNameOld As String, ByVal GroupTitleNameNew As String, ByVal TitleNameOld As String, ByVal TitleNameNew As String, ByVal BizTypeIDOld As Long, ByVal BizTypeIDNew As Long, ByVal BizNameOld As String, ByVal BizNameNew As String)
+        Dim trans As New Linq.Common.Utilities.TransactionDB
+        trans.CreateTransaction()
+        Try
+            Dim sql As String = "insert into LOG_EDIT_DOCUMENT(create_by, create_on, login_his_id, log_date, document_register_id,"
+            sql += "group_title_id_old,group_title_id_new, group_title_name_old, group_title_name_new, "
+            sql += " title_name_old, title_name_new, business_type_id_old, business_type_id_new, business_type_name_old, business_type_name_new) "
+            sql += " values('" & UserName & "',getdate()," & LoginHisID & ",getdate(), " & DocRegisID & ","
+            sql += " " & GroupTitleIDOld & "," & GroupTitleIDNew & ",'" & GroupTitleNameOld & "','" & GroupTitleIDNew & "',"
+            sql += " '" & TitleNameOld & "', '" & TitleNameNew & "', " & BizTypeIDOld & ", " & BizTypeIDNew & ", '" & BizNameOld & "','" & BizNameNew & "')"
+
+            If Linq.Common.Utilities.SqlDB.ExecuteNonQuery(sql, trans.Trans) > 0 Then
+                trans.CommitTransaction()
+            Else
+                trans.RollbackTransaction()
+                SaveErrorLog(Linq.Common.Utilities.SqlDB.ErrorMessage, LoginHisID)
+            End If
+
+        Catch ex As Exception
+            trans.RollbackTransaction()
+            SaveErrorLog(ex.Message, LoginHisID)
+        End Try
+
+    End Sub
+
     Public Shared Sub SaveTransLog(ByVal TransDesc As String, ByVal LoginHisID As Long)
         Dim trans As New Linq.Common.Utilities.TransactionDB
         trans.CreateTransaction()

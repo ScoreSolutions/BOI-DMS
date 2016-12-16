@@ -1,5 +1,6 @@
 ﻿Imports System.Data
 Imports Engine.Document.DocumentRegisterENG
+Imports Para.Common.Utilities
 
 Partial Class WebApp_frmDocChangeBookOut
     Inherits System.Web.UI.Page
@@ -21,8 +22,8 @@ Partial Class WebApp_frmDocChangeBookOut
 
         'ต้องมีการทำรายการด้วย เช่น เลือกชื่อบริษัท หรือ เลือกชื่อหน่วยงาน
         'ไม่สามารถเป็นค่าว่างทั้งหมดได้
-        If txtCompanyID.Text.Trim = "" And txtNewBookNo.Text.Trim = "" Then
-            Config.SetAlert("กรุณาระบุเลขทะเบียนบริษัทหรือเลขที่หนังสือ", Me, txtCompanyID.ClientID)
+        If txtCompanyID.Text.Trim = "" And txtNewBookNo.Text.Trim = "" And txtCustName.Text.Trim = "" Then
+            Config.SetAlert("กรุณาระบุเลขทะเบียนบริษัท ชื่อบริษัท หรือเลขที่หนังสือ", Me, txtCompanyID.ClientID)
             Return False
         End If
 
@@ -44,16 +45,16 @@ Partial Class WebApp_frmDocChangeBookOut
         If ctlDocBookDetailShow1.DocID > "0" Then
             SetCmbBookOut()
 
-            Dim trans As New Linq.Common.Utilities.TransactionDB
-            trans.CreateTransaction()
-            Dim para As New Para.TABLE.DocumentRegisterPara
-            Dim eng As New Engine.Document.DocumentRegisterENG
-            para = eng.GetDocumentParaByBookNo(txtSearchBookNo.Text.Trim, trans)
-            If para.ID > 0 Then
-                'cdlSendOrgID.SelectedValue = para.ORGANIZATION_ID_OWNER
-                'lblSendOrgID.Text = para.ORGANIZATION_ID_OWNER
-            End If
-            trans.CommitTransaction()
+            'Dim trans As New Linq.Common.Utilities.TransactionDB
+            'trans.CreateTransaction()
+            'Dim para As New Para.TABLE.DocumentRegisterPara
+            'Dim eng As New Engine.Document.DocumentRegisterENG
+            'para = eng.GetDocumentParaByBookNo(txtSearchBookNo.Text.Trim, trans)
+            'If para.ID > 0 Then
+            '    'cdlSendOrgID.SelectedValue = para.ORGANIZATION_ID_OWNER
+            '    'lblSendOrgID.Text = para.ORGANIZATION_ID_OWNER
+            'End If
+            'trans.CommitTransaction()
         End If
     End Sub
 
@@ -108,21 +109,38 @@ Partial Class WebApp_frmDocChangeBookOut
         Dim lnq As New Linq.TABLE.DocumentExtReceiverLinq
         lnq.GetDataByPK(cmbBookOutNo.SelectedValue, trans.Trans)
         If lnq.ID > 0 Then
-            If txtCompanyID.Text.Trim <> "" And txtNewBookNo.Text.Trim <> "" Then
+            If (txtCompanyID.Text.Trim <> "" Or txtCustName.Text.Trim <> "") And txtNewBookNo.Text.Trim <> "" Then
                 'New Company and Now Bookno
-                Dim cmEng As New Engine.Master.CompanyEng
-                Dim cmPara As Para.TABLE.CompanyPara = cmEng.GetCompanyPara(hdnCustValue.Text, trans)
-                lnq.COMPANY_ID_RECEIVE = cmPara.ID
-                lnq.COMPANY_NAME_RECEIVE = cmPara.THAINAME
                 lnq.DOCUMENT_REGISTER_ID = lblNewDocumentRegisterID.Text
-                lnq.COMPANY_REGIS_NO = txtCompanyID.Text
-            ElseIf txtCompanyID.Text.Trim <> "" Then
+
+                lnq.COMPANY_ID_RECEIVE = hdnCustValue.Text.Trim.Replace("&nbsp;", "")
+                lnq.COMPANY_REGIS_NO = txtCompanyID.Text.Trim.Replace("&nbsp;", "")
+
+
+                If txtCustName.Text.IndexOf(Constant.CompanySourceType.BOICENTRAL) > 0 Then
+                    'Company มาจาก BOICENTRAL
+                    lnq.COMPANY_DOC_SYSTEM_ID = Constant.CompanySourceType.BOICENTRAL
+                    lnq.COMPANY_NAME_RECEIVE = txtCustName.Text.Trim.Replace("&nbsp;", "").Replace("(" & Constant.CompanySourceType.BOICENTRAL & ")", "")
+                Else
+                    'Company มาจาก DMS
+                    lnq.COMPANY_DOC_SYSTEM_ID = Constant.CompanySourceType.DMS
+                    lnq.COMPANY_NAME_RECEIVE = txtCustName.Text.Trim.Replace("&nbsp;", "").Replace("(" & Constant.CompanySourceType.DMS & ")", "")
+                End If
+            ElseIf txtCompanyID.Text.Trim <> "" Or txtCustName.Text.Trim <> "" Then
                 'New Company Only
-                Dim cmEng As New Engine.Master.CompanyEng
-                Dim cmPara As Para.TABLE.CompanyPara = cmEng.GetCompanyPara(hdnCustValue.Text, trans)
-                lnq.COMPANY_ID_RECEIVE = cmPara.ID
-                lnq.COMPANY_NAME_RECEIVE = cmPara.THAINAME
-                lnq.COMPANY_REGIS_NO = txtCompanyID.Text
+                
+                lnq.COMPANY_ID_RECEIVE = hdnCustValue.Text.Trim.Replace("&nbsp;", "")
+                lnq.COMPANY_REGIS_NO = txtCompanyID.Text.Trim.Replace("&nbsp;", "")
+                If txtCustName.Text.IndexOf(Constant.CompanySourceType.BOICENTRAL) > 0 Then
+                    'Company มาจาก BOICENTRAL
+                    lnq.COMPANY_DOC_SYSTEM_ID = Constant.CompanySourceType.BOICENTRAL
+                    lnq.COMPANY_NAME_RECEIVE = txtCustName.Text.Trim.Replace("&nbsp;", "").Replace("(" & Constant.CompanySourceType.BOICENTRAL & ")", "")
+                Else
+                    'Company มาจาก DMS
+                    lnq.COMPANY_DOC_SYSTEM_ID = Constant.CompanySourceType.DMS
+                    lnq.COMPANY_NAME_RECEIVE = txtCustName.Text.Trim.Replace("&nbsp;", "").Replace("(" & Constant.CompanySourceType.DMS & ")", "")
+                End If
+
             ElseIf txtNewBookNo.Text.Trim <> "" Then
                 'New Bookno Only
                 lnq.DOCUMENT_REGISTER_ID = lblNewDocumentRegisterID.Text

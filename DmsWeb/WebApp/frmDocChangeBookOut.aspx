@@ -188,7 +188,7 @@
                                                         runat="server" ID="AutoCompleteExtender1" 
                                                         TargetControlID="txtCustName" ServicePath="~/Template/AjaxScript.asmx" ServiceMethod = "GetAllCompanyForDDL"
                                                         MinimumPrefixLength="3" CompletionInterval="200" UseContextKey="true" EnableCaching="true"
-                                                        CompletionSetCount="20" FirstRowSelected="true" 
+                                                        CompletionSetCount="40" FirstRowSelected="true" 
                                                         CompletionListCssClass="autocomplete_completionListElement" 
                                                         CompletionListItemCssClass="autocomplete_listItem" 
                                                         CompletionListHighlightedItemCssClass="autocomplete_highlightedListItem"

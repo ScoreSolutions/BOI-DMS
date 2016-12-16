@@ -170,38 +170,45 @@ Partial Class UserPageControls_ctlDocBookDetailShow
             imgPrintElec.Attributes.Add("onClick", "PrintReport(" & GetPrintCond(para.ELECTRONIC_DOC_ID, trans) & "); return false;")
         End If
 
-        If para.DOC_STATUS_ID = Constant.DocumentRegister.DocStatusID.JobRemain Then
-            'If dt.Rows.Count > 0 Then
-            If Convert.IsDBNull(dt.Rows(0)("organization_id_receive")) = False Then
-                If Convert.ToInt64(dt.Rows(0)("organization_id_receive")) = Config.GetLogOnUser.ORG_DATA.ID Then
-                    btnEdit.Visible = True
-                End If
-            End If
-            'End If
-        End If
 
-
-        If para.DOC_STATUS_ID = Constant.DocumentRegister.DocStatusID.JobClose Then
-            'ต้องเป็นเอกสารที่จบงานแล้วเท่านั้น
-
-            eng = New Engine.Document.DocumentRegisterENG
-            dt = eng.GetAttachFileList(para.ID)
-            dt.Columns.Add("no")
-            If dt.Rows.Count > 0 Then
-                Dim uPara As Para.Common.UserProfilePara = Config.GetLogOnUser
-                For i As Integer = 0 To dt.Rows.Count - 1
-                    dt.Rows(i)("no") = (i + 1)
-                    If Convert.IsDBNull(dt.Rows(i)("description")) = True Then
-                        dt.Rows(i)("description") = "-"
+        Select Case para.DOC_STATUS_ID
+            Case Constant.DocumentRegister.DocStatusID.JobRemain
+                'งานค้าง
+                'คนที่อยู่หน่วยงานเจ้าของเรื่องสามารถแก้ไขได้
+                If Convert.IsDBNull(dt.Rows(0)("organization_id_receive")) = False Then
+                    If Convert.ToInt64(dt.Rows(0)("organization_id_receive")) = Config.GetLogOnUser.ORG_DATA.ID Then
+                        btnEdit.Visible = True
                     End If
-                Next
-                lblAttachFile.Visible = True
-                gvFiles.DataSource = dt
-                gvFiles.DataBind()
-            End If
-            eng = Nothing
-        End If
-        
+                End If
+
+            Case Constant.DocumentRegister.DocStatusID.JobClose
+                'จบงาน
+                'ต้องเป็นเจ้าของเรื่องเท่านั้นถึงจะแก้ไขได้
+                If Convert.IsDBNull(dt.Rows(0)("receiver_officer_username")) = False Then
+                    If dt.Rows(0)("receiver_officer_username") = Config.GetLogOnUser.UserName Then
+                        btnEdit.Visible = True
+                    End If
+                End If
+
+                'ต้องเป็นเอกสารที่จบงานแล้วเท่านั้น ถึงจะสามารถแสดงรายการเอกสารแนบได้
+                eng = New Engine.Document.DocumentRegisterENG
+                dt = eng.GetAttachFileList(para.ID)
+                dt.Columns.Add("no")
+                If dt.Rows.Count > 0 Then
+                    Dim uPara As Para.Common.UserProfilePara = Config.GetLogOnUser
+                    For i As Integer = 0 To dt.Rows.Count - 1
+                        dt.Rows(i)("no") = (i + 1)
+                        If Convert.IsDBNull(dt.Rows(i)("description")) = True Then
+                            dt.Rows(i)("description") = "-"
+                        End If
+                    Next
+                    lblAttachFile.Visible = True
+                    gvFiles.DataSource = dt
+                    gvFiles.DataBind()
+                End If
+                eng = Nothing
+        End Select
+
         Config.SaveTransLog("แสดงรายละเอียดหนังสือเลขที่ :" & para.BOOK_NO, Config.GetLoginHistoryID)
 
         SearchEng = Nothing

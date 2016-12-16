@@ -67,39 +67,6 @@
             var WinSettings = "center:yes;resizable:no;dialogWidth:" + width + "px;dialogHeight:" + height + "px;scrollbars:yes";
             var MyArgs = window.showModalDialog(url + "&rnd=" + RndNum, null, WinSettings);
         }
-
-//        function PrintReport(vReportName, vID) {
-//            var pageUrl = '<%=ResolveUrl("~/Template/AjaxScript.asmx")%>';
-//            //พิมพ์ใบตอบรับคำขอ
-//            $.ajax({
-//                type: "POST",
-//                url: pageUrl + "/GetReportURL",
-//                contentType: "application/json; charset=utf-8",
-//                dataType: "json",
-//                success: function(msg) {
-//                    if (msg.d != "") {
-//                        var pStr = msg.d + 'ReportName=' + vReportName + '&ID=' + vID;
-//                        window.open(pStr, '_blank', 'height=650,left=600,location=no,menubar=no,toolbar=no,status=yes,resizable=yes,scrollbars=yes', true);
-//                    }
-//                }
-//            });
-//        }
-
-//        function PreviewReport(url) {
-//            window.open(url, '_blank', 'height=650,left=0,location=yes,menubar=yes,toolbar=yes,status=yes,resizable=yes,scrollbars=yes', true);
-//        }
-
-//        function ClickNewDoc(LoginHisID) {
-//            SaveTransLog("คลิกปุ่มมีเอกสารใหม่", LoginHisID);
-//            document.location.href = '../WebApp/frmDocToDoList.aspx?rnd=' + (new Date().getMilliseconds());
-//        }
-//        function ClickDocSendBackSystem(LoginHisID) {
-//            SaveTransLog("คลิกปุ่มมีเอกสารตีกลับโดยระบบ", LoginHisID);
-//            document.location.href = '../WebApp/frmDocRemainSendBack.aspx?rnd=' + (new Date().getMilliseconds());
-//        }
-
-
-
     </script>
 
 
@@ -143,10 +110,7 @@
                     }
                 }
             });
-
-            //oXmlHttp.setRequestHeader("Connection", "close");
-
-
+            
             //เลขที่หนังสือแจ้งมติ
             var cmb = document.getElementById("<%=cmbResolutionsNo.ClientID %>");
             $.ajax({
@@ -252,6 +216,7 @@
                                                                                 ชื่อเรื่อง : </td>
                                                                             <td colspan="3">
                                                                                 <uc2:txtBox ID="txtTitle" runat="server"  Width="770px" IsNotNull ="true"  />
+                                                                                <asp:TextBox ID="txtTitleOld" runat="server" Text="" CssClass="zHidden" ></asp:TextBox>
                                                                             </td>
                                                                         </tr>
                                                                         <tr style="height:25px" id="trDateRow" runat="server">
@@ -446,6 +411,7 @@
                                                                                                     <td align="right" class="Csslbl" >ประเภทกิจการ : </td>
                                                                                                     <td align="left" colspan="3"  valign="top">
                                                                                                         <uc7:cmbAutoComplete ID="cmbBusinessTypeID" runat="server" Width="743px"  />
+                                                                                                        <asp:TextBox ID="txtBusinessTypeIDOld" runat="server" Text="" CssClass="zHidden" ></asp:TextBox>
                                                                                                     </td>
                                                                                                 </tr>
                                                                                             </table>

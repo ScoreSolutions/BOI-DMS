@@ -269,27 +269,36 @@ Public Class AjaxScript
 
             ''ดึงข้อมูลจาก BOICENTRAL
             If Engine.Common.BOICentralENG.PingServer() = True Then
+
                 Dim cDt As New DataTable
                 cDt = Engine.Common.BOICentralENG.GetCompanyList(prefixText)
 
                 If cDt.Rows.Count > 0 Then
+                    'i += 1
                     For j As Integer = 0 To cDt.Rows.Count - 1
-                        Dim cDr As DataRow = cDt.Rows(j)
-                        i += j
-                        'Dim dr As DataRow = dt.NewRow
-                        'dr("id") = cDr("id")
-                        'dr("company_name") = cDr("company_name")
-                        'dr("company_regis_no") = cDr("company_regis_no")
-                        'dt.Rows.Add(dr)
+                        Try
+                            Dim cDr As DataRow = cDt.Rows(j)
+                            i += j
+                            'Dim dr As DataRow = dt.NewRow
+                            'dr("id") = cDr("id")
+                            'dr("company_name") = cDr("company_name")
+                            'dr("company_regis_no") = cDr("company_regis_no")
+                            'dt.Rows.Add(dr)
 
-                        Dim retValue As String = cDr("id").ToString & "|"
-                        If Convert.IsDBNull(cDr("company_regis_no")) = False Then
-                            retValue += cDr("company_regis_no")
-                        End If
-                        itemsCust.Insert(i, AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(dt.Rows(i)("company_name").ToString, retValue))
+                            Dim retValue As String = cDr("id").ToString & "|"
+                            If Convert.IsDBNull(cDr("company_regis_no")) = False Then
+                                retValue += cDr("company_regis_no")
+                            End If
+                            itemsCust.Insert(i, AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(cDr("company_name").ToString, retValue))
+
+                        Catch ex As Exception
+
+                        End Try
                     Next
                 End If
                 cDt = Nothing
+
+
             End If
 
             If i = 0 Then
