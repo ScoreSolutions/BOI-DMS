@@ -29,6 +29,7 @@
             
             var vIDCardNo = document.getElementById("<%=txtIDCardNo.ClientID %>");
             var vPassportNo = document.getElementById("<%=txtPassportNo.ClientID %>");
+                      
 
             if ($(vCompanyType).val() == "0") {
                 alert("กรุณาเลือกประเภทองค์กร");

@@ -325,6 +325,8 @@ Public Class AjaxScript
         para.DISTRICT_ID = DistrictID
         para.ACTIVE = "Y"
         para.COMPANY_REGIS_NO = ComRegisNo
+        para.IDCARD_NO = IDCardNo
+        para.PASSPORT_NO = PassportNo
 
         Dim trans As New Linq.Common.Utilities.TransactionDB
         trans.CreateTransaction()

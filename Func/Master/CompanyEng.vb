@@ -169,6 +169,8 @@ Namespace Master
             lnq.PROVINCE_ID = para.PROVINCE_ID
             lnq.DISTRICT_ID = para.DISTRICT_ID
             lnq.ACTIVE = para.ACTIVE
+            lnq.IDCARD_NO = para.IDCARD_NO
+            lnq.PASSPORT_NO = para.PASSPORT_NO
 
             If para.ID <> 0 Then
                 ret = lnq.UpdateByPK(UserID, trans.Trans)
