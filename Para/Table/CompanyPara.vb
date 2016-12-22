@@ -34,6 +34,8 @@ Namespace TABLE
         Dim _DISTRICT_ID As System.Nullable(Of Long) = 0
         Dim _DIRECTOR_POSITION As String = ""
         Dim _COMPANY_REGIS_NO As String = ""
+        Dim _IDCARD_NO As String = ""
+        Dim _PASSPORT_NO As String = ""
 
         'Generate Field Property 
         <Column(Storage:="_ID", DbType:="BigInt NOT NULL ",CanBeNull:=false)>  _
@@ -232,6 +234,24 @@ Namespace TABLE
             End Get
             Set(ByVal value As String)
                 _COMPANY_REGIS_NO = value
+            End Set
+        End Property
+        <Column(Storage:="_IDCARD_NO", DbType:="VarChar(50)")> _
+        Public Property IDCARD_NO() As String
+            Get
+                Return _IDCARD_NO
+            End Get
+            Set(ByVal value As String)
+                _IDCARD_NO = value
+            End Set
+        End Property
+        <Column(Storage:="_PASSPORT_NO", DbType:="VarChar(50)")> _
+        Public Property PASSPORT_NO() As String
+            Get
+                Return _PASSPORT_NO
+            End Get
+            Set(ByVal value As String)
+                _PASSPORT_NO = value
             End Set
         End Property
 

@@ -70,6 +70,8 @@ Namespace TABLE
         Dim _DISTRICT_ID As System.Nullable(Of Long) = 0
         Dim _DIRECTOR_POSITION As String = ""
         Dim _COMPANY_REGIS_NO As String = ""
+        Dim _IDCARD_NO As String = ""
+        Dim _PASSPORT_NO As String = ""
 
 
         'Generate Field Property 
@@ -271,6 +273,24 @@ Namespace TABLE
                 _COMPANY_REGIS_NO = value
             End Set
         End Property
+        <Column(Storage:="_IDCARD_NO", DbType:="VarChar(50)")> _
+        Public Property IDCARD_NO() As String
+            Get
+                Return _IDCARD_NO
+            End Get
+            Set(ByVal value As String)
+                _IDCARD_NO = value
+            End Set
+        End Property
+        <Column(Storage:="_PASSPORT_NO", DbType:="VarChar(50)")> _
+        Public Property PASSPORT_NO() As String
+            Get
+                Return _PASSPORT_NO
+            End Get
+            Set(ByVal value As String)
+                _PASSPORT_NO = value
+            End Set
+        End Property
 
         'Clear All Data
         Private Sub ClearData()
@@ -296,6 +316,8 @@ Namespace TABLE
             _DISTRICT_ID = 0
             _DIRECTOR_POSITION = ""
             _COMPANY_REGIS_NO = ""
+            _IDCARD_NO = ""
+            _PASSPORT_NO = ""
         End Sub
 
        'Define Public Method 
@@ -589,6 +611,8 @@ Namespace TABLE
                         If Convert.IsDBNull(Rdr("district_id")) = False Then _DISTRICT_ID = Convert.ToInt64(Rdr("district_id"))
                         If Convert.IsDBNull(Rdr("director_position")) = False Then _DIRECTOR_POSITION = Rdr("director_position").ToString()
                         If Convert.IsDBNull(Rdr("company_regis_no")) = False Then _COMPANY_REGIS_NO = Rdr("company_regis_no").ToString()
+                        If Convert.IsDBNull(Rdr("idcard_no")) = False Then _IDCARD_NO = Rdr("idcard_no").ToString()
+                        If Convert.IsDBNull(Rdr("passport_no")) = False Then _PASSPORT_NO = Rdr("passport_no").ToString()
                     Else
                         ret = False
                         _error = MessageResources.MSGEV002
@@ -648,6 +672,8 @@ Namespace TABLE
                         If Convert.IsDBNull(Rdr("district_id")) = False Then _DISTRICT_ID = Convert.ToInt64(Rdr("district_id"))
                         If Convert.IsDBNull(Rdr("director_position")) = False Then _DIRECTOR_POSITION = Rdr("director_position").ToString()
                         If Convert.IsDBNull(Rdr("company_regis_no")) = False Then _COMPANY_REGIS_NO = Rdr("company_regis_no").ToString()
+                        If Convert.IsDBNull(Rdr("idcard_no")) = False Then _IDCARD_NO = Rdr("idcard_no").ToString()
+                        If Convert.IsDBNull(Rdr("passport_no")) = False Then _PASSPORT_NO = Rdr("passport_no").ToString()
 
                         'Generate Item For Child Table
                         'Child Table Name : GROUP_TITLE_COMPANY_DEFAULT Column :company_id
@@ -710,6 +736,8 @@ Namespace TABLE
                         If Convert.IsDBNull(Rdr("district_id")) = False Then ret.DISTRICT_ID = Convert.ToInt64(Rdr("district_id"))
                         If Convert.IsDBNull(Rdr("director_position")) = False Then ret.DIRECTOR_POSITION = Rdr("director_position").ToString()
                         If Convert.IsDBNull(Rdr("company_regis_no")) = False Then ret.COMPANY_REGIS_NO = Rdr("company_regis_no").ToString()
+                        If Convert.IsDBNull(Rdr("idcard_no")) = False Then ret.IDCARD_NO = Rdr("idcard_no").ToString()
+                        If Convert.IsDBNull(Rdr("passport_no")) = False Then ret.PASSPORT_NO = Rdr("passport_no").ToString()
 
                         'Generate Item For Child Table
                         'Child Table Name : GROUP_TITLE_COMPANY_DEFAULT Column :company_id
@@ -743,7 +771,7 @@ Namespace TABLE
         Private ReadOnly Property SqlInsert() As String 
             Get
                 Dim Sql As String=""
-                Sql += "INSERT INTO " & TableName & " (ID, CREATE_BY, CREATE_ON, UPDATE_BY, UPDATE_ON, COMPANY_TYPE_ID, THAINAME, ENGNAME, ADDRESSID, COMID, DESCRIPTION, ACTIVE, REF_OLD_ID, REF_ORG_ID, TH_EGIF_ORG_CODE, TEL, FAX, ZIPCODE, PROVINCE_ID, DISTRICT_ID, DIRECTOR_POSITION, COMPANY_REGIS_NO)"
+                Sql += "INSERT INTO " & TableName & " (ID, CREATE_BY, CREATE_ON, UPDATE_BY, UPDATE_ON, COMPANY_TYPE_ID, THAINAME, ENGNAME, ADDRESSID, COMID, DESCRIPTION, ACTIVE, REF_OLD_ID, REF_ORG_ID, TH_EGIF_ORG_CODE, TEL, FAX, ZIPCODE, PROVINCE_ID, DISTRICT_ID, DIRECTOR_POSITION, COMPANY_REGIS_NO, IDCARD_NO, PASSPORT_NO)"
                 Sql += " VALUES("
                 sql += DB.SetDouble(_ID) & ", "
                 sql += DB.SetString(_CREATE_BY) & ", "
@@ -766,7 +794,9 @@ Namespace TABLE
                 sql += DB.SetDouble(_PROVINCE_ID) & ", "
                 Sql += DB.SetDouble(_DISTRICT_ID) & ", "
                 Sql += DB.SetString(_DIRECTOR_POSITION) & ", "
-                Sql += DB.SetString(_COMPANY_REGIS_NO) & " "
+                Sql += DB.SetString(_COMPANY_REGIS_NO) & ", "
+                Sql += DB.SetString(_IDCARD_NO) & ", "
+                Sql += DB.SetString(_PASSPORT_NO) & " "
                 sql += ")"
                 Return sql
             End Get
@@ -799,7 +829,9 @@ Namespace TABLE
                 Sql += "PROVINCE_ID = " & DB.SetDouble(_PROVINCE_ID) & ", "
                 Sql += "DISTRICT_ID = " & DB.SetDouble(_DISTRICT_ID) + ", "
                 Sql += "DIRECTOR_POSITION = " & DB.SetString(_DIRECTOR_POSITION) & ", "
-                Sql += "COMPANY_REGIS_NO = " & DB.SetString(_COMPANY_REGIS_NO) & " "
+                Sql += "COMPANY_REGIS_NO = " & DB.SetString(_COMPANY_REGIS_NO) & ", "
+                Sql += "IDCARD_NO = " & DB.SetString(_IDCARD_NO) & ", "
+                Sql += "PASSPORT_NO = " & DB.SetString(_PASSPORT_NO) & " "
                 Return Sql
             End Get
         End Property
