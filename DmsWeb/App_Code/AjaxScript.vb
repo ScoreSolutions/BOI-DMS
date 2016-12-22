@@ -301,7 +301,7 @@ Public Class AjaxScript
     End Function
 
     <WebMethod()> _
-    Public Function SaveCompany(ByVal UserName As String, ByVal ThaiName As String, ByVal EngName As String, ByVal vAddress As String, ByVal CompanyType As String, ByVal vTel As String, ByVal vFax As String, ByVal vZipcode As String, ByVal ProvinceID As String, ByVal DistrictID As String, ByVal ComRegisNo As String) As String
+    Public Function SaveCompany(ByVal UserName As String, ByVal ThaiName As String, ByVal EngName As String, ByVal vAddress As String, ByVal CompanyType As String, ByVal vTel As String, ByVal vFax As String, ByVal vZipcode As String, ByVal ProvinceID As String, ByVal DistrictID As String, ByVal ComRegisNo As String, ByVal IDCardNo As String, ByVal PassportNo As String) As String
         Dim ret As String = "0"
 
         Dim para As New Para.TABLE.CompanyPara

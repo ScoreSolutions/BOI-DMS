@@ -26,6 +26,9 @@
             var DistrictID = "0";
             var vComRegisNo = document.getElementById("<%=txtCompanyRegisNo.ClientID %>");
             var vComRequireRegisNo = document.getElementById("<%=txtCompanyRequireRegisNo.ClientID %>");
+            
+            var vIDCardNo = document.getElementById("<%=txtIDCardNo.ClientID %>");
+            var vPassportNo = document.getElementById("<%=txtPassportNo.ClientID %>");
 
             if ($(vCompanyType).val() == "0") {
                 alert("กรุณาเลือกประเภทองค์กร");
@@ -41,6 +44,18 @@
                 }
             }
             
+            if ($(vIDCardNo).val() == "") {
+                alert("กรุณาระบุเลขบัตรประชาชน");
+                $(vIDCardNo).select();
+                return false;
+            }
+            
+            if ($(vPassportNo).val() == "") {
+                alert("กรุณาระบุเลขที่ Passport");
+                $(vPassportNo).select();
+                return false;
+            }
+            
             if ($(vThaiName).val() == "") {
                 alert("กรุณาระบุชื่อองค์กร");
                 $(vThaiName).select();
@@ -53,7 +68,7 @@
             $.ajax({
                 type: "POST",
                 url: pageUrl + "/SaveCompany",
-                data: "{'UserName':'" + vUserName + "','ThaiName':'" + $(vThaiName).val() + "','EngName':'" + $(vEngName).val() + "','vAddress':'" + $(vAddress).val() + "','CompanyType':'" + $(vCompanyType).val() + "','vTel':'" + $(vTel).val() + "','vFax':'" + $(vFax).val() + "','vZipcode':'" + vZipcode + "','ProvinceID':'" + ProvinceID + "','DistrictID':'" + DistrictID + "','ComRegisNo':'" + $(vComRegisNo).val() + "'}",
+                data: "{'UserName':'" + vUserName + "','ThaiName':'" + $(vThaiName).val() + "','EngName':'" + $(vEngName).val() + "','vAddress':'" + $(vAddress).val() + "','CompanyType':'" + $(vCompanyType).val() + "','vTel':'" + $(vTel).val() + "','vFax':'" + $(vFax).val() + "','vZipcode':'" + vZipcode + "','ProvinceID':'" + ProvinceID + "','DistrictID':'" + DistrictID + "','ComRegisNo':'" + $(vComRegisNo).val() + "','IDCardNo':'" + $(vIDCardNo).val() + "','PassportNo':'" + $(vPassportNo).val() + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(msg) {
@@ -135,6 +150,22 @@
                                         </td>
                                         <td align="left" class="Csslbl">
                                             <uc4:txtBox ID="txtCompanyRegisNo" runat="server" TextKey="TextInt" IsNotNull="True" Width="400"  MaxLength="13" />
+                                        </td>
+                                    </tr>
+                                     <tr>
+                                        <td align="right" class="Csslbl" width="20%">
+                                            เลขบัตรประชาชน :
+                                        </td>
+                                        <td align="left" class="Csslbl">
+                                            <uc4:txtBox ID="txtIDCardNo" runat="server" TextKey="TextInt" IsNotNull="True" Width="400"  MaxLength="50" />
+                                        </td>
+                                    </tr>
+                                     <tr>
+                                        <td align="right" class="Csslbl" width="20%">
+                                            เลขที่ Passport :
+                                        </td>
+                                        <td align="left" class="Csslbl">
+                                            <uc4:txtBox ID="txtPassportNo" runat="server" TextKey="TextInt" IsNotNull="True" Width="400"  MaxLength="50" />
                                         </td>
                                     </tr>
                                     <tr>
