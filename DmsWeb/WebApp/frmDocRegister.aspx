@@ -226,7 +226,8 @@
                                                         CompletionListCssClass="autocomplete_completionListElement" 
                                                         CompletionListItemCssClass="autocomplete_listItem" 
                                                         CompletionListHighlightedItemCssClass="autocomplete_highlightedListItem"
-                                                        ShowOnlyCurrentWordInCompletionListItem="true"  >
+                                                        ShowOnlyCurrentWordInCompletionListItem="true" 
+                                                        OnClientItemSelected="SetCompanyByRegisNo" >
                                                      </cc1:AutoCompleteExtender>
                                                 </td>
                                                 <td align="right" class="Csslbl"></td>

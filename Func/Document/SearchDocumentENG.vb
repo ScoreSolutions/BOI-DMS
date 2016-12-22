@@ -522,7 +522,7 @@ Namespace Document
         Public Function GetDocumentSendList(ByVal vID As Long, ByVal trans As Linq.Common.Utilities.TransactionDB) As DataTable
             Dim ret As New DataTable
             Dim sql As String = ""
-            sql += " select ir.receiver_officer_fullname user_receive,ir.organization_appname_receive, ir.organization_id_receive, ir.receive_date , " & vbNewLine
+            sql += " select ir.receiver_officer_fullname user_receive, ir.receiver_officer_username ,ir.organization_appname_receive, ir.organization_id_receive, ir.receive_date , " & vbNewLine
             sql += " ir.sender_officer_fullname user_send, ir.organization_appname_send, ir.send_date, ir.remarks " & vbNewLine
             sql += " from DOCUMENT_REGISTER dr" & vbNewLine
             sql += " left join DOCUMENT_INT_RECEIVER ir on dr.id=ir.document_register_id" & vbNewLine

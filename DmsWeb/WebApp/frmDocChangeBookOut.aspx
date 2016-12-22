@@ -156,7 +156,24 @@
                                                     </td>
                                                     <td align="right" width="15%" class="Csslbl">เลขทะเบียนบริษัท : </td>
                                                     <td width="40%" align="left" valign="top" >
-                                                        <uc2:txtBox ID="txtCompanyID" runat="server" TableName="COMPANY" FieldName="ComID" Width ="300px" />
+                                                        <asp:TextBox ID="txtCompanyID" runat="server" CssClass="TextBox" AutoComplete="false" Width="300px"  MaxLength="13" />
+                                                         <cc1:AutoCompleteExtender
+                                                            runat="server" 
+                                                            ID="companyIDAutocomplete" 
+                                                            TargetControlID="txtCompanyID"
+                                                            ServicePath="~/Template/AjaxScript.asmx"
+                                                            ServiceMethod = "GetAutoCompleteCompanyID"
+                                                            MinimumPrefixLength="1" 
+                                                            CompletionInterval="500"
+                                                            UseContextKey="true"
+                                                            EnableCaching="true"
+                                                            CompletionSetCount="10" FirstRowSelected="true"
+                                                            CompletionListCssClass="autocomplete_completionListElement" 
+                                                            CompletionListItemCssClass="autocomplete_listItem" 
+                                                            CompletionListHighlightedItemCssClass="autocomplete_highlightedListItem"
+                                                            ShowOnlyCurrentWordInCompletionListItem="true" 
+                                                            OnClientItemSelected="SetCompanyByRegisNo" >
+                                                         </cc1:AutoCompleteExtender>
                                                         
                                                     </td>
                                                 </tr>
@@ -165,19 +182,13 @@
                                                     <td>&nbsp;</td>
                                                     <td align="right" width="15%" class="Csslbl">ชื่อองค์กร : </td>
                                                     <td align="left" valign="top" >
-                                                       <%-- <asp:DropDownList ID="cmbSendOrgID" runat="server" CssClass="zComboBox" Width="300px" Enabled="false" >
-                                                        </asp:DropDownList>
-                                                        <cc1:CascadingDropDown ID="cdlSendOrgID" runat="server" TargetControlID="cmbSendOrgID"
-                                                            Category="ReceiveOrg" PromptText="เลือก" 
-                                                            ServicePath="~/Template/AjaxScript.asmx" ServiceMethod="GetOrgIDForDDL" />
-                                                        <asp:Label ID="lblSendOrgID" runat="server" Text="" Visible="false" ></asp:Label>--%>
-                                                        
+                 
                                                         <asp:TextBox runat="server" ID="txtCustName" Width="300" CssClass="TextBox" autocomplete="off" onBlur="ClearTxtCustValue()" ></asp:TextBox>&nbsp;
                                                         <cc1:AutoCompleteExtender
                                                         runat="server" ID="AutoCompleteExtender1" 
                                                         TargetControlID="txtCustName" ServicePath="~/Template/AjaxScript.asmx" ServiceMethod = "GetAllCompanyForDDL"
                                                         MinimumPrefixLength="3" CompletionInterval="200" UseContextKey="true" EnableCaching="true"
-                                                        CompletionSetCount="20" FirstRowSelected="true" 
+                                                        CompletionSetCount="40" FirstRowSelected="true" 
                                                         CompletionListCssClass="autocomplete_completionListElement" 
                                                         CompletionListItemCssClass="autocomplete_listItem" 
                                                         CompletionListHighlightedItemCssClass="autocomplete_highlightedListItem"
@@ -322,7 +333,29 @@
                                     </td>
                                 </tr>
                             </table>
+                            <script language="javascript" type="text/javascript">
 
+                                function SetCompanyByRegisNo(){
+                                    var hdnCustValue = document.getElementById('<%=hdnCustValue.ClientID%>');
+                                    var txtCustName = document.getElementById('<%=txtCustName.ClientID%>');
+                                    var txtCompanyRegisNo = document.getElementById('<%=txtCompanyID.ClientID%>');
+                                    
+                                    var pageUrl = '<%=ResolveUrl("~/Template/AjaxScript.asmx")%>';
+                                    $.ajax({
+                                        type: "POST",
+                                        url: pageUrl + "/GetCompanyNameByRegisNo",
+                                        data: "{'CompanyRegisNo':'" + $(txtCompanyRegisNo).val() + "'}",
+                                        contentType: "application/json; charset=utf-8",
+                                        dataType: "json",
+                                        success: function(msg) {
+                                            var ret = msg.d;
+                                            hdnCustValue.value = ret[0];
+                                            txtCustName.value = ret[1];
+                                            return true;
+                                        }
+                                    });
+                                }
+                            </script>
                         </ContentTemplate>
                     </asp:UpdatePanel>
                     <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="UpdatePanel1">

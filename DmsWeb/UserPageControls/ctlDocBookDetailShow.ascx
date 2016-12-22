@@ -249,13 +249,15 @@
                                     <HeaderStyle HorizontalAlign="Center" Width="95%" />
                                     <ItemTemplate>
                                         <asp:Label ID="likEdit" runat="server" Text='<%# Bind("description") %>' ></asp:Label>
+                                        <asp:Label ID="lblFileName" runat="server" Text='<%# Bind("file_name") %>' CssClass="zHidden" ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField ShowHeader="False">
                                     <ItemStyle Width="15px" />
                                     <ItemTemplate>
-                                        <asp:ImageButton ID="imgDownload" runat="server" ImageUrl="~/Images/download.png"
-                                           OnClick="imgDownload_Click" ToolTip="ดาวน์โหลด" />
+                                        <a id="lnkDownload" runat="server" target="_blank"  >
+                                            <img src="../Images/download.png" alt="ดาวน์โหลด" title="ดาวน์โหลด" border="0" />
+                                        </a>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                

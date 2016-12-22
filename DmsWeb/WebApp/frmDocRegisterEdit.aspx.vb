@@ -60,8 +60,9 @@ Partial Class WebApp_frmDocRegisterEdit
             txtBookNo.Text = para.BOOK_NO
             txtRequestNo.Text = para.REQUEST_NO
             cmbGroupTitle.SelectedValue = para.GROUP_TITLE_ID
-            txtGroupTiltleName.Text = cmbGroupTitle.SelectedItem.Text
+            txtGroupTiltleName.Text = para.GROUP_TITLE_ID & "|" & cmbGroupTitle.SelectedItem.Text
             txtTitle.Text = para.TITLE_NAME
+            txtTitleOld.Text = para.TITLE_NAME
             txtReceiveDate.DateValue = para.REGISTER_DATE.Value
             txtExpectDate.DateValue = para.EXPECT_FINISH_DATE.Value
             If txtExpectDate.DateValue.Year <> 1 Then
@@ -82,6 +83,7 @@ Partial Class WebApp_frmDocRegisterEdit
             hdnCustValue.Text = para.COMPANY_ID
             txtCustName.Text = para.COMPANY_NAME
             txtCompanyDocSysID.Text = para.COMPANY_DOC_SYS_ID
+            txtCompanyID.text = para.COMPANY_REGIS_NO
 
             If para.COMPANY_DOC_SYS_ID = Constant.CompanySourceType.BOICENTRAL Then
                 Dim cEng As New Engine.Master.CompanyEng
@@ -129,6 +131,8 @@ Partial Class WebApp_frmDocRegisterEdit
                 chkCertNo.Enabled = False
             End If
             cmbBusinessTypeID.SelectedValue = para.BUSINESS_TYPE_ID
+            txtBusinessTypeIDOld.Text = para.BUSINESS_TYPE_ID & "|" & cmbBusinessTypeID.SelectedText
+
             txtDocRefID.Text = para.ELECTRONIC_DOC_ID
             txtTHeGIFDocID.Text = para.REF_TH_EGIF_DOC_INBOUND_ID
             txtRefDocRegisID.Text = para.REF_DOCUMENT_REGISTER_ID
@@ -173,31 +177,31 @@ Partial Class WebApp_frmDocRegisterEdit
         fnc = Nothing
     End Sub
 
-    Public Sub clearfrm()
-        txtBookNo.Text = ""
-        txtRequestNo.Text = ""
-        SetGroupTitle()
-        txtTitle.Text = ""
-        txtReceiveDate.DateValue = DateTime.Now
-        txtExpectDate.DateValue = New Date(1, 1, 1)
-        SetAllCombo()
-        cdlOwnerOrgID.SelectedValue = Config.GetLogOnUser.ORG_DATA.ID
-        cdlOwnerStaffID.SelectedValue = Config.GetLogOnUser.OFFICER_DATA.ID
-        txtRemarks.Text = ""
-        rdiReceiveType.SelectedIndex = 0 'การลงทะเบียนรับจากภายนอก/ลงทะเบียนรับจากภายใน
-        txtCustName.Text = ""
-        hdnCustValue.Text = ""
-        txtCompanyDocNo.Text = ""
-        txtCompanyDocDate.DateValue = DateTime.Now.Date
-        txtCompanySignatureName.Text = ""
-        rdiSupportCardNo.Checked = True
-        chkCertNo.Items.Clear()
-        cmbResolutionsNo.ClearCombo() 'เลขที่หนังสือแจ้งมติ
-        txtScanJobID.Text = "0"
+    'Public Sub clearfrm()
+    '    txtBookNo.Text = ""
+    '    txtRequestNo.Text = ""
+    '    SetGroupTitle()
+    '    txtTitle.Text = ""
+    '    txtReceiveDate.DateValue = DateTime.Now
+    '    txtExpectDate.DateValue = New Date(1, 1, 1)
+    '    SetAllCombo()
+    '    cdlOwnerOrgID.SelectedValue = Config.GetLogOnUser.ORG_DATA.ID
+    '    cdlOwnerStaffID.SelectedValue = Config.GetLogOnUser.OFFICER_DATA.ID
+    '    txtRemarks.Text = ""
+    '    rdiReceiveType.SelectedIndex = 0 'การลงทะเบียนรับจากภายนอก/ลงทะเบียนรับจากภายใน
+    '    txtCustName.Text = ""
+    '    hdnCustValue.Text = ""
+    '    txtCompanyDocNo.Text = ""
+    '    txtCompanyDocDate.DateValue = DateTime.Now.Date
+    '    txtCompanySignatureName.Text = ""
+    '    rdiSupportCardNo.Checked = True
+    '    chkCertNo.Items.Clear()
+    '    cmbResolutionsNo.ClearCombo() 'เลขที่หนังสือแจ้งมติ
+    '    txtScanJobID.Text = "0"
 
-        cmbBusinessTypeID.clearval()
-        Session.Remove(Constant.SessFileUploadList)
-    End Sub
+    '    cmbBusinessTypeID.clearval()
+    '    Session.Remove(Constant.SessFileUploadList)
+    'End Sub
 
 #Region "Validation Data"
     Public Function ValidRegis() As Boolean
@@ -383,9 +387,14 @@ Partial Class WebApp_frmDocRegisterEdit
                 trans.CommitTransaction()
                 Config.SaveTransLog("บันทึกการแก้ไขข้อมูลเลขที่ :" & txtBookNo.Text & " ชื่อเรื่อง :" & txtTitle.Text, Config.GetLogOnUser.LOGIN_HISTORY_ID)
 
-                If txtGroupTiltleName.Text <> cmbGroupTitle.SelectedItem.Text Then
-                    Config.SaveTransLog("EditGroupTitle, บันทึกการแก้ไขกลุ่มเรื่อง, จาก : " & txtGroupTiltleName.Text & ", เป็น :" & cmbGroupTitle.SelectedItem.Text & ", เลขที่หนังสือ :" & txtBookNo.Text & ", ชื่อเรื่อง :" & txtTitle.Text, Config.GetLogOnUser.LOGIN_HISTORY_ID)
-                    txtGroupTiltleName.Text = cmbGroupTitle.SelectedItem.Text
+                Dim GroupTitleOld() As String = Split(txtGroupTiltleName.Text, "|")
+                Dim BusinessTypeOld() As String = Split(txtBusinessTypeIDOld.Text, "|")
+                If GroupTitleOld(1) <> cmbGroupTitle.SelectedItem.Text Or txtTitle.Text <> txtTitleOld.Text Or cmbBusinessTypeID.SelectedValue <> BusinessTypeOld(0) Then
+                    'Config.SaveTransLog("EditGroupTitle, บันทึกการแก้ไขกลุ่มเรื่อง, จาก : " & txtGroupTiltleName.Text & ", เป็น :" & cmbGroupTitle.SelectedItem.Text & ", เลขที่หนังสือ :" & txtBookNo.Text & ", ชื่อเรื่อง :" & txtTitle.Text, Config.GetLogOnUser.LOGIN_HISTORY_ID)
+                    Config.SaveLogEditDocument(Config.GetLoginHistoryID, Config.GetLogOnUser.UserName, txtID.Text, GroupTitleOld(0), cmbGroupTitle.SelectedValue, GroupTitleOld(0), cmbGroupTitle.SelectedItem.Text, txtTitleOld.Text, txtTitle.Text, BusinessTypeOld(0), cmbBusinessTypeID.SelectedValue, BusinessTypeOld(1), cmbBusinessTypeID.SelectedText)
+                    txtGroupTiltleName.Text = cmbGroupTitle.SelectedValue & "|" & cmbGroupTitle.SelectedItem.Text
+                    txtTitleOld.Text = txtTitle.Text
+                    txtBusinessTypeIDOld.Text = cmbBusinessTypeID.SelectedValue & "|" & cmbBusinessTypeID.SelectedText
                 End If
 
             Else

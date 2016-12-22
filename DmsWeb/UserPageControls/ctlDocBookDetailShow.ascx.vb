@@ -170,43 +170,45 @@ Partial Class UserPageControls_ctlDocBookDetailShow
             imgPrintElec.Attributes.Add("onClick", "PrintReport(" & GetPrintCond(para.ELECTRONIC_DOC_ID, trans) & "); return false;")
         End If
 
-        If para.DOC_STATUS_ID = Constant.DocumentRegister.DocStatusID.JobRemain Then
-            'If dt.Rows.Count > 0 Then
-            If Convert.IsDBNull(dt.Rows(0)("organization_id_receive")) = False Then
-                If Convert.ToInt64(dt.Rows(0)("organization_id_receive")) = Config.GetLogOnUser.ORG_DATA.ID Then
-                    btnEdit.Visible = True
+
+        Select Case para.DOC_STATUS_ID
+            Case Constant.DocumentRegister.DocStatusID.JobRemain
+                'งานค้าง
+                'คนที่อยู่หน่วยงานเจ้าของเรื่องสามารถแก้ไขได้
+                If Convert.IsDBNull(dt.Rows(0)("organization_id_receive")) = False Then
+                    If Convert.ToInt64(dt.Rows(0)("organization_id_receive")) = Config.GetLogOnUser.ORG_DATA.ID Then
+                        btnEdit.Visible = True
+                    End If
                 End If
-            End If
-            'End If
-        End If
 
-
-        If para.DOC_STATUS_ID = Constant.DocumentRegister.DocStatusID.JobClose Then
-            'ต้องเป็นเอกสารที่จบงานแล้วเท่านั้น
-
-            eng = New Engine.Document.DocumentRegisterENG
-            dt = eng.GetAttachFileList(para.ID)
-            dt.Columns.Add("no")
-            dt.Columns.Add("file_byte", GetType(Byte()))
-            If dt.Rows.Count > 0 Then
-                Dim uPara As Para.Common.UserProfilePara = Config.GetLogOnUser
-                For i As Integer = 0 To dt.Rows.Count - 1
-                    dt.Rows(i)("no") = (i + 1)
-                    If File.Exists(Engine.Common.FunctionENG.GetFileUploadPath & dt.Rows(i)("file_name")) = True Then
-                        dt.Rows(i)("file_byte") = File.ReadAllBytes(Engine.Common.FunctionENG.GetFileUploadPath & dt.Rows(i)("file_name"))
+            Case Constant.DocumentRegister.DocStatusID.JobClose
+                'จบงาน
+                'ต้องเป็นเจ้าของเรื่องเท่านั้นถึงจะแก้ไขได้
+                If Convert.IsDBNull(dt.Rows(0)("receiver_officer_username")) = False Then
+                    If dt.Rows(0)("receiver_officer_username") = Config.GetLogOnUser.UserName Then
+                        btnEdit.Visible = True
                     End If
-                    If Convert.IsDBNull(dt.Rows(i)("description")) = True Then
-                        dt.Rows(i)("description") = "-"
-                    End If
-                Next
-                lblAttachFile.Visible = True
-                gvFiles.DataSource = dt
-                gvFiles.DataBind()
-            End If
-            eng = Nothing
+                End If
 
-        End If
-        
+                'ต้องเป็นเอกสารที่จบงานแล้วเท่านั้น ถึงจะสามารถแสดงรายการเอกสารแนบได้
+                eng = New Engine.Document.DocumentRegisterENG
+                dt = eng.GetAttachFileList(para.ID)
+                dt.Columns.Add("no")
+                If dt.Rows.Count > 0 Then
+                    Dim uPara As Para.Common.UserProfilePara = Config.GetLogOnUser
+                    For i As Integer = 0 To dt.Rows.Count - 1
+                        dt.Rows(i)("no") = (i + 1)
+                        If Convert.IsDBNull(dt.Rows(i)("description")) = True Then
+                            dt.Rows(i)("description") = "-"
+                        End If
+                    Next
+                    lblAttachFile.Visible = True
+                    gvFiles.DataSource = dt
+                    gvFiles.DataBind()
+                End If
+                eng = Nothing
+        End Select
+
         Config.SaveTransLog("แสดงรายละเอียดหนังสือเลขที่ :" & para.BOOK_NO, Config.GetLoginHistoryID)
 
         SearchEng = Nothing
@@ -215,171 +217,16 @@ Partial Class UserPageControls_ctlDocBookDetailShow
     End Sub
 
     Protected Sub gvFiles_RowDataBound(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewRowEventArgs) Handles gvFiles.RowDataBound
-        'If e.Row.RowType = DataControlRowType.DataRow Then
-        '    Dim img As ImageButton = e.Row.FindControl("imgDownload")
-        '    Dim id As Long = e.Row.Cells(4).Text
-        '    Dim RowID As Int16 = e.Row.RowIndex
-        '    Dim grv As GridViewRow = e.Row
+        If e.Row.RowType = DataControlRowType.DataRow Then
+            Dim likEdit As Label = e.Row.FindControl("likEdit")
+            Dim aLink As HtmlAnchor = e.Row.FindControl("lnkDownload")
+            Dim lblFileName As Label = e.Row.FindControl("lblFileName")
 
-        '    Dim dt As DataTable
-        '    Dim FileName As String = ""
-        '    If id = "0" Then
-        '        dt = Session(Constant.SessFileUploadList)
-        '        FileName = Session.SessionID & dt.Rows(e.Row.RowIndex)("mime_type")
-        '    Else
-        '        Dim eng As New Engine.Document.DocumentRegisterENG
-        '        dt = eng.GetAttachFileList(lblDocumentRegisterID.Text)
-        '        FileName = dt.Rows(e.Row.RowIndex)("file_name")
-        '        eng = Nothing
-        '    End If
+            aLink.Attributes.Add("href", Engine.Common.FunctionENG.GetFileUploadURL(Request) & lblFileName.Text)
+            aLink.Attributes.Add("onClick", "SaveTransLog('ดาวน์โหลดเอกสาร ชื่อ " & likEdit.Text & "', '" & Config.GetLoginHistoryID & "');")
 
-        'End If
-    End Sub
-
-    Protected Sub imgDownload_Click(ByVal sender As Object, ByVal e As System.EventArgs)
-        Dim img As ImageButton = sender
-        Dim grv As GridViewRow = img.Parent.Parent
-        Dim index As Integer = grv.RowIndex
-        Dim dt As DataTable = Session(Constant.SessFileUploadList)
-
-        If dt.Rows(index)("id").ToString = "0" Then
-            Dim TmpDir As String = Engine.Common.FunctionENG.GetFileUploadPath() & "\TmpFile"
-            If Directory.Exists(TmpDir) = False Then
-                Directory.CreateDirectory(TmpDir)
-            End If
-
-            Dim FileName As String = Session.SessionID & dt.Rows(index)("mime_type")
-            Dim TmpFile As String = TmpDir & "\" & FileName
-            If File.Exists(TmpFile) = True Then
-                File.Delete(TmpFile)
-            End If
-            Dim FileByte() As Byte = CType(dt.Rows(index)("file_byte"), Byte())
-
-            Dim fs As FileStream
-            Try
-                fs = New FileStream(TmpFile, FileMode.CreateNew)
-                fs.Write(FileByte, 0, FileByte.Length)
-                fs.Close()
-                Config.SaveTransLog("ดาวน์โหลดเอกสาร ชื่อ " & dt.Rows(index)("description"))
-                Response.Redirect(Engine.Common.FunctionENG.GetFileUploadURL(Request) & "TmpFile/" & FileName & "?rnd=" & DateTime.Now.Millisecond)
-            Catch ex As Exception
-                Config.SetAlert(ex.Message, Me.Page)
-            End Try
-        Else
-            Config.SaveTransLog("ดาวน์โหลดเอกสาร ชื่อ " & dt.Rows(index)("description"))
-            Response.Redirect(Engine.Common.FunctionENG.GetFileUploadURL(Request) & dt.Rows(index)("file_name").ToString & "?rnd=" & DateTime.Now.Millisecond)
         End If
     End Sub
-
-    'Protected Sub gvFiles_RowCommand(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewCommandEventArgs) Handles gvFiles.RowCommand
-    '    Dim gvRow As GridViewRow = CType(CType(e.CommandSource, Control).Parent.Parent, GridViewRow)
-    '    Dim index As Integer = gvRow.RowIndex
-    '    Dim dt As DataTable
-    '    If lblDocumentRegisterID.Text = "0" Then
-    '        dt = Session(Constant.SessFileUploadList)
-    '    Else
-    '        Dim en As New Engine.Document.DocumentRegisterENG
-    '        dt = en.GetAttachFileList(lblDocumentRegisterID.Text)
-    '        dt.Columns.Add("no")
-    '        dt.Columns.Add("file_byte", GetType(Byte()))
-    '        dt.Columns.Add("IsDel")
-    '        If dt.Rows.Count > 0 Then
-    '            For i As Integer = 0 To dt.Rows.Count - 1
-    '                dt.Rows(i)("no") = (i + 1)
-    '                dt.Rows(i)("file_byte") = File.ReadAllBytes(Engine.Common.FunctionENG.GetFileUploadPath & dt.Rows(i)("file_name"))
-    '                dt.Rows(i)("IsDel") = IIf(dt.Rows(i)("create_by").ToString = Config.GetLogOnUser.UserName, "Y", "N")
-    '                If Convert.IsDBNull(dt.Rows(i)("description")) = True Then
-    '                    dt.Rows(i)("description") = "-"
-    '                End If
-    '            Next
-    '        End If
-    '        en = Nothing
-    '    End If
-
-    '    If e.CommandName = "Edit" Then
-    '        'CancelEdit(dt.Rows(index)("id"))
-    '        Dim FilePara As New Para.Common.TmpFileUploadPara
-    '        FilePara.TmpFileByte = dt.Rows(index)("file_byte")
-    '        FilePara.FileExtent = dt.Rows(index)("mime_type")
-    '        ctlBrowseFile1.TmpFileUploadPara = FilePara
-    '        txtDescription.Text = dt.Rows(index)("description")
-    '        lblDocumentRegisterID.Text = dt.Rows(index)("document_register_id")
-    '        lblID.Text = dt.Rows(index)("id")
-    '        lblRowIndex.Text = index
-    '        lblRowNo.Text = dt.Rows(index)("no")
-    '    ElseIf e.CommandName = "Delete" Then
-    '        Dim ret As Boolean = True
-    '        Dim _err As String = ""
-    '        Dim FileName As String = ""
-
-    '        If Convert.ToInt64(dt.Rows(index)("id")) > 0 Then
-    '            Dim eng As New Engine.Document.DocumentRegisterENG
-    '            ret = eng.DeleteAttachFile(Convert.ToInt64(dt.Rows(index)("id")))
-    '            _err = eng.ErrorMessage
-    '            eng = Nothing
-    '            FileName = Engine.Common.FunctionENG.GetFileUploadPath & dt.Rows(index)("file_name")
-    '        Else
-    '            FileName = Engine.Common.FunctionENG.GetFileUploadPath() & "\TmpFile\" & Session.SessionID & dt.Rows(index)("mime_type")
-    '        End If
-
-    '        If ret = True Then
-    '            If File.Exists(FileName) Then
-    '                File.Delete(FileName)
-    '            End If
-    '            dt.Rows.RemoveAt(index)
-    '            If dt.Rows.Count > 0 Then
-    '                For i As Integer = 0 To dt.Rows.Count - 1
-    '                    dt.Rows(i)("no") = (i + 1)
-    '                Next
-    '                gvFiles.DataSource = dt
-    '                gvFiles.DataBind()
-    '                Session(Constant.SessFileUploadList) = dt
-    '            Else
-    '                gvFiles.DataSource = Nothing
-    '                gvFiles.DataBind()
-    '                Session.Remove(Constant.SessFileUploadList)
-    '            End If
-    '        Else
-    '            Config.SetAlert(_err, Me)
-    '        End If
-    '    Else
-    '        Dim FileName As String = ""
-    '        If dt.Rows(index)("id").ToString = "0" Then
-    '            Dim TmpDir As String = Engine.Common.FunctionENG.GetFileUploadPath() & "\TmpFile"
-    '            If Directory.Exists(TmpDir) = False Then
-    '                Directory.CreateDirectory(TmpDir)
-    '            End If
-
-    '            FileName = Session.SessionID & dt.Rows(index)("mime_type")
-    '            Dim TmpFile As String = TmpDir & "\" & FileName
-
-    '            Dim fleList As String() = Directory.GetFiles(TmpDir)
-    '            If fleList.Length > 0 Then
-    '                For Each fla As String In fleList
-    '                    Dim f As New FileInfo(fla)
-    '                    If f.Name.Replace(f.Extension, "") = Session.SessionID Then
-    '                        File.Delete(f.FullName)
-    '                    End If
-    '                Next
-    '            End If
-
-    '            Dim FileByte() As Byte = CType(dt.Rows(index)("file_byte"), Byte())
-    '            Dim fs As FileStream
-    '            Try
-    '                fs = New FileStream(TmpFile, FileMode.CreateNew)
-    '                fs.Write(FileByte, 0, FileByte.Length)
-    '                fs.Close()
-    '            Catch ex As Exception
-    '                Config.SetAlert(ex.Message, Me)
-    '            End Try
-    '        Else
-    '            FileName = dt.Rows(index)("file_name")
-    '        End If
-
-    '        Dim OpenDwnScr As String = "<script language='javascript'>OpenDownload('id=" & dt.Rows(index)("id").ToString & "&FileName=" & FileName & "&RowID=" & index & "&rnd=" & DateTime.Now.Millisecond & "');</script>"
-    '        ScriptManager.RegisterStartupScript(Me, GetType(String), "OpenDwn", OpenDwnScr, False)
-    '    End If
-    'End Sub
 
     Private Sub ClearDocDetail()
         lblID.Text = "0"

@@ -434,7 +434,7 @@ Namespace TABLE
         '/// <returns>true if insert data successfully; otherwise, false.</returns>
         Public Function InsertData(LoginName As String,trans As SQLTransaction) As Boolean
             If trans IsNot Nothing Then 
-                _id = DB.GetNextID("id",tableName, trans)
+                '_id = DB.GetNextID("id",tableName, trans)
                 _CREATE_BY = LoginName
                 _CREATE_ON = DateTime.Now
                 Return doInsert(trans)
@@ -581,14 +581,21 @@ Namespace TABLE
             Dim ret As Boolean = True
             If _haveData = False Then
                 Try
-
-                    ret = (DB.ExecuteNonQuery(SqlInsert, trans) > 0)
-                    If ret = False Then
-                        _error = DB.ErrorMessage
+                    Dim dt As DataTable = DB.ExecuteTable(SqlInsert, trans)
+                    If dt.Rows.Count > 0 Then
+                        _ID = Convert.ToInt64(dt.Rows(0)("id"))
+                        ret = (_ID > 0)
+                        If ret = False Then
+                            _error = DB.ErrorMessage
+                        Else
+                            _haveData = True
+                        End If
+                        _information = MessageResources.MSGIN001
                     Else
-                        _haveData = True
+                        ret = False
                     End If
-                    _information = MessageResources.MSGIN001
+                    dt.Dispose()
+                    
                 Catch ex As ApplicationException
                     ret = false
                     _error = ex.Message
@@ -891,9 +898,9 @@ Namespace TABLE
         Private ReadOnly Property SqlInsert() As String 
             Get
                 Dim Sql As String=""
-                Sql += "INSERT INTO " & tableName  & " (ID, CREATE_BY, CREATE_ON, UPDATE_BY, UPDATE_ON, DOCUMENT_REGISTER_ID, ORGANIZATION_ID_SEND, ORGANIZATION_NAME_SEND, ORGANIZATION_APPNAME_SEND, SEND_DATE, SENDER_OFFICER_USERNAME, SENDER_OFFICER_FULLNAME, RECEIVE_STATUS_ID, RECEIVE_DATE, ORGANIZATION_ID_RECEIVE, ORGANIZATION_NAME_RECEIVE, ORGANIZATION_APPNAME_RECEIVE, RECEIVER_OFFICER_USERNAME, RECEIVER_OFFICER_FULLNAME, RECEIVE_TYPE_ID, RECEIVE_OBJECTIVE_ID, REMARKS, ORGANIZATION_ID_STORAGE, ORGANIZATION_NAME_STORAGE, REF_OLD_SEND_ID, REF_OLD_RECEIVE_ID, DOCUMENT_STATEMENT, DOCUMENT_INT_TYPE, MODULE_FOLDER_ID, IS_FORWARD, SENDBACK_REASON, RETRIEVE_REASON)"
+                Sql += "INSERT INTO " & TableName & " (CREATE_BY, CREATE_ON, UPDATE_BY, UPDATE_ON, DOCUMENT_REGISTER_ID, ORGANIZATION_ID_SEND, ORGANIZATION_NAME_SEND, ORGANIZATION_APPNAME_SEND, SEND_DATE, SENDER_OFFICER_USERNAME, SENDER_OFFICER_FULLNAME, RECEIVE_STATUS_ID, RECEIVE_DATE, ORGANIZATION_ID_RECEIVE, ORGANIZATION_NAME_RECEIVE, ORGANIZATION_APPNAME_RECEIVE, RECEIVER_OFFICER_USERNAME, RECEIVER_OFFICER_FULLNAME, RECEIVE_TYPE_ID, RECEIVE_OBJECTIVE_ID, REMARKS, ORGANIZATION_ID_STORAGE, ORGANIZATION_NAME_STORAGE, REF_OLD_SEND_ID, REF_OLD_RECEIVE_ID, DOCUMENT_STATEMENT, DOCUMENT_INT_TYPE, MODULE_FOLDER_ID, IS_FORWARD, SENDBACK_REASON, RETRIEVE_REASON)"
+                Sql += " output inserted.id "
                 Sql += " VALUES("
-                sql += DB.SetDouble(_ID) & ", "
                 sql += DB.SetString(_CREATE_BY) & ", "
                 sql += DB.SetDateTime(_CREATE_ON) & ", "
                 sql += DB.SetString(_UPDATE_BY) & ", "
@@ -936,7 +943,7 @@ Namespace TABLE
             Get
                 Dim Sql As String = ""
                 Sql += "UPDATE " & tableName & " SET "
-                Sql += "ID = " & DB.SetDouble(_ID) & ", "
+                'Sql += "ID = " & DB.SetDouble(_ID) & ", "
                 Sql += "CREATE_BY = " & DB.SetString(_CREATE_BY) & ", "
                 Sql += "CREATE_ON = " & DB.SetDateTime(_CREATE_ON) & ", "
                 Sql += "UPDATE_BY = " & DB.SetString(_UPDATE_BY) & ", "
