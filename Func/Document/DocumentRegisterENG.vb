@@ -458,6 +458,8 @@ Namespace Document
             lnq.BUSINESS_TYPE_ID = para.BUSINESS_TYPE_ID
             lnq.COMPANY_ID = para.COMPANY_ID
             lnq.COMPANY_REGIS_NO = para.COMPANY_REGIS_NO
+            lnq.COMPANY_IDCARD_NO = para.COMPANY_IDCARD_NO
+            lnq.COMPANY_PASSPORT_NO = para.COMPANY_PASSPORT_NO
             lnq.COMPANY_NAME = para.COMPANY_NAME
             lnq.COMPANY_DOC_NO = para.COMPANY_DOC_NO
             lnq.COMPANY_DOC_TYPE_ID = para.COMPANY_DOC_TYPE_ID

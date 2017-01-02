@@ -495,7 +495,7 @@ Partial Class UserControls_Button_btnSendOutside
                 dr("CompanyNameReceive") = grv.Cells(ColCompanyNameReceive).Text
                 dr("company_id") = grv.Cells(ColCompanyID).Text
                 dr("CompanySource") = grv.Cells(ColCompanySource).Text
-                dr("CompanyRegisNo") = grv.Cells(ColCompanyRegisNo).Text
+                dr("CompanyRegisNo") = grv.Cells(ColCompanyRegisNo).Text.Replace("&nbsp;", "").Replace("&amp;nbsp;", "")
                 ret.Rows.Add(dr)
             Next
         End If

@@ -21,6 +21,8 @@ Partial Class WebApp_PopAttachFile
                 cmbCompanyType.DataSource = dt
                 cmbCompanyType.DataBind()
 
+                txtThaiPersonCompanyTypeID.Text = Engine.Common.FunctionENG.GetConfigValue("ThaiPersonCompanyTypeID")
+                txtForeignCompanyTypeID.Text = Engine.Common.FunctionENG.GetConfigValue("ForeignCompanyTypeID")
             End If
             txtCompanyRegisNo.Attributes.Add("onBlur", "return ChkDupCompanyRegisNo();")
 
@@ -47,6 +49,9 @@ Partial Class WebApp_PopAttachFile
                 txtCompanyRequireRegisNo.Text = dt.Rows(0)("require_regis_no")
             End If
             dt.Dispose()
+
+            
+
         End If
     End Sub
 End Class

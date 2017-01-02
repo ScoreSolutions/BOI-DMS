@@ -51,6 +51,46 @@ Public Class AjaxScript
     End Function
 
     <WebMethod()> _
+    Public Function GetAutoCompleteCompanyIDCardNo(ByVal prefixText As String, ByVal count As Integer, ByVal contextKey As String) As String()
+        Dim result() As String
+
+        Dim items As New List(Of String)
+        Dim Str As String = "select top 10 idcard_no "
+        Str += " from company "
+        Str += " where idcard_no like '" & prefixText & "%' "
+        Str += " order by idcard_no"
+        Dim dt As DataTable = Linq.Common.Utilities.SqlDB.ExecuteTable(Str)
+        If dt.Rows.Count > 0 Then
+            For Each dr As DataRow In dt.Rows
+                items.Add(dr("idcard_no").ToString())
+            Next
+        End If
+
+        result = items.ToArray()
+        Return result
+    End Function
+
+    <WebMethod()> _
+    Public Function GetAutoCompleteCompanyPassportNo(ByVal prefixText As String, ByVal count As Integer, ByVal contextKey As String) As String()
+        Dim result() As String
+
+        Dim items As New List(Of String)
+        Dim Str As String = "select top 10 passport_no "
+        Str += " from company "
+        Str += " where passport_no like '" & prefixText & "%' "
+        Str += " order by passport_no"
+        Dim dt As DataTable = Linq.Common.Utilities.SqlDB.ExecuteTable(Str)
+        If dt.Rows.Count > 0 Then
+            For Each dr As DataRow In dt.Rows
+                items.Add(dr("passport_no").ToString())
+            Next
+        End If
+
+        result = items.ToArray()
+        Return result
+    End Function
+
+    <WebMethod()> _
     Public Sub SaveTransLog(ByVal TransDesc As String, ByVal LoginHisID As Long)
         Config.SaveTransLog(TransDesc, LoginHisID)
     End Sub
@@ -256,10 +296,11 @@ Public Class AjaxScript
             Dim i As Integer = 0
             If dt.Rows.Count > 0 Then
                 For i = 0 To dt.Rows.Count - 1
-                    Dim retValue As String = dt.Rows(i)("id").ToString & "|"
-                    If Convert.IsDBNull(dt.Rows(i)("company_regis_no")) = False Then
-                        retValue += dt.Rows(i)("company_regis_no")
-                    End If
+                    Dim retValue As String = dt.Rows(i)("id").ToString   'COMPANY.id
+                    retValue += "|" & dt.Rows(i)("company_regis_no")     'COMPANY.company_regis_no
+                    retValue += "|" & dt.Rows(i)("idcard_no")           'COMPANY.idcard_no
+                    retValue += "|" & dt.Rows(i)("passport_no")         'COMPANY.passport_no
+
                     itemsCust.Insert(i, AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(dt.Rows(i)("company_name").ToString, retValue))
                 Next
                 dt = Nothing
@@ -279,16 +320,12 @@ Public Class AjaxScript
                         Try
                             Dim cDr As DataRow = cDt.Rows(j)
                             i += j
-                            'Dim dr As DataRow = dt.NewRow
-                            'dr("id") = cDr("id")
-                            'dr("company_name") = cDr("company_name")
-                            'dr("company_regis_no") = cDr("company_regis_no")
-                            'dt.Rows.Add(dr)
-
                             Dim retValue As String = cDr("id").ToString & "|"
                             If Convert.IsDBNull(cDr("company_regis_no")) = False Then
                                 retValue += cDr("company_regis_no")
                             End If
+                            retValue += "||"   'ใน BOICENTRAL ไม่มีข้อมูล idcard_no กับ passport_no
+
                             itemsCust.Insert(i, AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(cDr("company_name").ToString, retValue))
 
                         Catch ex As Exception
@@ -355,7 +392,7 @@ Public Class AjaxScript
 
     <WebMethod()> _
     Public Function GetCompanyNameByRegisNo(ByVal CompanyRegisNo As String) As String()
-        Dim ret() As String = {"", ""}
+        Dim ret() As String = {"", "", "", "", ""}
 
         Dim dt As New DataTable
         If Engine.Common.BOICentralENG.PingServer() = True Then
@@ -374,9 +411,53 @@ Public Class AjaxScript
             If dt.Rows.Count > 0 Then
                 ret(0) = dt.Rows(0)("id").ToString()
                 ret(1) = dt.Rows(0)("company_name").ToString()
+                ret(2) = dt.Rows(0)("company_regis_no").ToString()
+                ret(3) = dt.Rows(0)("idcard_no").ToString()
+                ret(4) = dt.Rows(0)("passport_no").ToString()
             End If
             cmpENG = Nothing
         End If
+        dt.Dispose()
+
+        Return ret
+    End Function
+
+    <WebMethod()> _
+    Public Function GetCompanyNameByIDCardNo(ByVal CompanyIDCardNo As String) As String()
+        Dim ret() As String = {"", "", "", "", ""}
+
+        Dim dt As New DataTable
+
+        Dim cmpENG As New Engine.Master.CompanyEng
+        dt = cmpENG.GetDataCompanyByCompanyIDCardNo(CompanyIDCardNo)
+        If dt.Rows.Count > 0 Then
+            ret(0) = dt.Rows(0)("id").ToString()
+            ret(1) = dt.Rows(0)("company_name").ToString()
+            ret(2) = dt.Rows(0)("company_regis_no").ToString()
+            ret(3) = dt.Rows(0)("idcard_no").ToString()
+            ret(4) = dt.Rows(0)("passport_no").ToString()
+        End If
+        cmpENG = Nothing
+        dt.Dispose()
+
+        Return ret
+    End Function
+    <WebMethod()> _
+    Public Function GetCompanyNameByPassportNo(ByVal CompanyPassportNo As String) As String()
+        Dim ret() As String = {"", "", "", "", ""}
+
+        Dim dt As New DataTable
+
+        Dim cmpENG As New Engine.Master.CompanyEng
+        dt = cmpENG.GetDataCompanyByCompanyPassportNo(CompanyPassportNo)
+        If dt.Rows.Count > 0 Then
+            ret(0) = dt.Rows(0)("id").ToString()
+            ret(1) = dt.Rows(0)("company_name").ToString()
+            ret(2) = dt.Rows(0)("company_regis_no").ToString()
+            ret(3) = dt.Rows(0)("idcard_no").ToString()
+            ret(4) = dt.Rows(0)("passport_no").ToString()
+        End If
+        cmpENG = Nothing
         dt.Dispose()
 
         Return ret

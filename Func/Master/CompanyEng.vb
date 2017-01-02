@@ -31,7 +31,8 @@ Namespace Master
             Dim dt As New DataTable
             Dim trans As New Linq.Common.Utilities.TransactionDB
             trans.CreateTransaction()
-            Dim sql As String = " select top 10 id, case when ltrim(thaiName)='' then engName else thaiName end + ' (" & Para.Common.Utilities.Constant.CompanySourceType.DMS & ")' company_name, company_regis_no "
+            Dim sql As String = " select top 10 id, case when ltrim(thaiName)='' then engName else thaiName end + ' (" & Para.Common.Utilities.Constant.CompanySourceType.DMS & ")' company_name "
+            sql += " , isnull(company_regis_no,'') company_regis_no, isnull(idcard_no,'') idcard_no, isnull(passport_no,'') passport_no "
             sql += " from company "
             sql += " where ltrim(case when ltrim(thaiName)='' then engName else thaiName end)<>'' "
             sql += " and ltrim(case when ltrim(thaiName)='' then engName else thaiName end) like '" & WhText & "%' "
@@ -41,24 +42,6 @@ Namespace Master
             trans.CommitTransaction()
             lnq = Nothing
 
-            
-
-
-            ''ข้อมูลจาก WebService
-            'Dim ws As New LinqWS.OneDB.CompanyInfoLinqWS
-            'Dim bDt As New DataTable
-            'bDt = ws.GetCompanyList(WhText, Engine.Common.FunctionENG.GetConfigValue("BCM_WS_URL"))
-            'If bDt.Rows.Count > 0 Then
-            '    For Each bDr As DataRow In bDt.Rows
-            '        Dim dr As DataRow = dt.NewRow
-            '        dr("id") = bDr("comcode")
-            '        dr("company_name") = bDr("comnameth") & " (BCM)"
-            '        dt.Rows.Add(dr)
-            '    Next
-            'End If
-            'Dim dv As DataView = dt.DefaultView
-            'dv.Sort = "company_name asc"
-            'dt = dv.ToTable
             dt.DefaultView.Sort = "company_name"
 
             Return dt.DefaultView.ToTable
@@ -80,9 +63,39 @@ Namespace Master
             Dim dt As New DataTable
             Dim trans As New Linq.Common.Utilities.TransactionDB
             trans.CreateTransaction()
-            Dim sql As String = " select top 10 id, case when ltrim(thaiName)='' then engName else thaiName end + ' (" & Para.Common.Utilities.Constant.CompanySourceType.DMS & ")' company_name, company_regis_no "
+            Dim sql As String = " select top 10 id, case when ltrim(thaiName)='' then engName else thaiName end + ' (" & Para.Common.Utilities.Constant.CompanySourceType.DMS & ")' company_name, "
+            sql += " isnull(company_regis_no,'') company_regis_no, isnull(idcard_no,'') idcard_no, isnull(passport_no,'') passport_no"
             sql += " from company "
             sql += " where company_regis_no='" & CompanyRegisNo & "'"
+            Dim lnq As New CompanyLinq
+            dt = lnq.GetListBySql(sql, trans.Trans)
+            trans.CommitTransaction()
+            lnq = Nothing
+            Return dt
+        End Function
+
+        Public Function GetDataCompanyByCompanyIDCardNo(ByVal CompanyIDCardNo As String) As DataTable
+            Dim dt As New DataTable
+            Dim trans As New Linq.Common.Utilities.TransactionDB
+            trans.CreateTransaction()
+            Dim sql As String = " select top 10 id, case when ltrim(thaiName)='' then engName else thaiName end + ' (" & Para.Common.Utilities.Constant.CompanySourceType.DMS & ")' company_name, "
+            sql += " isnull(company_regis_no,'') company_regis_no, isnull(idcard_no,'') idcard_no, isnull(passport_no,'') passport_no"
+            sql += " from company "
+            sql += " where idcard_no='" & CompanyIDCardNo & "'"
+            Dim lnq As New CompanyLinq
+            dt = lnq.GetListBySql(sql, trans.Trans)
+            trans.CommitTransaction()
+            lnq = Nothing
+            Return dt
+        End Function
+        Public Function GetDataCompanyByCompanyPassportNo(ByVal CompanyPassportNo As String) As DataTable
+            Dim dt As New DataTable
+            Dim trans As New Linq.Common.Utilities.TransactionDB
+            trans.CreateTransaction()
+            Dim sql As String = " select top 10 id, case when ltrim(thaiName)='' then engName else thaiName end + ' (" & Para.Common.Utilities.Constant.CompanySourceType.DMS & ")' company_name, "
+            sql += " isnull(company_regis_no,'') company_regis_no, isnull(idcard_no,'') idcard_no, isnull(passport_no,'') passport_no"
+            sql += " from company "
+            sql += " where passport_no='" & CompanyPassportNo & "'"
             Dim lnq As New CompanyLinq
             dt = lnq.GetListBySql(sql, trans.Trans)
             trans.CommitTransaction()

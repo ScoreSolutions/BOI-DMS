@@ -69,6 +69,8 @@ Namespace TABLE
         Dim _REF_TH_EGIF_DOC_INBOUND_ID As  String  = ""
         Dim _BOOKOUT_DATE As System.Nullable(Of DateTime) = New DateTime(1, 1, 1)
         Dim _COMPANY_REGIS_NO As String = ""
+        Dim _COMPANY_IDCARD_NO As String = ""
+        Dim _COMPANY_PASSPORT_NO As String = ""
 
         'Generate Field Property 
         <Column(Storage:="_ID", DbType:="BigInt NOT NULL ",CanBeNull:=false)>  _
@@ -582,6 +584,24 @@ Namespace TABLE
             End Get
             Set(ByVal value As String)
                 _COMPANY_REGIS_NO = value
+            End Set
+        End Property
+        <Column(Storage:="_COMPANY_IDCARD_NO", DbType:="VarChar(50)")> _
+        Public Property COMPANY_IDCARD_NO() As String
+            Get
+                Return _COMPANY_IDCARD_NO
+            End Get
+            Set(ByVal value As String)
+                _COMPANY_IDCARD_NO = value
+            End Set
+        End Property
+        <Column(Storage:="_COMPANY_PASSPORT_NO", DbType:="VarChar(50)")> _
+        Public Property COMPANY_PASSPORT_NO() As String
+            Get
+                Return _COMPANY_PASSPORT_NO
+            End Get
+            Set(ByVal value As String)
+                _COMPANY_PASSPORT_NO = value
             End Set
         End Property
 

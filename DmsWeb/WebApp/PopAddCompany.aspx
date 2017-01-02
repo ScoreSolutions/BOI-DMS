@@ -29,6 +29,8 @@
             
             var vIDCardNo = document.getElementById("<%=txtIDCardNo.ClientID %>");
             var vPassportNo = document.getElementById("<%=txtPassportNo.ClientID %>");
+            var vThaiPersonCompanyTypeID = document.getElementById("<%=txtThaiPersonCompanyTypeID.ClientID %>");
+            var vForeignCompanyTypeID = document.getElementById("<%=txtForeignCompanyTypeID.ClientID %>");
                       
 
             if ($(vCompanyType).val() == "0") {
@@ -36,26 +38,37 @@
                 $(vCompanyType).focus();
                 return false;
             }
-            
+
             if ($(vComRequireRegisNo).val() == "Y") {
-                if ($(vComRegisNo).val().length != 13) {
-                    alert("กรุณาระบุเลขทะเบียนบริษัทจำนวน 13 หลัก");
-                    $(vComRegisNo).select();
-                    return false;
+                //ถ้าเลือกประเภทองค์กรเป็นบุคคลธรรมดา หรือผู้ประกอบการต่างชาติ
+                if (($(vCompanyType).val() == $(vThaiPersonCompanyTypeID).val() || ($(vCompanyType).val() == $(vForeignCompanyTypeID).val()))) {
+                    if ($(vCompanyType).val() == $(vThaiPersonCompanyTypeID).val()) {
+                        //ถ้าประเภทองค์กรเป็นบุคคลธรรมดา
+                        if ($(vIDCardNo).val() == "") {
+                            alert("กรุณาระบุเลขบัตรประชาชน");
+                            $(vIDCardNo).select();
+                            return false;
+                        }
+                    }
+
+                    if ($(vCompanyType).val() == $(vForeignCompanyTypeID).val()) {
+                        //ถ้าประเภทองค์กรเป็นผู้ประกอบการต่างชาติ
+                        if ($(vPassportNo).val() == "") {
+                            alert("กรุณาระบุเลขที่ Passport");
+                            $(vPassportNo).select();
+                            return false;
+                        }
+                    }
+                }else{
+                    if ($(vComRegisNo).val().length != 13) {
+                        alert("กรุณาระบุเลขทะเบียนบริษัทจำนวน 13 หลัก");
+                        $(vComRegisNo).select();
+                        return false;
+                    }
                 }
             }
+
             
-            if ($(vIDCardNo).val() == "") {
-                alert("กรุณาระบุเลขบัตรประชาชน");
-                $(vIDCardNo).select();
-                return false;
-            }
-            
-            if ($(vPassportNo).val() == "") {
-                alert("กรุณาระบุเลขที่ Passport");
-                $(vPassportNo).select();
-                return false;
-            }
             
             if ($(vThaiName).val() == "") {
                 alert("กรุณาระบุชื่อองค์กร");
@@ -78,6 +91,8 @@
                         ret[0] = msg.d;
                         ret[1] = $(vThaiName).val();
                         ret[2] = $(vComRegisNo).val();
+                        ret[3] = $(vIDCardNo).val();
+                        ret[4] = $(vPassportNo).val();
                         window.returnValue = ret;
                     } else {
                         window.returnValue = null;
@@ -143,6 +158,9 @@
                                             <asp:DropDownList ID="cmbCompanyType" runat="server" Width="400" AutoPostBack="true" ></asp:DropDownList>
                                             <font color="red">*</font>
                                             <asp:TextBox ID="txtCompanyRequireRegisNo" runat="server" CssClass="zHidden" ></asp:TextBox>
+                                            <asp:TextBox ID="txtThaiPersonCompanyTypeID" runat="server" CssClass="zHidden" ></asp:TextBox>
+                                            <asp:TextBox ID="txtForeignCompanyTypeID" runat="server" CssClass="zHidden" ></asp:TextBox>
+                                            
                                         </td>
                                     </tr>
                                     <tr>
@@ -158,7 +176,7 @@
                                             เลขบัตรประชาชน :
                                         </td>
                                         <td align="left" class="Csslbl">
-                                            <uc4:txtBox ID="txtIDCardNo" runat="server" TextKey="TextInt" IsNotNull="True" Width="400"  MaxLength="50" />
+                                            <uc4:txtBox ID="txtIDCardNo" runat="server" TextKey="TextInt" IsNotNull="True" Width="400"  MaxLength="13" />
                                         </td>
                                     </tr>
                                      <tr>

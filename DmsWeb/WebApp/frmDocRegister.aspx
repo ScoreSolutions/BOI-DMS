@@ -28,6 +28,8 @@
             var custVal = retVal[0];
             document.getElementById('<%=hdnCustValue.ClientID%>').value = custVal;
             document.getElementById('<%=txtCompanyID.ClientID%>').value = retVal[1];
+            document.getElementById('<%=txtCompanyIDCardNo.ClientID%>').value = retVal[2];
+            document.getElementById('<%=txtCompanyPassportNo.ClientID%>').value = retVal[3];
 
             var chk = document.getElementById("<%=chkCertNo.ClientID %>");
             if (chk != null)
@@ -237,6 +239,54 @@
                                             </tr>
                                         
                                             <tr style="height:25px">
+                                                <td align="right" class="Csslbl" style="width:20%" >เลขบัตรประชาชน : </td>
+                                                <td align="left" class="Csslbl"  style="width:30%" >
+                                                     <asp:TextBox ID="txtCompanyIDCardNo" runat="server" CssClass="TextBox" AutoComplete="false" Width="300px"  MaxLength="13" />
+                                                     <cc1:AutoCompleteExtender
+                                                        runat="server" 
+                                                        ID="AutoCompleteExtender2" 
+                                                        TargetControlID="txtCompanyIDCardNo"
+                                                        ServicePath="~/Template/AjaxScript.asmx"
+                                                        ServiceMethod = "GetAutoCompleteCompanyIDCardNo"
+                                                        MinimumPrefixLength="1" 
+                                                        CompletionInterval="500"
+                                                        UseContextKey="true"
+                                                        EnableCaching="true"
+                                                        CompletionSetCount="10" FirstRowSelected="true"
+                                                        CompletionListCssClass="autocomplete_completionListElement" 
+                                                        CompletionListItemCssClass="autocomplete_listItem" 
+                                                        CompletionListHighlightedItemCssClass="autocomplete_highlightedListItem"
+                                                        ShowOnlyCurrentWordInCompletionListItem="true" 
+                                                        OnClientItemSelected="SetCompanyByIDCardNo" >
+                                                     </cc1:AutoCompleteExtender>
+                                                </td>
+                                                <td align="right" class="Csslbl" style="width:15%">เลขPassport : </td>
+                                                <td align="left" style="width:35%">
+                                                    <asp:TextBox ID="txtCompanyPassportNo" runat="server" CssClass="TextBox" AutoComplete="false" Width="260px"  MaxLength="50" />
+                                                     <cc1:AutoCompleteExtender
+                                                        runat="server" 
+                                                        ID="AutoCompleteExtender3" 
+                                                        TargetControlID="txtCompanyPassportNo"
+                                                        ServicePath="~/Template/AjaxScript.asmx"
+                                                        ServiceMethod = "GetAutoCompleteCompanyPassportNo"
+                                                        MinimumPrefixLength="1" 
+                                                        CompletionInterval="500"
+                                                        UseContextKey="true"
+                                                        EnableCaching="true"
+                                                        CompletionSetCount="10" FirstRowSelected="true"
+                                                        CompletionListCssClass="autocomplete_completionListElement" 
+                                                        CompletionListItemCssClass="autocomplete_listItem" 
+                                                        CompletionListHighlightedItemCssClass="autocomplete_highlightedListItem"
+                                                        ShowOnlyCurrentWordInCompletionListItem="true" 
+                                                        OnClientItemSelected="SetCompanyByPassportNo" >
+                                                     </cc1:AutoCompleteExtender>
+                                                </td>
+                                            </tr>
+                                        
+                                        
+                                        
+                                        
+                                            <tr style="height:25px">
                                                 <td align="right" class="Csslbl" >ชื่อองค์กร : </td>
                                                 <td colspan="3" align="left">
                                                     <asp:TextBox runat="server" ID="txtCustName" Width="700" CssClass="TextBox" autocomplete="off" onBlur="ClearTxtCustValue()" ></asp:TextBox>&nbsp;
@@ -289,7 +339,7 @@
                                                     <table border="0" cellpadding="0" cellspacing="0" >
                                                         <tr>
                                                             <td>
-                                                                <uc2:txtBox ID="txtCompanyDocNo" runat="server"  MaxLength="100" />
+                                                                <uc2:txtBox ID="txtCompanyDocNo" runat="server" Width="150px" MaxLength="100" />
                                                             </td>
                                                             <td width="80px" align="right">ลงวันที่ :&nbsp;</td>
                                                             <td width="150px">
@@ -300,7 +350,7 @@
                                                 </td>
                                                 <td align="right" class="Csslbl">ผู้ลงนาม : </td>
                                                 <td align="left" >
-                                                    <uc2:txtBox ID="txtCompanySignatureName" runat="server"  Width="260"  />
+                                                    <uc2:txtBox ID="txtCompanySignatureName" runat="server"  Width="260px"  />
                                                 </td>
                                             </tr>
                                             <tr style="height:25px">
@@ -341,7 +391,7 @@
                                                                 </script>
                                                             </td>
                                                             <td width="34%" align="left"  valign="top" >
-                                                                <uc7:cmbAutoComplete ID="cmbResolutionsNo" runat="server" Width="205px" DefaultDisplay="เลือก" Enabled="false" />
+                                                                <uc7:cmbAutoComplete ID="cmbResolutionsNo" runat="server" Width="225px" DefaultDisplay="เลือก" Enabled="false" />
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -625,6 +675,8 @@
                 var hdnCustValue = document.getElementById('<%=hdnCustValue.ClientID%>');
                 var txtCustName = document.getElementById('<%=txtCustName.ClientID%>');
                 var txtCompanyRegisNo = document.getElementById('<%=txtCompanyID.ClientID%>');
+                var txtCompanyIDCardNo = document.getElementById('<%=txtCompanyIDCardNo.ClientID%>');
+                var txtCompanyPassportNo = document.getElementById('<%=txtCompanyPassportNo.ClientID %>');
                 
                 var pageUrl = '<%=ResolveUrl("~/Template/AjaxScript.asmx")%>';
                 $.ajax({
@@ -637,6 +689,58 @@
                         var ret = msg.d;
                         hdnCustValue.value = ret[0];
                         txtCustName.value = ret[1];
+                        txtCompanyIDCardNo.value = "";
+                        txtCompanyPassportNo.value = "";
+                        return true;
+                    }
+                });
+            }
+            
+            function SetCompanyByIDCardNo(){
+                var hdnCustValue = document.getElementById('<%=hdnCustValue.ClientID%>');
+                var txtCustName = document.getElementById('<%=txtCustName.ClientID%>');
+                var txtCompanyRegisNo = document.getElementById('<%=txtCompanyID.ClientID%>');
+                var txtCompanyIDCardNo = document.getElementById('<%=txtCompanyIDCardNo.ClientID%>');
+                var txtCompanyPassportNo = document.getElementById('<%=txtCompanyPassportNo.ClientID %>');
+                
+                var pageUrl = '<%=ResolveUrl("~/Template/AjaxScript.asmx")%>';
+                $.ajax({
+                    type: "POST",
+                    url: pageUrl + "/GetCompanyNameByIDCardNo",
+                    data: "{'CompanyIDCardNo':'" + $(txtCompanyIDCardNo).val() + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(msg) {
+                        var ret = msg.d;
+                        hdnCustValue.value = ret[0];
+                        txtCustName.value = ret[1];
+                        txtCompanyRegisNo.value = "";
+                        txtCompanyPassportNo.value = "";
+                        return true;
+                    }
+                });
+            }
+            
+            function SetCompanyByPassportNo(){
+                var hdnCustValue = document.getElementById('<%=hdnCustValue.ClientID%>');
+                var txtCustName = document.getElementById('<%=txtCustName.ClientID%>');
+                var txtCompanyRegisNo = document.getElementById('<%=txtCompanyID.ClientID%>');
+                var txtCompanyIDCardNo = document.getElementById('<%=txtCompanyIDCardNo.ClientID%>');
+                var txtCompanyPassportNo = document.getElementById('<%=txtCompanyPassportNo.ClientID %>');
+                
+                var pageUrl = '<%=ResolveUrl("~/Template/AjaxScript.asmx")%>';
+                $.ajax({
+                    type: "POST",
+                    url: pageUrl + "/GetCompanyNameByPassportNo",
+                    data: "{'CompanyPassportNo':'" + $(txtCompanyPassportNo).val() + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(msg) {
+                        var ret = msg.d;
+                        hdnCustValue.value = ret[0];
+                        txtCustName.value = ret[1];
+                        txtCompanyRegisNo.value = "";
+                        txtCompanyIDCardNo.value = "";
                         return true;
                     }
                 });

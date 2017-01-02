@@ -353,6 +353,8 @@ Partial Class WebApp_frmDocRegister
         txtRemarks.Text = ""
         rdiReceiveType.SelectedIndex = 0 'การลงทะเบียนรับจากภายนอก/ลงทะเบียนรับจากภายใน
         txtCompanyID.Text = ""
+        txtCompanyIDCardNo.Text = ""
+        txtCompanyPassportNo.Text = ""
         txtCustName.Text = ""
         hdnCustValue.Text = ""
         txtCompanyDocNo.Text = ""
@@ -489,6 +491,8 @@ Partial Class WebApp_frmDocRegister
 
         'Set Compary ที่เป็นข้อมูลที่มาจากแต่ละที่
         para.COMPANY_REGIS_NO = txtCompanyID.Text.Trim
+        para.COMPANY_IDCARD_NO = txtCompanyIDCardNo.Text.Trim
+        para.COMPANY_PASSPORT_NO = txtCompanyPassportNo.Text.Trim
         para.COMPANY_NAME = txtCustName.Text
         If rdiReceiveType.SelectedValue = "0" Then
             'ลงทะเบียนรับจากหน่วยงานภายนอก
