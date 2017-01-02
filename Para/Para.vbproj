@@ -162,6 +162,7 @@
     <Compile Include="THeGIFResponse\SendRejectLetterNotifierResponsePara.vb" />
     <Compile Include="THeGIFResponse\SendAcceiptLetterNotifierResponsePara.vb" />
     <Compile Include="THeGIFResponse\SendReceiveLetterNotifierResposePara.vb" />
+    <Compile Include="THeGIF\DeleteGovernmentDocumentRequestPara.vb" />
     <Compile Include="THeGIF\CorrespondenceLetterDeleteRequestPara.vb" />
     <Compile Include="THeGIF\CorrespondenceLetterOutboundRequestPara.vb" />
     <Compile Include="THeGIF\DeleteAcceiptLetterNotifierPara.vb" />

@@ -453,7 +453,8 @@ Partial Class WebApp_frmDocRegister
 #End Region
 
 
-    Public Function InsertDocRegis(ByVal RefDocRegisID As Long, ByVal RefDocRegisBookNo As String, ByVal ReceiveAbbName As String, ByVal SendType As String, ByVal trans As Linq.Common.Utilities.TransactionDB, ByVal uPara As Para.Common.UserProfilePara) As Para.TABLE.DocumentRegisterPara 'ลงทะเบียน
+    Public Function InsertDocRegis(ByVal RefDocRegisID As Long, ByVal RefDocRegisBookNo As String, ByVal ReceiveAbbName As String, ByVal SendType As String, ByVal trans As Linq.Common.Utilities.TransactionDB, ByVal uPara As Para.Common.UserProfilePara) As Para.TABLE.DocumentRegisterPara
+        'ลงทะเบียน
         Dim para As New Para.TABLE.DocumentRegisterPara
 
         para.BOOK_NO = DateTime.Now.ToString("yyyyMMddHHmmssffff")  'Temp Data Record
@@ -537,17 +538,18 @@ Partial Class WebApp_frmDocRegister
         Dim _ID As Long = eng.SaveDocumentRegister(uPara.UserName, para, Session(Constant.SessFileUploadList), txtScanJobID.Text, trans)
         If _ID > 0 Then
             'ให้มีการ Insert Document Register โดยที่ฟิลด์ BOOK_NO กับ  REQUEST_NO  เป็นค่า null ไปก่อนเพื่อให้ Lock Transaction
+            'และป้องกันการ Generate เลขที่หนังสือซ้ำ
             para = New DocumentRegisterPara
             para = eng.GetDocumentPara(_ID, trans)
 
-            'เลขที่หนังสือ
+            'Gen เลขที่หนังสือ
             If RefDocRegisID = 0 Then
                 para.BOOK_NO = Engine.Document.BookRunningENG.GetBookNo(rdiReceiveType.SelectedValue, SendType, uPara.ORG_DATA.NAME_ABB, trans)
             Else
                 para.BOOK_NO = RefDocRegisBookNo & "/" & ReceiveAbbName
             End If
 
-            'ถ้าเป็นเลขต้น ถึงจะ Gen เลขที่คำขอ
+            'ถ้าเป็นเลขต้น และเป็นกลุ่มเรื่องคำขอ ถึงจะ Gen เลขที่คำขอ
             If ReceiveAbbName.Trim = "" Then
                 Dim gEng As New Engine.Master.GroupTitleEng
                 Dim gPara As Para.TABLE.GroupTitlePara = gEng.GetGroupTitlePara(cmbGroupTitle.SelectedValue, trans)

@@ -1,14 +1,12 @@
 ﻿Namespace THeGIF
     Public Class SendInvalidAcceptIDNotifierPara
-        '5.21	การส่งหนังสือแจ้งเลขรับผิด(InvalidAcceptIDNotifier) จาก ระบบสารบรรณอิเล็กทรอนิกส์ต้นทาง  ไป eCMSต้นทาง
+        '3.2.6	การส่งหนังสือแจ้งเลขรับผิด(InvalidAcceptIDNotifier) จาก ระบบสารบรรณอิเล็กทรอนิกส์ต้นทาง  ไป eCMSต้นทาง
         Dim _HeaderMessageID As String = ""
         Dim _HeaderTo As String = ""
         Dim _BodyLetterID As String = ""
         Dim _BodyAcceptID As String = ""
         Dim _BodyCorrespondenceDate As String = ""
         Dim _BodySubject As String = ""
-        Dim _BodyAcceptDate As String = ""
-        Dim _BodyAcceptDepartmentCode As String = ""
 
         Public Property HeaderMessageID() As String
             Get
@@ -61,22 +59,7 @@
                 _BodySubject = value
             End Set
         End Property
-        Public Property BodyAcceptDate() As String
-            Get
-                Return _BodyAcceptDate.Trim
-            End Get
-            Set(ByVal value As String)
-                _BodyAcceptDate = value
-            End Set
-        End Property
-        Public Property BodyAcceptDepartmentCode() As String
-            Get
-                Return _BodyAcceptDepartmentCode.Trim
-            End Get
-            Set(ByVal value As String)
-                _BodyAcceptDepartmentCode = value
-            End Set
-        End Property
+        
     End Class
 End Namespace
 
