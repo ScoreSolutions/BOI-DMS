@@ -10,10 +10,10 @@ Imports System.ComponentModel
 Public Class DmsOfficerWebService
     Inherits System.Web.Services.WebService
 
-    <WebMethod()> _
-    Public Function HelloWorld() As String
-       Return "Hello World"
-    End Function
+    '<WebMethod()> _
+    'Public Function HelloWorld() As String
+    '   Return "Hello World"
+    'End Function
 
     <WebMethod()> _
     Public Function SaveDmsOfficer(ByVal UserName As String, ByVal OfficerCode As String, ByVal OfficerIDCardNo As String, ByVal FirstNameThai As String, ByVal LastNameThai As String, ByVal FirstNameEng As String, ByVal LastNameEng As String, ByVal Gender As Integer, ByVal OrganizationID As Long, ByVal OfficerLevel As Integer, ByVal TelNo As String, ByVal FaxNo As String, ByVal BirthDate As String, ByVal Email As String, ByVal Description As String, ByVal efDate As String, ByVal epDate As String) As String
