@@ -105,16 +105,21 @@ Partial Class WebApp_frmMasterOfficer
                 sqltmp = sqltmp + " where id = '" & id & "'"
             End If
 
-            
+            Dim _BirthDate As String = IIf(birth_date.DateValue = Nothing, "null", "'" + birth_date.DateValue.ToString("yyyy-MM-dd", New Globalization.CultureInfo("en-US")) + "'")
+            Dim _EfDate As String = IIf(efdate.DateValue = Nothing, "null", "'" + efdate.DateValue.ToString("yyyy-MM-dd", New Globalization.CultureInfo("en-US")) + "'")
+            Dim _EpDate As String = IIf(epdate.DateValue = Nothing, "null", "'" + epdate.DateValue.ToString("yyyy-MM-dd", New Globalization.CultureInfo("en-US")) + "'")
 
-            Dim msg As String = sql_data(sqltmp)
-            If msg = "" Then
-                txtID.Text = id
-                SetGridview(True)
-                ClearData()
-                sys_msg.Text = "บันทึกข้อมูลเรียบร้อย"
-            Else
-                sys_msg.Text = msg
+            Dim eng As New Engine.Master.OfficerEng
+            Dim msg() As String = Split(eng.SaveOfficerData(txtID.Text, username.Text, officer_code.Text, identity_card.Text, first_name.Text, last_name.Text, first_name_eng.Text, last_name_eng.Text, gender.SelectedValue, organization_id.SelectedValue, officer_code.Text, tel.Text, fax.Text, _BirthDate, email.Text, description.Text, _EfDate, _EpDate, Config.GetLogOnUser.UserName), "|")
+            If msg.Length = 2 Then
+                If msg(0) = "true" Then
+                    txtID.Text = msg(1)
+                    SetGridview(True)
+                    ClearData()
+                    sys_msg.Text = "บันทึกข้อมูลเรียบร้อย"
+                Else
+                    sys_msg.Text = msg(0)
+                End If
             End If
         End If
 
