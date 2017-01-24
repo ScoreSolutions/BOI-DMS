@@ -23,6 +23,23 @@ Namespace Master
             Return dt
         End Function
 
+        Public Function GetOfficerIDByUsernameOrIDCard(ByVal username As String, ByVal idcard As String) As String
+            Dim trans As New Linq.Common.Utilities.TransactionDB
+            trans.CreateTransaction()
+            Dim sql As String = "select id from OFFICER where username='" & username & "' or identity_card ='" & idcard & "'"
+            Dim lnq As New OfficerLinq
+            Dim dt As DataTable = lnq.GetListBySql(sql, trans.Trans)
+            trans.CommitTransaction()
+            lnq = Nothing
+
+            Dim id As String = "0"
+            If dt.Rows.Count > 0 Then
+                id = dt.Rows(0)("id").ToString()
+            End If
+
+            Return id
+        End Function
+
         Public Function GetOfficerPara(ByVal vID As Long) As Para.TABLE.OfficerPara
             Dim trans As New Linq.Common.Utilities.TransactionDB
             trans.CreateTransaction()
@@ -105,12 +122,12 @@ Namespace Master
                 sqltmp = sqltmp + ",'" + FirstNameEng + "'"
                 sqltmp = sqltmp + ",'" + LastNameEng + "'"
                 sqltmp = sqltmp + ",'" + Description + "'"
-                sqltmp = sqltmp + ",'" + OrganizationID + "'"
-                sqltmp = sqltmp + ",'" + Gender + "'"
+                sqltmp = sqltmp + ",'" + OrganizationID.ToString() + "'"
+                sqltmp = sqltmp + ",'" + Gender.ToString() + "'"
                 sqltmp = sqltmp + "," + IIf(BirthDate.Trim = "", "null", "'" + BirthDate + "'")
                 sqltmp = sqltmp + "," + IIf(efDate.Trim = "", "null", "'" + efDate + "'")
                 sqltmp = sqltmp + "," + IIf(epDate.Trim = "", "null", "'" + epDate + "'")
-                sqltmp = sqltmp + ",'" + OfficerLevel + "'"
+                sqltmp = sqltmp + ",'" + OfficerLevel.ToString() + "'"
                 sqltmp = sqltmp + ",'" + OfficerIDCardNo + "'"
                 sqltmp = sqltmp + ",'" + TelNo + "'"
                 sqltmp = sqltmp + ",'" + FaxNo + "'"
@@ -129,12 +146,12 @@ Namespace Master
                 sqltmp = sqltmp + ",first_name_eng = '" + FirstNameEng + "'"
                 sqltmp = sqltmp + ",last_name_eng = '" + LastNameEng + "'"
                 sqltmp = sqltmp + ",description = '" + Description + "'"
-                sqltmp = sqltmp + ",organization_id = '" + OrganizationID + "'"
-                sqltmp = sqltmp + ",gender = '" + Gender + "'"
+                sqltmp = sqltmp + ",organization_id = '" + OrganizationID.ToString() + "'"
+                sqltmp = sqltmp + ",gender = '" + Gender.ToString() + "'"
                 sqltmp = sqltmp + ",birth_date = " + IIf(BirthDate.Trim = "", "null", "'" + BirthDate + "'")
                 sqltmp = sqltmp + ",efdate = " + IIf(efDate.Trim = "", "null", "'" + efDate + "'")
                 sqltmp = sqltmp + ",epdate = " + IIf(epDate.Trim = "", "null", "'" + epDate + "'")
-                sqltmp = sqltmp + ",officer_level = '" + OfficerLevel + "'"
+                sqltmp = sqltmp + ",officer_level = '" + OfficerLevel.ToString() + "'"
                 sqltmp = sqltmp + ",identity_card = '" + OfficerIDCardNo + "'"
                 sqltmp = sqltmp + ",tel = '" + TelNo + "'"
                 sqltmp = sqltmp + ",Fax = '" + FaxNo + "'"
@@ -147,8 +164,11 @@ Namespace Master
             Dim trans As New Linq.Common.Utilities.TransactionDB
             trans.CreateTransaction()
             Dim re As Integer = Linq.Common.Utilities.SqlDB.ExecuteNonQuery(sqltmp, trans.Trans)
-            If re = "true" Then
-                ret = re & "|" & id
+            If re > 0 Then
+                trans.CommitTransaction()
+                ret = IIf(re = 1, "true", "false") & "|" & id
+            Else
+                trans.RollbackTransaction()
             End If
 
             Return ret
