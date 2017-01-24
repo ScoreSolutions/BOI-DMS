@@ -125,6 +125,21 @@ Namespace Common
             Return ret
         End Function
 
+        Public Function SaveTransLog(ByVal UserName As String, ByVal LogMsg As String) As Boolean
+            Dim trans As New Linq.Common.Utilities.TransactionDB
+            trans.CreateTransaction()
+            Dim lPara As New Para.TABLE.LogTransPara
+            lPara.TRANS_DATE = DateTime.Now
+            lPara.TRANS_DESC = LogMsg
+
+            If SaveTransLog(UserName, lPara, trans) = True Then
+                trans.CommitTransaction()
+            Else
+                trans.RollbackTransaction()
+            End If
+            lPara = Nothing
+        End Function
+
         Public Function SaveErrLog(ByVal UserName As String, ByVal ErrMessage As String, ByVal trans As Linq.Common.Utilities.TransactionDB) As Boolean
             Dim ret As Boolean = False
             Try

@@ -1,10 +1,33 @@
 <publishData>
+  <publishTarget publishUrl="D:\application\DMSWebservice\">
+    <file relUrl="bin/LinqWS.xml" publishTime="01/22/2017 17:27:45" />
+    <file relUrl="bin/Para.pdb" publishTime="01/02/2017 18:12:44" />
+    <file relUrl="bin/WebServiceDms.pdb" publishTime="01/24/2017 16:17:31" />
+    <file relUrl="bin/Para.dll" publishTime="01/02/2017 18:12:44" />
+    <file relUrl="bin/Engine.xml" publishTime="01/24/2017 16:17:31" />
+    <file relUrl="frmTextReceiveDoc.aspx" publishTime="01/21/2016 15:19:11" />
+    <file relUrl="Web.config" publishTime="01/21/2016 15:19:11" />
+    <file relUrl="bin/WebServiceDms.xml" publishTime="01/24/2017 16:17:31" />
+    <file relUrl="bin/Linq.xml" publishTime="01/02/2017 18:12:45" />
+    <file relUrl="bin/LinqWS.dll" publishTime="01/22/2017 17:27:45" />
+    <file relUrl="bin/Engine.dll" publishTime="01/24/2017 16:17:31" />
+    <file relUrl="DmsWebservice.asmx" publishTime="01/21/2016 15:19:11" />
+    <file relUrl="bin/LinqWS.pdb" publishTime="01/22/2017 17:27:45" />
+    <file relUrl="TestWebServiceBCM.asmx" publishTime="01/21/2016 15:19:11" />
+    <file relUrl="bin/Para.xml" publishTime="01/02/2017 18:12:44" />
+    <file relUrl="bin/Engine.pdb" publishTime="01/24/2017 16:17:31" />
+    <file relUrl="DmsOfficerWebService.asmx" publishTime="01/22/2017 16:44:51" />
+    <file relUrl="DmsDocScanWebService.asmx" publishTime="01/21/2016 15:19:11" />
+    <file relUrl="bin/WebServiceDms.dll" publishTime="01/24/2017 16:17:31" />
+    <file relUrl="bin/Linq.pdb" publishTime="01/02/2017 18:12:45" />
+    <file relUrl="bin/Linq.dll" publishTime="01/02/2017 18:12:45" />
+    <file relUrl="frmTestTHEGif.aspx" publishTime="01/21/2016 15:19:11" />
+  </publishTarget>
   <publishTarget publishUrl="D:\WebServiceDMS\">
     <file relUrl="bin/LinqWS.xml" publishTime="04/08/2014 11:13:51" />
     <file relUrl="bin/Para.pdb" publishTime="04/08/2014 11:13:50" />
     <file relUrl="bin/WebServiceDms.pdb" publishTime="04/09/2014 10:30:31" />
     <file relUrl="bin/Para.dll" publishTime="04/08/2014 11:13:50" />
-    <file relUrl="bin/Engine.xml" publishTime="04/08/2014 11:13:51" />
     <file relUrl="frmTextReceiveDoc.aspx" publishTime="07/21/2012 22:11:47" />
     <file relUrl="Web.config" publishTime="12/31/2012 09:44:15" />
     <file relUrl="bin/WebServiceDms.xml" publishTime="04/09/2014 10:30:31" />
@@ -16,9 +39,10 @@
     <file relUrl="TestWebServiceBCM.asmx" publishTime="05/25/2012 12:28:03" />
     <file relUrl="bin/Para.xml" publishTime="04/08/2014 11:13:50" />
     <file relUrl="bin/Engine.pdb" publishTime="04/08/2014 11:13:51" />
+    <file relUrl="bin/Linq.pdb" publishTime="04/08/2014 11:13:50" />
     <file relUrl="DmsDocScanWebService.asmx" publishTime="07/06/2012 10:25:29" />
     <file relUrl="bin/WebServiceDms.dll" publishTime="04/09/2014 10:30:31" />
-    <file relUrl="bin/Linq.pdb" publishTime="04/08/2014 11:13:50" />
+    <file relUrl="bin/Engine.xml" publishTime="04/08/2014 11:13:51" />
     <file relUrl="bin/Linq.dll" publishTime="04/08/2014 11:13:50" />
     <file relUrl="frmTestTHEGif.aspx" publishTime="09/06/2012 10:01:38" />
   </publishTarget>
@@ -31,11 +55,11 @@
     <file relUrl="bin/Engine.xml" publishTime="05/11/2012 16:29:33" />
     <file relUrl="bin/Linq.xml" publishTime="05/11/2012 16:19:02" />
     <file relUrl="Web.config" publishTime="07/20/2011 22:36:36" />
+    <file relUrl="bin/WebServiceDms.dll" publishTime="05/11/2012 16:30:11" />
     <file relUrl="bin/WebServiceDms.pdb" publishTime="05/11/2012 16:30:11" />
     <file relUrl="bin/Linq.pdb" publishTime="05/11/2012 16:19:02" />
-    <file relUrl="bin/Para.xml" publishTime="05/11/2012 15:41:45" />
     <file relUrl="bin/Engine.dll" publishTime="05/11/2012 16:29:33" />
-    <file relUrl="bin/WebServiceDms.dll" publishTime="05/11/2012 16:30:11" />
+    <file relUrl="bin/Para.xml" publishTime="05/11/2012 15:41:45" />
     <file relUrl="bin/Para.dll" publishTime="05/11/2012 15:41:45" />
   </publishTarget>
 </publishData>

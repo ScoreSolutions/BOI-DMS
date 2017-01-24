@@ -26,16 +26,18 @@ Namespace Master
         Public Function GetOfficerIDByUsernameOrIDCard(ByVal username As String, ByVal idcard As String) As String
             Dim trans As New Linq.Common.Utilities.TransactionDB
             trans.CreateTransaction()
-            Dim sql As String = "select id from OFFICER where username='" & username & "' or identity_card ='" & idcard & "'"
             Dim lnq As New OfficerLinq
-            Dim dt As DataTable = lnq.GetListBySql(sql, trans.Trans)
-            trans.CommitTransaction()
-            lnq = Nothing
+            lnq.ChkDataByUSERNAME(username, trans.Trans)
+            If lnq.ID = 0 Then
+                lnq.ChkDataByWhere("identity_card='" & idcard & "'", trans.Trans)
+            End If
 
             Dim id As String = "0"
-            If dt.Rows.Count > 0 Then
-                id = dt.Rows(0)("id").ToString()
+            If lnq.ID > 0 Then
+                id = lnq.ID
             End If
+            trans.CommitTransaction()
+            lnq = Nothing
 
             Return id
         End Function

@@ -24,6 +24,33 @@ Public Class DmsOfficerWebService
                                    ByVal BirthDate As String, ByVal Email As String, ByVal Description As String, ByVal efDate As String, _
                                    ByVal epDate As String, ByVal UpdateByUserName As String) As String
 
+
+        'เก็บ Log ก่อนเลย
+        Dim LogMsg As String = "DmsOfficerWebService.SaveDmsOfficer " & Environment.NewLine
+        LogMsg += "Parameter UserName=" & UserName & Environment.NewLine
+        LogMsg += "OfficerCode=" & OfficerCode & Environment.NewLine
+        LogMsg += "OfficerIDCardNo=" & OfficerIDCardNo & Environment.NewLine
+        LogMsg += "FirstNameThai=" & FirstNameThai & Environment.NewLine
+        LogMsg += "LastNameThai=" & LastNameThai & Environment.NewLine
+        LogMsg += "FirstNameEng=" & FirstNameEng & Environment.NewLine
+        LogMsg += "LastNameEng=" & LastNameEng & Environment.NewLine
+        LogMsg += "Gender=" & Gender & Environment.NewLine
+        LogMsg += "OrganizationID=" & OrganizationID & Environment.NewLine
+        LogMsg += "OfficerLevel=" & OfficerLevel & Environment.NewLine
+        LogMsg += "TelNo=" & TelNo & Environment.NewLine
+        LogMsg += "FaxNo=" & FaxNo & Environment.NewLine
+        LogMsg += "BirthDate=" & BirthDate & Environment.NewLine
+        LogMsg += "Email=" & Email & Environment.NewLine
+        LogMsg += "Description=" & Description & Environment.NewLine
+        LogMsg += "efDate=" & efDate & Environment.NewLine
+        LogMsg += "epDate=" & epDate & Environment.NewLine
+        LogMsg += "UpdateByUserName=" & UpdateByUserName & Environment.NewLine
+
+        Dim lEng As New Engine.Common.LogEng
+        lEng.SaveTransLog(UpdateByUserName, LogMsg)
+        lEng = Nothing
+
+
         Dim ret As String = "false"
         Dim eng As New Engine.Master.OfficerEng
 
@@ -51,6 +78,15 @@ Public Class DmsOfficerWebService
             Return ret & "|" & "กรุณาระบุหน่วยงาน"
         End If
 
+        Dim oEng As New Engine.Master.OrganizationEng
+        Dim oPara As New Para.TABLE.OrganizationPara
+        oPara = oEng.GetOrgPara(OrganizationID)
+        If oPara.ID = 0 Then
+            Return ret & "|" & "ข้อมูลหน่วยงานไม่ถูกต้อง"
+        End If
+        oEng = Nothing
+        oPara = Nothing
+
         If Gender.ToString <> "1" And Gender <> "2" Then
             Return ret & "|" & "กรุณาระบุเพศ"
         End If
@@ -63,7 +99,7 @@ Public Class DmsOfficerWebService
             Return ret & "|" & "กรุณาระบุวันที่เริ่มใช้"
         End If
 
-        If efDate = "" Then
+        If UpdateByUserName = "" Then
             Return ret & "|" & "กรุณาระบุชื่อเข้าระบบของผู้ที่ทำการแก้ไขข้อมูล"
         End If
 
