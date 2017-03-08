@@ -1438,18 +1438,20 @@ Namespace THeGIF
             webRequest.Method = "POST"
             webRequest.ContentType = "text/xml"
 
+            Dim data As String = "<?xml version=""1.0"" encoding=""UTF-8""?>"
+            data += "<SOAP-ENV:Envelope xmlns:SOAP-ENV=""http://schemas.xmlsoap.org/soap/envelope/"">"
+            data += "<SOAP-ENV:Header>"
+            data += "<wsa:MessageID xmlns:wsa=""http://w3.org/2005/08/addressing"">" & HeaderMessageID & "</wsa:MessageID>"
+            data += "<wsa:to xmlns:wsa=""http://w3.org/2005/08/addressing"">" & HeaderTo & "</wsa:to>"
+            data += "</SOAP-ENV:Header>"
+            data += "<SOAP-ENV:Body>"
+            data += "<GetMinistryOrganizationList/>"
+            data += "</SOAP-ENV:Body>"
+            data += "</SOAP-ENV:Envelope>"
+
             Dim writer As New StreamWriter(webRequest.GetRequestStream())
             Try
-                writer.Write("<?xml version=""1.0"" encoding=""UTF-8""?>")
-                writer.Write("<SOAP-ENV:Envelope xmlns:SOAP-ENV=""http://schemas.xmlsoap.org/soap/envelope/"">")
-                writer.Write("<SOAP-ENV:Header>")
-                writer.Write("<wsa:MessageID xmlns:wsa=""http://w3.org/2005/08/addressing"">" & HeaderMessageID & "</wsa:MessageID>")
-                writer.Write("<wsa:to xmlns:wsa=""http://w3.org/2005/08/addressing"">" & HeaderTo & "</wsa:to>")
-                writer.Write("</SOAP-ENV:Header>")
-                writer.Write("<SOAP-ENV:Body>")
-                writer.Write("<GetMinistryOrganizationList/>")
-                writer.Write("</SOAP-ENV:Body>")
-                writer.Write("</SOAP-ENV:Envelope>")
+                writer.Write(data)
                 writer.Close()
 
                 Dim resp As WebResponse = webRequest.GetResponse()

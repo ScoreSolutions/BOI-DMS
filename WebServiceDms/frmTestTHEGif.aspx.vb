@@ -16,43 +16,46 @@ Partial Public Class frmTestTHEGif
     'Const uri As String = "http://ega-ecms.mict.go.th/ecms-ws01/service2"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        'Dim dt As DataTable = Engine.WebService.THeGIFENG.GeteCMS2MinistryOrganizationList()
+        'If dt.Rows.Count > 0 Then
 
+        'End If
   
-        Dim p As New CorrespondenceLetterOutboundRequestPara
-        p.HeaderMessageID = ""  'บางทีไม่ต้องระบุก็ได้
-        p.HeaderMessageTo = ""
-        p.BodyCorrespondenceDate = "2012-09-07"
-        p.BodyID = "อก 0905/0007"
-        p.BodySubject = "subject7"
-        p.BodySecretCode = "001"
-        p.BodySpeedCode = "001"
-        p.SenderPartyGivenName = "อัครวัฒน์"
-        p.SenderPartyFamilyName = "พุทธจันทร์"
-        p.SenderPartyJobTitle = "JobTitle"
-        p.SenderPartyMinistryOrganizationID = "11"
-        p.SenderPartyDepartmentOrganizationID = "11008"   '11008=สรอ.
+        'Dim p As New CorrespondenceLetterOutboundRequestPara
+        'p.HeaderMessageID = ""  'บางทีไม่ต้องระบุก็ได้
+        'p.HeaderMessageTo = ""
+        'p.BodyCorrespondenceDate = "2012-09-07"
+        'p.BodyID = "อก 0905/0007"
+        'p.BodySubject = "subject7"
+        'p.BodySecretCode = "001"
+        'p.BodySpeedCode = "001"
+        'p.SenderPartyGivenName = "อัครวัฒน์"
+        'p.SenderPartyFamilyName = "พุทธจันทร์"
+        'p.SenderPartyJobTitle = "JobTitle"
+        'p.SenderPartyMinistryOrganizationID = "11"
+        'p.SenderPartyDepartmentOrganizationID = "11008"   '11008=สรอ.
 
-        p.ReceiverPartyGivenName = "Test"
-        p.ReceiverPartyFamilyName = "Test"
-        p.ReceiverPartyJobTitle = "Test"
-        p.ReceiverPartyMinistryOrganizationID = "11"
-        p.ReceiverPartyDepartmentOrganizationID = "11002"   '11002 = กระทรวง ICT
+        'p.ReceiverPartyGivenName = "Test"
+        'p.ReceiverPartyFamilyName = "Test"
+        'p.ReceiverPartyJobTitle = "Test"
+        'p.ReceiverPartyMinistryOrganizationID = "11"
+        'p.ReceiverPartyDepartmentOrganizationID = "11002"   '11002 = กระทรวง ICT
 
-        'p.ReferenceCorrespondence  'หนังสืออ้างอิง
-        p.Description = "Test"
-        p.MainLetterBinaryObjectMime = ""
-        p.MainLetterBinaryObjectDataBase64 = ""
-        'p.AttachmentBinaryObject 'ไฟล์แนบ
-        p.GovernmentSignatureTypeCode = ""
-        p.SignerPartyGivenName = "Test"
-        p.SignerPartyFamilyName = "Test"
-        p.SignerPartyJobTitle = "Test"
-        p.SignerPartyMinistryOrganizationID = "11"
-        p.SignerPartyDepartmentOrganizationID = "11008"
+        ''p.ReferenceCorrespondence  'หนังสืออ้างอิง
+        'p.Description = "Test"
+        'p.MainLetterBinaryObjectMime = ""
+        'p.MainLetterBinaryObjectDataBase64 = ""
+        ''p.AttachmentBinaryObject 'ไฟล์แนบ
+        'p.GovernmentSignatureTypeCode = ""
+        'p.SignerPartyGivenName = "Test"
+        'p.SignerPartyFamilyName = "Test"
+        'p.SignerPartyJobTitle = "Test"
+        'p.SignerPartyMinistryOrganizationID = "11"
+        'p.SignerPartyDepartmentOrganizationID = "11008"
 
-        LinqWS.THeGIF.RequestTHeGIFLinqWS.SetURI = "http://dev.exchange.ecms.ega.or.th/thegif_2" '"http://ega-ecms.mict.go.th/ecms-ws01/service2"
+        'LinqWS.THeGIF.RequestTHeGIFLinqWS.SetURI = "http://dev.exchange.ecms.ega.or.th/thegif_2" '"http://ega-ecms.mict.go.th/ecms-ws01/service2"
 
-        Response.Write(LinqWS.THeGIF.RequestTHeGIFLinqWS.CorrespondenceLetterOutboundRequest(p).GovernmentDocument)
+        'Response.Write(LinqWS.THeGIF.RequestTHeGIFLinqWS.CorrespondenceLetterOutboundRequest(p).GovernmentDocument)
 
 
 

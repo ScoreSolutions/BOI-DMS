@@ -220,6 +220,32 @@ Namespace WebService
             Return para
         End Function
 
+        Public Shared Function Get_eCMSMinistryOrganizationList() As DataTable
+            Dim dt As New DataTable
+            Try
+                SetURI = Engine.Common.FunctionENG.GetConfigValue("eCMS_URL")
+                'SetURI = "http://dev.exchange.ecms.ega.or.th/"
+                dt = GetMinistryOrganizationList("", "")
+            Catch ex As Exception
+                dt = New DataTable
+            End Try
+
+            Return dt
+        End Function
+
+        Public Shared Function Get_eCMSOrganizationList() As DataTable
+            Dim dt As New DataTable
+            Try
+                SetURI = Engine.Common.FunctionENG.GetConfigValue("eCMS_URL")
+                'SetURI = "http://dev.exchange.ecms.ega.or.th/"
+                dt = GetOrganizationList("", "")
+            Catch ex As Exception
+                dt = New DataTable
+            End Try
+
+            Return dt
+        End Function
+
         Public Shared Function SendCorrespondenceLetterOutboundRequest(ByVal ExtID As String, ByVal LoginName As String) As Boolean
             Dim ret As Boolean = False
             Dim sql As String = ""
@@ -272,6 +298,7 @@ Namespace WebService
                 p.SignerPartyDepartmentOrganizationID = vDepartID
 
                 SetURI = Engine.Common.FunctionENG.GetConfigValue("eCMS_URL")
+                'SetURI = "http://dev.exchange.ecms.ega.or.th/"
                 If CorrespondenceLetterOutboundRequest(p).ProcessID <> "" Then
                     ret = True
                 End If
