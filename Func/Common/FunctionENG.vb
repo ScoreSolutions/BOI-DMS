@@ -104,6 +104,10 @@
 
             Return ret
         End Function
+
+        Public Shared Function EncryptText(ByVal txt As String) As String
+            Return Linq.Common.Utilities.SqlDB.EnCripPwd(txt)
+        End Function
     End Class
 End Namespace
 

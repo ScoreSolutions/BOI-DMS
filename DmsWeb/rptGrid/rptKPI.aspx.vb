@@ -271,22 +271,22 @@ Partial Class rptGrid_rptKPI
             sumRemTotOver += Convert.ToInt64(e.Item.DataItem("remain_tot_over"))
         End If
         If Convert.ToInt64(e.Item.DataItem("remain_tot_notover")) <> 0 Then
-            lblRemTotOver.Text = "<a href='../rptGrid/rptDocList.aspx?vPage=rptKPI&rpType=RemainTotNotOver"
-            lblRemTotOver.Text += "&gID=" & e.Item.DataItem("group_title_id") & "&orgID=" & reports.OrgID
-            lblRemTotOver.Text += IIf(lblOfficerID.Text.Trim <> "", "&OfficerID=" & lblOfficerID.Text.Trim, "")
-            lblRemTotOver.Text += "&DateFrom=" & reports.fromdate & "&DateTo=" & reports.todt & "&ExpFinish=" & Request("IsExpectedFinishDate") & "&rnd=" & DateTime.Now.Millisecond & "' target='_blank' >"
-            lblRemTotOver.Text += e.Item.DataItem("remain_tot_notover").ToString
-            lblRemTotOver.Text += "</a>"
+            lblRemTotNotOver.Text = "<a href='../rptGrid/rptDocList.aspx?vPage=rptKPI&rpType=RemainTotNotOver"
+            lblRemTotNotOver.Text += "&gID=" & e.Item.DataItem("group_title_id") & "&orgID=" & reports.OrgID
+            lblRemTotNotOver.Text += IIf(lblOfficerID.Text.Trim <> "", "&OfficerID=" & lblOfficerID.Text.Trim, "")
+            lblRemTotNotOver.Text += "&DateFrom=" & reports.fromdate & "&DateTo=" & reports.todt & "&ExpFinish=" & Request("IsExpectedFinishDate") & "&rnd=" & DateTime.Now.Millisecond & "' target='_blank' >"
+            lblRemTotNotOver.Text += e.Item.DataItem("remain_tot_notover").ToString
+            lblRemTotNotOver.Text += "</a>"
             sumRemTotNotOver += Convert.ToInt64(e.Item.DataItem("remain_tot_notover"))
         End If
         Dim vRemTotOver As Double = Convert.ToInt64(e.Item.DataItem("remain_tot_over")) + Convert.ToInt64(e.Item.DataItem("remain_tot_notover"))
         If vRemTotOver <> 0 Then
-            lblRemTotOver.Text = "<a href='../rptGrid/rptDocList.aspx?vPage=rptKPI&rpType=RemainTotAll"
-            lblRemTotOver.Text += "&gID=" & e.Item.DataItem("group_title_id") & "&orgID=" & reports.OrgID
-            lblRemTotOver.Text += IIf(lblOfficerID.Text.Trim <> "", "&OfficerID=" & lblOfficerID.Text.Trim, "")
-            lblRemTotOver.Text += "&DateFrom=" & reports.fromdate & "&DateTo=" & reports.todt & "&ExpFinish=" & Request("IsExpectedFinishDate") & "&rnd=" & DateTime.Now.Millisecond & "' target='_blank' >"
-            lblRemTotOver.Text += vRemTotOver.ToString
-            lblRemTotOver.Text += "</a>"
+            lblRemTotTotal.Text = "<a href='../rptGrid/rptDocList.aspx?vPage=rptKPI&rpType=RemainTotAll"
+            lblRemTotTotal.Text += "&gID=" & e.Item.DataItem("group_title_id") & "&orgID=" & reports.OrgID
+            lblRemTotTotal.Text += IIf(lblOfficerID.Text.Trim <> "", "&OfficerID=" & lblOfficerID.Text.Trim, "")
+            lblRemTotTotal.Text += "&DateFrom=" & reports.fromdate & "&DateTo=" & reports.todt & "&ExpFinish=" & Request("IsExpectedFinishDate") & "&rnd=" & DateTime.Now.Millisecond & "' target='_blank' >"
+            lblRemTotTotal.Text += vRemTotOver.ToString
+            lblRemTotTotal.Text += "</a>"
         End If
 
         'KPI

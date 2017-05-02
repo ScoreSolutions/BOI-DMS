@@ -25,11 +25,14 @@ Namespace Auth
                 _err = "กรุณาระบุรหัสผ่าน"
             Else
                 UserName = UserName.Replace("'", "''")
-                Pwd = Pwd.Replace("'", "''")
+                Pwd = FunctionENG.EncryptText(Pwd.Replace("'", "''"))
 
                 Dim lnq As New Linq.TABLE.OfficerLinq
                 Dim dt As New DataTable
-                dt = lnq.GetDataList("username = '" & UserName & "' and pwd = '" & Pwd & "'", "", Nothing)
+                Dim wh As String = "username = '" & UserName & "' and pwd = '" & Pwd & "'"
+                wh += " and getdate() between efdate and epdate "
+
+                dt = lnq.GetDataList(wh, "", Nothing)
                 If dt.Rows.Count > 0 Then
                     ret = True
                     dt = Nothing

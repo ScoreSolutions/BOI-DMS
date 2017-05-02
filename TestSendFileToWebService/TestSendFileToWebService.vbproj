@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{E4F72650-8B5A-4419-96C5-5B6E159A5B35}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -76,6 +76,12 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmEncryptPwd.Designer.vb">
+      <DependentUpon>frmEncryptPwd.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmEncryptPwd.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmTestSendFileToWebService.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -105,6 +111,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmEncryptPwd.resx">
+      <DependentUpon>frmEncryptPwd.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmTestSendFileToWebService.resx">
       <DependentUpon>frmTestSendFileToWebService.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -154,6 +163,12 @@
       <CachedAppSettingsObjectName>MySettings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>TestSendFileToWebService_TestWSSendFile_DmsDocScanWebService</CachedSettingsPropName>
     </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Func\Engine.vbproj">
+      <Project>{D7C0964B-50A9-4070-889A-8A26CE6D8C49}</Project>
+      <Name>Engine</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
