@@ -45,11 +45,6 @@ Partial Class rptGrid_rptKPI
 
             End If
             Binddata(DateFrom, DateTo, OrgID)
-
-            'Session.Remove("OrgID")
-            'Session.Remove("OfficerID")
-            'Session.Remove("todt")
-            'Session.Remove("formdt")
         End If
     End Sub
 
@@ -58,6 +53,7 @@ Partial Class rptGrid_rptKPI
     Private Sub Binddata(ByVal DateFrom As Date, ByVal DateTo As Date, ByVal OrgID As String)
         Try
 
+
             reports.fromdate = DateFrom.ToString("yyyyMMdd", New Globalization.CultureInfo("en-US"))
             reports.todt = DateTo.ToString("yyyyMMdd", New Globalization.CultureInfo("en-US"))
             reports.OrgID = OrgID
@@ -65,20 +61,22 @@ Partial Class rptGrid_rptKPI
             reports.havefinishdate = Request("IsExpectedFinishDate")
             dt = reports.RetreiveKPIByEMP
             If dt.Rows.Count > 0 Then
-                'For Total Sum
-                Dim totIncome As Double = 0
-                Dim totRemOver As Double = 0
-                Dim totRemNotOver As Double = 0
-                Dim totOutOver As Double = 0
-                Dim totOutNotOver As Double = 0
-                Dim totRemTotOver As Double = 0
-                Dim totRemTotNotOver As Double = 0
-
                 Dim gDt As New DataTable
                 gDt = dt.DefaultView.ToTable(True, "doc_cat_type_name").Copy
                 If gDt.Rows.Count > 0 Then
                     rptDocCatType.DataSource = gDt
                     rptDocCatType.DataBind()
+
+                    lblTotIncome.Text = totIncome.ToString("#,##0")
+                    lblTotRemOver.Text = totRemOver.ToString("#,##0")
+                    lblTotRemNotOver.Text = totRemNotOver.ToString("#,##0")
+                    lblTotRem.Text = (totRemOver + totRemNotOver).ToString("#,##0")
+                    lblTotOutOver.Text = totOutOver.ToString("#,##0")
+                    lblTotOutNotOver.Text = totOutNotOver.ToString("#,##0")
+                    lblTotOut.Text = (totOutOver + totOutNotOver).ToString("#,##0")
+                    lblTotRemTotOver.Text = totRemTotOver.ToString("#,##0")
+                    lblTotRemTotNotOver.Text = totRemTotNotOver.ToString("#,##0")
+                    lblTotRemTot.Text = (totRemTotOver + totRemTotNotOver).ToString("#,##0")
                 End If
                 gDt.Dispose()
                 dt.Dispose()
@@ -88,6 +86,16 @@ Partial Class rptGrid_rptKPI
 
         End Try
     End Sub
+
+    'For Total Sum
+    Dim totIncome As Double = 0
+    Dim totRemOver As Double = 0
+    Dim totRemNotOver As Double = 0
+    Dim totOutOver As Double = 0
+    Dim totOutNotOver As Double = 0
+    Dim totRemTotOver As Double = 0
+    Dim totRemTotNotOver As Double = 0
+
 
     'For Sum By Group Title
     Dim sumIncome As Double = 0
@@ -148,9 +156,13 @@ Partial Class rptGrid_rptKPI
             lblSumRemTotNotOver.Text = sumRemTotNotOver.ToString("#,##0")
             lblTotalRemTot.Text = (sumRemTotOver + sumRemTotNotOver).ToString("#,##0")
 
-            
-
-
+            totIncome += sumIncome
+            totRemOver += sumRemOver
+            totRemNotOver += sumRemNotOver
+            totOutOver += sumOutOver
+            totOutNotOver += sumOutNotOver
+            totRemTotOver += sumRemTotOver
+            totRemTotNotOver += sumRemTotNotOver
         End If
         dt.DefaultView.RowFilter = ""
 

@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://sso.boi.co.th/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://sso.boi.co.th/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://sso.boi.co.th/">
+      <s:element name="SignIn">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SignInResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SignInResult" type="tns:TResultOfUserProfile" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="TResultOfUserProfile">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ActionCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ResponseText" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Data" type="tns:UserProfile" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="UserProfile">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Userid" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TitleNameTh" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Firstname" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Lastname" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TitleNameEn" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FirstnameEn" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastnameEn" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CardId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UserStatusId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="EmployeeStatusId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SeqInDept" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="PositionTh" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PositionEN" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BoiPositionTh" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BoiPositionEn" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PhoneNo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PhoneNoExt" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Department" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Birthdate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Application" type="tns:ArrayOfUserApplication" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfUserApplication">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="UserApplication" nillable="true" type="tns:UserApplication" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="UserApplication">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ApplicationId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ApplicationName" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="SignInToken">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SignInTokenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SignInTokenResult" type="tns:TResultOfUserProfile" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VerifyToken">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VerifyTokenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VerifyTokenResult" type="tns:TResultOfApplicationToken" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="TResultOfApplicationToken">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ActionCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ResponseText" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Data" type="tns:ApplicationToken" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ApplicationToken">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="TokenId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AuthToken" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IssuedOn" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="ExpiresOn" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="ClientIp" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="SignOut">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SignOutResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SignOutResult" type="tns:TResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="TResultOfBoolean">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ActionCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ResponseText" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Data" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SignInSoapIn">
+    <wsdl:part name="parameters" element="tns:SignIn" />
+  </wsdl:message>
+  <wsdl:message name="SignInSoapOut">
+    <wsdl:part name="parameters" element="tns:SignInResponse" />
+  </wsdl:message>
+  <wsdl:message name="SignInTokenSoapIn">
+    <wsdl:part name="parameters" element="tns:SignInToken" />
+  </wsdl:message>
+  <wsdl:message name="SignInTokenSoapOut">
+    <wsdl:part name="parameters" element="tns:SignInTokenResponse" />
+  </wsdl:message>
+  <wsdl:message name="VerifyTokenSoapIn">
+    <wsdl:part name="parameters" element="tns:VerifyToken" />
+  </wsdl:message>
+  <wsdl:message name="VerifyTokenSoapOut">
+    <wsdl:part name="parameters" element="tns:VerifyTokenResponse" />
+  </wsdl:message>
+  <wsdl:message name="SignOutSoapIn">
+    <wsdl:part name="parameters" element="tns:SignOut" />
+  </wsdl:message>
+  <wsdl:message name="SignOutSoapOut">
+    <wsdl:part name="parameters" element="tns:SignOutResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ssoSoap">
+    <wsdl:operation name="SignIn">
+      <wsdl:input message="tns:SignInSoapIn" />
+      <wsdl:output message="tns:SignInSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SignInToken">
+      <wsdl:input message="tns:SignInTokenSoapIn" />
+      <wsdl:output message="tns:SignInTokenSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VerifyToken">
+      <wsdl:input message="tns:VerifyTokenSoapIn" />
+      <wsdl:output message="tns:VerifyTokenSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SignOut">
+      <wsdl:input message="tns:SignOutSoapIn" />
+      <wsdl:output message="tns:SignOutSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ssoSoap" type="tns:ssoSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SignIn">
+      <soap:operation soapAction="http://sso.boi.co.th/SignIn" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SignInToken">
+      <soap:operation soapAction="http://sso.boi.co.th/SignInToken" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyToken">
+      <soap:operation soapAction="http://sso.boi.co.th/VerifyToken" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SignOut">
+      <soap:operation soapAction="http://sso.boi.co.th/SignOut" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ssoSoap12" type="tns:ssoSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SignIn">
+      <soap12:operation soapAction="http://sso.boi.co.th/SignIn" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SignInToken">
+      <soap12:operation soapAction="http://sso.boi.co.th/SignInToken" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyToken">
+      <soap12:operation soapAction="http://sso.boi.co.th/VerifyToken" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SignOut">
+      <soap12:operation soapAction="http://sso.boi.co.th/SignOut" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="sso">
+    <wsdl:port name="ssoSoap" binding="tns:ssoSoap">
+      <soap:address location="https://e-sso.boi.go.th/ssows/sso.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ssoSoap12" binding="tns:ssoSoap12">
+      <soap12:address location="https://e-sso.boi.go.th/ssows/sso.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

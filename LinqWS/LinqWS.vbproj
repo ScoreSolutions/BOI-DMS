@@ -86,8 +86,14 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="OneDB\CompanyInfoLinqWS.vb" />
+    <Compile Include="SSO\SSOLinqWS.vb" />
     <Compile Include="THeGIF\RequestTHeGIFLinqWS.vb" />
     <Compile Include="Web References\BCMLinqWS\Reference.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\eSSO\Reference.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
@@ -123,6 +129,20 @@
       <DependentUpon>Reference.map</DependentUpon>
     </None>
     <None Include="Web References\BCMLinqWS\webservice_api.wsdl" />
+    <None Include="Web References\eSSO\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.vb</LastGenOutput>
+    </None>
+    <None Include="Web References\eSSO\sso.wsdl" />
+    <None Include="Web References\eSSO\TResultOfApplicationToken.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\eSSO\TResultOfBoolean.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\eSSO\TResultOfUserProfile.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <WebReferences Include="Web References\" />
@@ -138,6 +158,17 @@
       </CachedDynamicPropName>
       <CachedAppSettingsObjectName>MySettings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>LinqWS_BCMLinqWS_BCM</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://e-sso.boi.go.th/ssows/sso.asmx%3fWSDL">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\eSSO\</RelPath>
+      <UpdateFromURL>https://e-sso.boi.go.th/ssows/sso.asmx%3fWSDL</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>MySettings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>LinqWS_eSSO_sso</CachedSettingsPropName>
     </WebReferenceUrl>
   </ItemGroup>
   <ItemGroup>

@@ -101,6 +101,25 @@
                 
             </ItemTemplate>
         </asp:Repeater>
+        
+        
+        <tr class='grid_Header' style='background-color:#B1B1B1;'>
+            <td align='center'>รวมทั้งสิ้น</td>
+            <td align='center'><asp:Label ID="lblTotIncome" runat="server"></asp:Label></td>
+            <td align='center'><asp:Label ID="lblTotRemOver" runat="server"></asp:Label></td>
+            <td align='center'><asp:Label ID="lblTotRemNotOver" runat="server"></asp:Label></td>
+            <td align='center'><asp:Label ID="lblTotRem" runat="server"></asp:Label></td>
+            <td align='center'><asp:Label ID="lblTotOutOver" runat="server"></asp:Label></td>
+            <td align='center'><asp:Label ID="lblTotOutNotOver" runat="server"></asp:Label></td>
+            <td align='center'><asp:Label ID="lblTotOut" runat="server"></asp:Label></td>
+            <td align='center'><asp:Label ID="lblTotRemTotOver" runat="server"></asp:Label></td>
+            <td align='center'><asp:Label ID="lblTotRemTotNotOver" runat="server"></asp:Label></td>
+            <td align='center'><asp:Label ID="lblTotRemTot" runat="server"></asp:Label></td>
+            <td align='center'>&nbsp;</td>
+            <td align='center'>&nbsp;</td>
+            <td align='center'>&nbsp;</td>
+            <td align='center'>&nbsp;</td>
+        </tr>
     </table>
 </asp:Content>
 

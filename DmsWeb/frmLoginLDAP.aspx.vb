@@ -12,41 +12,6 @@ Partial Class frmLoginLDAP
     Inherits System.Web.UI.Page
     Dim SerialUserData As String = ""
 
-    'Private Function CreateUserProfile(ByVal UserName As String) As UserProfilePara
-    '    'สร้าง Profile  No SSO โดย Config
-    '    Dim uPara As New UserProfilePara
-    '    Dim cEng As New Engine.Master.OfficerEng
-    '    Dim cPara As New Para.TABLE.OfficerPara
-    '    cPara = cEng.GetOfficerParaByUserName(UserName)
-    '    If cPara.ID <> 0 Then
-    '        uPara.UserName = cPara.USERNAME
-
-    '        Dim log As New LogEng
-    '        log.SaveLoginHistory(uPara.UserName, Request)
-    '        uPara.LOGIN_HISTORY_ID = log.LOGIN_HISTORY_ID
-    '        log = Nothing
-    '        If uPara.LOGIN_HISTORY_ID <> 0 Then
-    '            Dim tmp As New LoginSessionPara
-    '            tmp.LOGIN_HISTORY_ID = uPara.LOGIN_HISTORY_ID
-    '            tmp.USER_NAME = uPara.UserName
-    '            Session(Constant.UserProfileSession) = tmp
-
-    '            Dim eng As New Engine.Master.OrganizationEng
-    '            Dim stDt As New DataTable
-    '            stDt = eng.GetDataOrgStorageList()
-    '            If stDt.Rows.Count > 0 Then
-    '                Session("OrgStorageList") = stDt.Copy
-    '            End If
-    '            stDt.Dispose()
-    '            eng = Nothing
-    '        End If
-    '    End If
-    '    cPara = Nothing
-    '    cEng = Nothing
-
-    '    Return uPara
-    'End Function
-
     Private Function CreateUserProfile(ByVal UserName As String) As UserProfilePara
         'สร้าง Profile  No SSO โดย Config
         Dim uPara As New UserProfilePara
@@ -188,33 +153,62 @@ Partial Class frmLoginLDAP
         eng = Nothing
     End Sub
 
+
+    Private Sub UpdateUserProfileFromSSO(ByVal UserSSO As Para.SSO.SSOUserPara)
+        Dim sqltmp As String = "update OFFICER set "
+        sqltmp = sqltmp + "first_name = '" + UserSSO.FirstName + "'"
+        sqltmp = sqltmp + ",last_name = '" + UserSSO.LastName + "'"
+        sqltmp = sqltmp + ",first_name_thai = '" + UserSSO.FirstName + "'"
+        sqltmp = sqltmp + ",last_name_thai = '" + UserSSO.LastName + "'"
+        If UserSSO.FirstNameEn <> "" Then sqltmp = sqltmp + ",first_name_eng = '" + UserSSO.FirstNameEn + "'"
+        If UserSSO.LastNameEn <> "" Then sqltmp = sqltmp + ",last_name_eng = '" + UserSSO.LastNameEn + "'"
+        If UserSSO.CardId <> "" Then sqltmp = sqltmp + ",identity_card = '" + UserSSO.CardId + "'"
+
+        sqltmp = sqltmp + ",update_by = '" + UserSSO.Username + "'"
+        sqltmp = sqltmp + ",update_on= getdate()"
+        sqltmp = sqltmp + " where username = '" & UserSSO.Username & "'"
+
+        Dim eng As New Engine.Master.OfficerEng
+        eng.UpdateUserProfile(sqltmp)
+        eng = Nothing
+    End Sub
+
     Protected Sub Login1_Authenticate(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.AuthenticateEventArgs) Handles Login1.Authenticate
         If Valid() = True Then
-            If Login1.UserName.ToUpper <> "AKKARAWAT" Then
-                If CheckLDAP(Login1.UserName, Login1.Password) = True Then
-                    Dim uData As UserProfilePara
-                    uData = CreateUserProfile(Login1.UserName)
-                    If uData.UserName <> "" Then
-                        e.Authenticated = True
-                    Else
-                        e.Authenticated = False
-                        Config.SetAlert(_err, Me)
-                    End If
-                Else
-                    e.Authenticated = False
-                    Config.SaveErrorLog(_err, 0)
-                    Config.SetAlert(_err, Me)
-                End If
-            Else
-                If CheckLoginFromDB(Login1.UserName, Login1.Password) = True Then
-                    CreateUserProfile(Login1.UserName)
+            Dim WsUrl As String = Engine.Common.FunctionENG.GetConfigValue("SSO_URL")
+            Dim UserSSO As Para.SSO.SSOUserPara = LinqWS.SSO.SSOLinqWS.LogInSSO(WsUrl, Login1.UserName, Login1.Password)
+
+            If UserSSO.IsSuccess = True Then
+                UpdateUserProfileFromSSO(UserSSO)
+
+                Dim uData As UserProfilePara
+                uData = CreateUserProfile(Login1.UserName)
+                If uData.UserName <> "" Then
                     e.Authenticated = True
                 Else
                     e.Authenticated = False
-                    Config.SaveErrorLog(_err, 0)
                     Config.SetAlert(_err, Me)
                 End If
+            Else
+                e.Authenticated = False
+                Config.SaveErrorLog(UserSSO.ErrorMessage, 0)
+                Config.SetAlert(UserSSO.ErrorMessage, Me)
             End If
+
+            'If CheckLDAP(Login1.UserName, Login1.Password) = True Then
+            '    Dim uData As UserProfilePara
+            '    uData = CreateUserProfile(Login1.UserName)
+            '    If uData.UserName <> "" Then
+            '        e.Authenticated = True
+            '    Else
+            '        e.Authenticated = False
+            '        Config.SetAlert(_err, Me)
+            '    End If
+            'Else
+            '    e.Authenticated = False
+            '    Config.SaveErrorLog(_err, 0)
+            '    Config.SetAlert(_err, Me)
+            'End If
 
             GC.Collect()
             GC.WaitForPendingFinalizers()
@@ -223,26 +217,7 @@ Partial Class frmLoginLDAP
         End If
     End Sub
 
-    Private Function CheckLoginFromDB(ByVal UserName As String, ByVal Pwd As String) As Boolean
-        Dim ret As Boolean = False
-        Dim eng As New Engine.Auth.LogInEng
-        ret = eng.CheckLogin(UserName, Pwd)
-        If ret = False Then
-            _err = eng.ErrorMessage
-        End If
-
-        eng = Nothing
-        Return ret
-    End Function
-
     Protected Sub Login1_LoggedIn(ByVal sender As Object, ByVal e As System.EventArgs) Handles Login1.LoggedIn
-        'HttpContext.Current.Response.Cookies.Clear()
-        'Dim fat As New FormsAuthenticationTicket(1, Login1.UserName, DateTime.Now, DateTime.Now.AddMinutes(60), False, SerialUserData.ToString)
-        'Dim ck As New System.Web.HttpCookie(".BOIDMS")
-        'ck.Value = FormsAuthentication.Encrypt(fat)
-        'ck.Expires = fat.Expiration
-        'HttpContext.Current.Response.Cookies.Add(ck)
-
         If Request("ReturnUrl") Is Nothing Or Request("ReturnUrl") = "" Then
             Response.Redirect("WebApp/frmDocToDoList.aspx?rnd=" & Date.Now.Millisecond)
         Else
