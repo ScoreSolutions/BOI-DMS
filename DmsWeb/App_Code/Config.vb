@@ -277,6 +277,51 @@ Public Class Config
         End Try
     End Sub
 
+    Public Shared Sub SaveTransLog(ByVal TransDesc As String, ByVal LoginHisID As Long, ByVal trans As Linq.Common.Utilities.TransactionDB)
+        Try
+            Dim lLnq As New Linq.TABLE.LoginHistoryLinq
+            lLnq.GetDataByPK(LoginHisID, trans.Trans)
+
+            Dim para As New LogTransPara
+            para.LOGIN_HIS_ID = LoginHisID
+            para.TRANS_DATE = DateTime.Now
+            para.TRANS_DESC = TransDesc
+
+            Dim fnc As New LogEng
+            If fnc.SaveTransLog(lLnq.USERNAME, para, trans) = False Then
+                SaveErrorLog(fnc.ErrorMessage, LoginHisID, trans)
+            End If
+            para = Nothing
+            fnc = Nothing
+            lLnq = Nothing
+        Catch ex As Exception
+            SaveErrorLog(ex.Message, LoginHisID, trans)
+        End Try
+    End Sub
+
+    Public Shared Sub SaveTransLog(ByVal TransDesc As String, ByVal trans As Linq.Common.Utilities.TransactionDB)
+        Dim LoginHisID As Long = GetLoginHistoryID()
+        Try
+            Dim lLnq As New Linq.TABLE.LoginHistoryLinq
+            lLnq.GetDataByPK(LoginHisID, trans.Trans)
+
+            Dim para As New LogTransPara
+            para.LOGIN_HIS_ID = LoginHisID
+            para.TRANS_DATE = DateTime.Now
+            para.TRANS_DESC = TransDesc
+
+            Dim fnc As New LogEng
+            If fnc.SaveTransLog(lLnq.USERNAME, para, trans) = False Then
+                SaveErrorLog(fnc.ErrorMessage, LoginHisID, trans)
+            End If
+            para = Nothing
+            fnc = Nothing
+            lLnq = Nothing
+        Catch ex As Exception
+            SaveErrorLog(ex.Message, LoginHisID, trans)
+        End Try
+    End Sub
+
     Public Shared Sub SaveTransLog(ByVal TransDesc As String)
         Dim LoginHisID As Long = GetLoginHistoryID()
 
@@ -330,6 +375,25 @@ Public Class Config
             lLnq = Nothing
         Catch ex As Exception
             trans.RollbackTransaction()
+        End Try
+    End Sub
+
+    Public Shared Sub SaveErrorLog(ByVal ErrDesc As String, ByVal LoginHisID As Long, ByVal trans As Linq.Common.Utilities.TransactionDB)
+        Try
+            Dim lLnq As New Linq.TABLE.LoginHistoryLinq
+            lLnq.GetDataByPK(LoginHisID, trans.Trans)
+
+            Dim para As New LogErrorPara
+            para.LOGIN_HIS_ID = LoginHisID
+            para.ERROR_TIME = DateTime.Now
+            para.ERROR_DESC = ErrDesc
+
+            Dim fnc As New LogEng
+            fnc.SaveErrLog(lLnq.USERNAME, para, trans)
+            para = Nothing
+            fnc = Nothing
+            lLnq = Nothing
+        Catch ex As Exception
         End Try
     End Sub
 

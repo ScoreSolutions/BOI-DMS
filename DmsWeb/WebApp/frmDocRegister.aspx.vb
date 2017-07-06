@@ -534,44 +534,57 @@ Partial Class WebApp_frmDocRegister
         para.ELECTRONIC_DOC_ID = txtDocRefID.Text
         para.REF_TH_EGIF_DOC_INBOUND_ID = txtTHeGIFDocID.Text
 
+        Config.SaveTransLog("InsertDocRegis ก่อน Insert Temp Record", trans)
         Dim eng As New Engine.Document.DocumentRegisterENG
         Dim _ID As Long = eng.SaveDocumentRegister(uPara.UserName, para, Session(Constant.SessFileUploadList), txtScanJobID.Text, trans)
         If _ID > 0 Then
+            Config.SaveTransLog("InsertDocRegis Insert Temp Record สำเร็จ", trans)
             'ให้มีการ Insert Document Register โดยที่ฟิลด์ BOOK_NO กับ  REQUEST_NO  เป็นค่า null ไปก่อนเพื่อให้ Lock Transaction
             'และป้องกันการ Generate เลขที่หนังสือซ้ำ
             para = New DocumentRegisterPara
             para = eng.GetDocumentPara(_ID, trans)
 
-            'Gen เลขที่หนังสือ
-            If RefDocRegisID = 0 Then
-                para.BOOK_NO = Engine.Document.BookRunningENG.GetBookNo(rdiReceiveType.SelectedValue, SendType, uPara.ORG_DATA.NAME_ABB, trans)
-            Else
-                para.BOOK_NO = RefDocRegisBookNo & "/" & ReceiveAbbName
-            End If
-
-            'ถ้าเป็นเลขต้น และเป็นกลุ่มเรื่องคำขอ ถึงจะ Gen เลขที่คำขอ
-            If ReceiveAbbName.Trim = "" Then
-                Dim gEng As New Engine.Master.GroupTitleEng
-                Dim gPara As Para.TABLE.GroupTitlePara = gEng.GetGroupTitlePara(cmbGroupTitle.SelectedValue, trans)
-                If gPara.IS_GEN_REQ = "Y" Then
-                    para.REQUEST_NO = Engine.Document.BookRunningENG.GetRequestNo(trans)
-                    txtRequestNo.Text = para.REQUEST_NO
+            If para.ID > 0 Then
+                Config.SaveTransLog("InsertDocRegis Get Docuemtn Para สำเร็จ", trans)
+                'Gen เลขที่หนังสือ
+                If RefDocRegisID = 0 Then
+                    para.BOOK_NO = Engine.Document.BookRunningENG.GetBookNo(rdiReceiveType.SelectedValue, SendType, uPara.ORG_DATA.NAME_ABB, trans)
+                    Config.SaveTransLog("InsertDocRegis Get New Running No" & para.BOOK_NO, trans)
+                Else
+                    para.BOOK_NO = RefDocRegisBookNo & "/" & ReceiveAbbName
+                    Config.SaveTransLog("InsertDocRegis Running No" & para.BOOK_NO, trans)
                 End If
-                gEng = Nothing
-                gPara = Nothing
+
+                'ถ้าเป็นเลขต้น และเป็นกลุ่มเรื่องคำขอ ถึงจะ Gen เลขที่คำขอ
+                If ReceiveAbbName.Trim = "" Then
+                    Dim gEng As New Engine.Master.GroupTitleEng
+                    Dim gPara As Para.TABLE.GroupTitlePara = gEng.GetGroupTitlePara(cmbGroupTitle.SelectedValue, trans)
+                    If gPara.IS_GEN_REQ = "Y" Then
+                        para.REQUEST_NO = Engine.Document.BookRunningENG.GetRequestNo(trans)
+                        txtRequestNo.Text = para.REQUEST_NO
+
+                        Config.SaveTransLog("InsertDocRegis Get New Request No" & para.REQUEST_NO, trans)
+                    End If
+                    gEng = Nothing
+                    gPara = Nothing
+                Else
+                    para.REQUEST_NO = txtRequestNo.Text.Trim
+                End If
+
+                Config.SaveTransLog("InsertDocRegis ก่อน Update เลขที่ " & para.BOOK_NO, trans)
+                _ID = 0  'Reset ก่อน เพื่อให้แน่ใจว่าเป็นข้อมูลใหม่แน่ๆ
+                _ID = eng.SaveDocumentRegister(uPara.UserName, para, Session(Constant.SessFileUploadList), txtScanJobID.Text, trans)
+
+                If _ID > 0 Then
+                    para.ID = _ID
+                    Config.SaveTransLog("InsertDocRegis Update เลขที่ " & para.BOOK_NO & " สำเร็จ", trans)
+                Else
+                    para.ID = 0
+                    Config.SaveErrorLog("InsertDocRegis Update เลขที่ " & para.BOOK_NO & "ไม่สำเร็จ", Config.GetLoginHistoryID())
+                End If
             Else
-                para.REQUEST_NO = txtRequestNo.Text.Trim
+                Config.SaveErrorLog("InsertDocRegis Get Para ไม่สำเร็จ", Config.GetLoginHistoryID())
             End If
-
-            _ID = 0  'Reset ก่อน เพื่อให้แน่ใจว่าเป็นข้อมูลใหม่แน่ๆ
-            _ID = eng.SaveDocumentRegister(uPara.UserName, para, Session(Constant.SessFileUploadList), txtScanJobID.Text, trans)
-
-            If _ID > 0 Then
-                para.ID = _ID
-            Else
-                para.ID = 0
-            End If
-
         End If
         eng = Nothing
         Return para
@@ -754,7 +767,7 @@ Partial Class WebApp_frmDocRegister
                     ret = SaveInsideSend(dPara.ID, dr, trans, uPara)
                 End If
 
-                Config.SaveTransLog("frmDocRegister.aspx ส่งภายในสำนักงาน เลขที่หนังสือ " & dPara.BOOK_NO)
+                Config.SaveTransLog("frmDocRegister.aspx ส่งภายในสำนักงาน เลขที่หนังสือ " & dPara.BOOK_NO, trans)
             End If
 
             dPara = Nothing

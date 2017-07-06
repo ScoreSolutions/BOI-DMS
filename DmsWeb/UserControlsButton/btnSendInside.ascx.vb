@@ -93,6 +93,7 @@ Partial Class UserControls_Button_btnSendInside
                     gvConfirmList.DataSource = Nothing
                     gvConfirmList.DataBind()
                     zPopConfirm.Hide()
+                    Config.SaveErrorLog("btnYes_Click เกิดความผิดพลาดระหว่างการดำเนินการ ไม่สามารถบันทึกข้อมูลได้", Config.GetLoginHistoryID())
                     Config.SetAlert("เกิดความผิดพลาดระหว่างการดำเนินการ ไม่สามารถบันทึกข้อมูลได้", Me.Page)
                 End If
             End If
